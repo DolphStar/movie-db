@@ -7,7 +7,7 @@ function App() {
   const [movie, setMovie] = useState()
 
   useEffect( ()=>{
-    setMovie("Testing State")
+    setMovie("Main Branch")
 
   },[])
 
@@ -15,6 +15,7 @@ function App() {
     <>
       <div className="main-wrapper">
         <h1>{movie}</h1>
+        <p>This is the main branch</p>
       </div>
     </>
   );
