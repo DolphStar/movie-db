@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "contributors": [
+   {"name":"Nick Birkus", "url": "https://github.com/DolphStar"},
+   {"name":"Samir Afilal", "url": "https://github.com/goahitle"},
+   {"name":"Jadie Lin", "url": "https://github.com/jadieLin"}
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
