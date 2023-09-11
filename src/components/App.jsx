@@ -26,8 +26,17 @@ function App() {
     fetchMovies();
   },[])
 
+  function getRandomIndex(){
+    const randomIndex = Math.floor(Math.random() * movies.results.length);
+    if(randomMovieIndex === randomIndex){
+      getRandomIndex();
+    }else{
+      setRandomMovieIndex(randomIndex);
+    }
+  }
+
   function displayRandomMovie(){
-    setRandomMovieIndex(Math.floor(Math.random() * movies.results.length));
+    getRandomIndex();
     setRandomMovie({
       ...randomMovie,
       title: movies.results[randomMovieIndex].title,
