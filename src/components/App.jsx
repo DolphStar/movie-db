@@ -19,6 +19,7 @@ function App() {
     title: '',
     poster: '',
     id: 0,
+    isFavourite: true
   });
 
   // Api fetch link for searching
@@ -57,6 +58,15 @@ function App() {
     fetchMovies();
   },[])
 
+//function for toggling isFavourite to toggle heart state
+//thinking of [setState, prevState] = React.useState({data...})
+function toggleFavorite() {
+  //updating prevState
+  setState(prevState => ({
+      ...prevState,
+      isFavourite: !prevState.isFavourite
+  }))
+}
 
 
   return (
@@ -103,3 +113,6 @@ export default App;
 //     </div>
 //   </>
 // );
+
+
+//Add <Favourites isFilled={prevState.isFavourite} handleClick={toggleFavourite} />
