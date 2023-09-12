@@ -68,6 +68,13 @@ button:focus-visible {
   }
 }
 
+nav {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
 nav ul {
   list-style: none;
   padding: 0;
@@ -82,4 +89,11 @@ nav li {
 
 nav li:last-child {
   margin-right: 0px;
+}
+
+footer {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%)
 }
