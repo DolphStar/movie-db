@@ -4,3 +4,5 @@ export const apiKey = "9de5ef6478cb7a1b5b666488d964d267";
 export const imgPath = "https://image.tmdb.org/t/p/original";
 
 export const youtubePath = "https://www.youtube.com/embed/";
+
+export const moviePage = 30;

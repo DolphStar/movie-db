@@ -93,7 +93,32 @@ nav li:last-child {
 
 footer {
   position: absolute;
-  bottom: 5%;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%)
+}
+
+.random-movie-details {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 700px;
+  height: 500px;
+  position: relative;
+}
+
+.random-movie-details iframe {
+  width: 650px;
+  height: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.random-movie-details h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
 }
