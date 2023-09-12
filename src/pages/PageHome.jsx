@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { apiKey, imgPath } from "../globals/globalVariables"
 
-import "../styles/App.css";
+import "../styles/PageHome.css";
 
 function App() {
   
@@ -58,48 +58,37 @@ function App() {
   },[])
 
 
-
   return (
-    <>
-      <div className="main-wrapper">
-        <h1>Movies</h1>
-        <div className="movie-list">
-
+      <>
+        <div className="main-wrapper">
+          <h1>Movies</h1>
+          <div className="movie-list">
+          {movies.map((movie) => {
+            return(
+              <div
+                key={movie.id}
+                className="single-movie"
+                style={{
+                  width: 300,
+                }}>
+                  <h2 className="movie-title">{movie.title}</h2>
+                  <img 
+                      src={`${imgPath}${movie.poster_path}`} 
+                      alt={movie.title} 
+                      className="movie-poster"
+                      />
+                  <div 
+                      className="movie-overview"
+                      >{movie.overview}</div>
+              </div>
+            );
+            })} 
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  
+    
 }
 
 export default App;
-
-// Displaying the 12 most popular movies
-// return (
-//   <>
-//     <div className="main-wrapper">
-//       <h1>Movies</h1>
-//       <div className="movie-list">
-//       {movies.map((movie) => {
-//         return(
-//           <div
-//             key={movie.id}
-//             className="single-movie"
-//             style={{
-//               width: 300,
-//             }}>
-//               <h2 className="movie-title">{movie.title}</h2>
-//               <img 
-//                   src={`${imgPath}${movie.poster_path}`} 
-//                   alt={movie.title} 
-//                   className="movie-poster"
-//                   />
-//               <div 
-//                   className="movie-overview"
-//                   >{movie.overview}</div>
-//           </div>
-//         );
-//         })} 
-//       </div>
-//     </div>
-//   </>
-// );
