@@ -107,7 +107,7 @@ footer {
   position: relative;
 }
 
-.random-movie-details iframe {
+.random-movie-details .frame {
   width: 650px;
   height: 350px;
   position: absolute;
