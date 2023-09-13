@@ -141,7 +141,6 @@ function Quiz() {
         /> */}
       </div>
       <button className="new-movie-button" onClick={()=>newRandomMovie()}>New Movie</button>
-      <button className="new-frame-button" onClick={()=>newFrame()}>New Frame</button>
     </>
   )
 }
