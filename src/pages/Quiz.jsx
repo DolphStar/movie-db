@@ -39,7 +39,7 @@ function Quiz() {
     setIsVisible(true);
     setTimeout(()=>{
       setIsVisible(false)
-    }, 2500)
+    }, 3000)
   }
 
   // Finds the trailer from the video list
@@ -105,9 +105,14 @@ function Quiz() {
           className="countdown" 
           ref={countdown}
           style={{
-            display: isVisible ? 'block' : 'none',
-            backgroundColor: 'teal',
-          }}></div>
+            backgroundColor: isVisible ? 'black' : 'transparent',
+          }}>
+            <div 
+              className="title-blocker"
+              style={{
+                display: isVisible ? 'none' : 'block',
+              }}></div>
+        </div>
 
         {/* youtube embed */}
         <Youtube
@@ -117,7 +122,7 @@ function Quiz() {
             width: '650',
             height: '365',
             playerVars: {
-              autoplay: 0,  // No auto play
+              autoplay: 1,  // autoplay
               controls: 0,  // disables controls         
               disablekb: 1, // disables keyboard controls
               mute: 1,      // mutes
@@ -126,10 +131,10 @@ function Quiz() {
           }}
           onReady={(event) => {
             setYoutubePlayer(event.target)
-            event.target.seekTo(Math.floor(Math.random() * event.target.getDuration()));
-            setTimeout(()=>{
-              event.target.pauseVideo();
-            }, 500)
+            // event.target.seekTo(Math.floor(Math.random() * event.target.getDuration()));
+            // setTimeout(()=>{
+            //   event.target.playVideo();
+            // }, 500)
           }}
           key={trailerID}
         />
