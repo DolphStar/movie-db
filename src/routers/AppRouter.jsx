@@ -10,6 +10,7 @@ function AppRouter() {
     <BrowserRouter>
       <div className="wrapper">
         <Header />
+        <Carousel />
         <App />
         <Footer />
       </div>
