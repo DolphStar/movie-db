@@ -1,32 +1,30 @@
-// import Swiper bundle with all modules installed
-import Swiper from 'swiper/bundle';
+import React, { useRef, useState } from 'react';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-// import styles bundle
-import 'swiper/css/bundle';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
 
-function Carousel(){
-    return(
-    // Slider main container
-<div class="swiper">
-  {/* Additional required wrapper */}
-  <div class="swiper-wrapper">
-    {/* <!-- Slides --> */}
-    <div class="swiper-slide">Slide 1</div>
-    <div class="swiper-slide">Slide 2</div>
-    <div class="swiper-slide">Slide 3</div>
-    ...
-  </div>
-  {/* <!-- If we need pagination --> */}
-  <div class="swiper-pagination"></div>
+import '../styles/Carousel.css';
 
-  {/* <!-- If we need navigation buttons --> */}
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+// import required modules
+import { Navigation } from 'swiper/modules';
 
-  {/* <!-- If we need scrollbar --> */}
-  <div class="swiper-scrollbar"></div>
-</div>)
-
+export default function Carousel() {
+  return (
+    <>
+      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+        <SwiperSlide>Slide 9</SwiperSlide>
+      </Swiper>
+    </>
+  );
 }
-
-export default Carousel
