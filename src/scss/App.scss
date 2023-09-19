@@ -1,0 +1,19 @@
+// Sass imports
+
+// Abstract
+@use "abstract/mixins";
+@use "abstract/variables";
+
+// Base
+@use "base/reset";
+@use "base/typography";
+
+// Layout
+@use "layout/header";
+@use "layout/main";
+@use "layout/footer";
+
+// Pages (import the page here when you add a new file)
+@use "layout/pages/favourites";
+@use "layout/pages/home";
+@use "layout/pages/trailr";

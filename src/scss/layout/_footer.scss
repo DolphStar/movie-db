@@ -1,0 +1,9 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%)
+}

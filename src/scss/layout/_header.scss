@@ -1,0 +1,25 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+nav {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav li:last-child {
+    margin-right: 0px;
+}

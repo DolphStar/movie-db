@@ -7,4 +7,4 @@ export const imgPath = "https://image.tmdb.org/t/p/original";
 
 export const youtubePath = "https://www.youtube.com/embed/";
 
-export const moviePage = 30;
+export const moviePage = 5;

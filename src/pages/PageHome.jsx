@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiKey, imgPath } from "../globals/globalVariables"
 
-import "../styles/PageHome.css";
-
 function App() {
   
   // Holds api request data

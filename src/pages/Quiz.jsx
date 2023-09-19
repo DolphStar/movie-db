@@ -28,7 +28,7 @@ function Quiz() {
   // countdown screen reference
   const countdown = useRef(null);
 
-  // Visible
+  // Countdown blocker screen visible
   const [isVisible, setIsVisible] = useState(false);
 
   // Gets a new random page
