@@ -66,7 +66,11 @@ const Carousel=()=> {
                   </SwiperSlide>
               ))}
           </Swiper>
-      </section>
+    </section>
+
+    <section>
+        
+    </section>
     
     <section className="carousel-2-swiper-slide">
         <Swiper

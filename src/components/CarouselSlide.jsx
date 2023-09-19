@@ -49,12 +49,15 @@ const CarouselSlide = ({trending, genresArr}) => {
             
             <div key={generateKey(trending.id)} className="carousel-content">
                 <h2>{trending.title}</h2>
-                <p>{trending.release_date}</p>
-                {commonGenres?.map((oneGenre)=>(
-                    <span key={oneGenre.id}>{oneGenre.name}</span>
-                ))}
+                    <div className="carousel-content-details">
+                    <p>{trending.release_date}</p>
+                    {commonGenres?.map((oneGenre)=>(
+                        <span key={oneGenre.id}>{oneGenre.name}</span>
+                    ))}
+                    </div>
             </div>
             <p className="carousel-text">{tagLineText}</p>
+            <a href="#" className="carousel-info-button">More Info</a>
         </>
   )
 }
