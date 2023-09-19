@@ -6,6 +6,7 @@ import App from "../components/App";
 import Footer from "../components/Footer";
 import Carousel from "../components/Carousel";
 
+
 function AppRouter() {
   return (
     <BrowserRouter>
