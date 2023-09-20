@@ -16,7 +16,7 @@ grid-gap: 20px;
 .movie-item {
     position: relative;
     display: inline-block;
-    margin: 0 0 10px 0; /* Adjust as needed for spacing */
+    margin: 0 0 10px 0; 
   }
 
 .favorite-button {
