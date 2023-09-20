@@ -9,6 +9,7 @@ import Quiz from "../pages/Quiz";
 import About from "../pages/About";
 import Favorites from "../pages/Favorites";
 
+
 function AppRouter() {
   return (
     <BrowserRouter>

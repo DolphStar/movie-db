@@ -1,0 +1,30 @@
+.favorites-main {
+display: grid;
+grid-template-columns: 32.3% 32.3% 32.3%;
+padding-top: 10%;
+grid-gap: 20px;
+}
+
+.favorite-movie {
+    border: 5px solid rgb(1, 3, 66);
+}
+
+.movie-poster{
+    width: 25vw;
+}
+
+.movie-item {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 10px 0; /* Adjust as needed for spacing */
+  }
+
+.favorite-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+  
