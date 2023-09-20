@@ -18,8 +18,10 @@ const isFavorite = favorites.some(favorite => favorite.id === movie.id);
 // If it's a favorite, remove it; otherwise, add it
 if (isFavorite) {
     deleteFromFavorites(movie, favorites, setFavorites);
+    console.log(movie.title + " movie deleted")
 } else {
     addToFavorites(movie, favorites, setFavorites);
+    console.log(movie.title + " movie added")
 }
 }
   

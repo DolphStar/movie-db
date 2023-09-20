@@ -13,9 +13,9 @@ function App() {
   // Function to handle adding/removing from favorites
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites)
+    console.log(favorites)
   }
 
-  console.log(favorites)
 
   useEffect(() => {
     const fetchMovies = async () => {
