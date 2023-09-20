@@ -1,55 +1,58 @@
-import { apiKey, youtubePath, imgPath, moviePage, youtubeApiKey } from "../globals/globalVariables";
+import { apiKey, moviePage } from "../globals/globalVariables";
 import Youtube from 'react-youtube';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 function Quiz() {
 
   // Holds random page number 1 to 51, initializes at a random page
-  const [randomPage, setRandomPage] = useState(Math.floor(Math.random() * moviePage) + 1);
+  const [randomPage, setRandomPage] = useState([
+    Math.floor(Math.random() * moviePage) + 1, // FrameA
+    Math.floor(Math.random() * moviePage) + 1, // FrameB
+  ]);
 
   // Holds random movie data
-  const [randomMovie, setRandomMovie] = useState({});
+  const [randomMovie, setRandomMovie] = useState([
+    '',  // FrameA
+    '',  // FrameB
+  ]);
 
   // Holds random movie video data
-  const [randomMovieVideo, setRandomMovieVideo] = useState({});
+  const [randomMovieVideo, setRandomMovieVideo] = useState([
+    '', // FrameA
+    '', // FrameB
+  ]);
 
-  // Holds the youtube trailerID for the random movie video
-  const [trailerID, setTrailerID] = useState('');
+  // Holds the youtube ID for the random movie video
+  const [trailerID, setTrailerID] = useState([
+    '', // FrameA
+    '', // FrameB
+  ]);
 
-  // Holds the youtube player instance
-  const [youtubePlayer, setYoutubePlayer] = useState(null);
-  
-  // Seek timestamp
-  const [seekTimestamp, setSeekTimestamp] = useState(0);
-
-  // Iframe refernce
-  const iframeRef = useRef(null);
-
-  // countdown screen reference
-  const countdown = useRef(null);
-
-  // Countdown blocker screen visible
-  const [isVisible, setIsVisible] = useState(false);
+  // Holds the indice of which frame is currently offscreen
+  // 0 = FrameA
+  // 1 = FrameB
+  const [offscreenFrame, setOffscreenFrame] = useState(0)
 
   // Gets a new random page
-  function newRandomMovie() {
-    setRandomPage(Math.floor(Math.random() * moviePage) + 1);
+  function newRandomPage() {
+    setRandomPage(randomPage => {
+      const newRandomPage = [...randomPage];
 
-    // puts a blocker in the way while the video flickers (temporary)
-    setIsVisible(true);
-    setTimeout(()=>{
-      setIsVisible(false)
-    }, 3000)
+      // Switch the movie of the offscreen frame
+      newRandomPage[offscreenFrame] = Math.floor(Math.random() * moviePage) + 1
+
+      return newRandomPage;
+    });
   }
 
   // Finds the trailer from the video list
   function getTrailer(){
-    if (randomMovieVideo.results) {
+    if (randomMovieVideo[offscreenFrame].results) {
       const id = randomMovieVideo.results.find(video => video.type === 'Trailer');
       if (id) {
         setTrailerID(id.key);
       } else {
-        newRandomMovie();
+        newRandomPage();
       }
     }
   }
@@ -58,18 +61,33 @@ function Quiz() {
   useEffect(()=> {
     
     // Api fetch link for a random movie
-    const endPointRandomMovie = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${randomPage}&sort_by=popularity.desc&api_key=${apiKey}`
+    const endPointRandomMovie = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${randomPage[offscreenFrame]}&sort_by=popularity.desc&api_key=${apiKey}`
 
     // Fetch movies from the randomly selected page and then set one as the random movie
     const fetchMovies = async () => {
       const res = await fetch(endPointRandomMovie);
-      const list = await res.json();
-      const randomIndex = (Math.floor(Math.random() * list.results.length));
-      setRandomMovie(list.results[randomIndex]);
+      if(res.ok){
+        const list = await res.json();
+        const randomIndex = (Math.floor(Math.random() * list.results.length));
+        setRandomMovie(randomMovie => {
+          const newRandomMovie = [...randomMovie];
+
+          // Change the movie data of the movie that is not in frame
+          if(offscreenFrame === 0){
+            newRandomMovie[1] = list.results[randomIndex];
+          }else{
+            newRandomMovie[0] = list.results[randomIndex];
+          }
+
+          return newRandomMovie;
+        });
+      }else{
+        console.log("Movie Fetch failed")
+      }
     };
 
     fetchMovies();
-  }, [randomPage])
+  }, [randomPage, offscreenFrame])
 
   // Gets the videos from the randomly selected movie
   useEffect(() => {
@@ -96,56 +114,67 @@ function Quiz() {
 
   return (
     <>
-      <div className="random-movie-details">
+      <div className="game-wrapper">
 
         <h2>{randomMovie.title}</h2>
-        
-        {/* bootleg solution to the ugly video flickering that happens while the embed loads */}
-        <div 
-          className="countdown" 
-          ref={countdown}
-          style={{
-            backgroundColor: isVisible ? 'black' : 'transparent',
-          }}>
-            <div 
-              className="title-blocker"
-              style={{
-                display: isVisible ? 'none' : 'block',
-              }}></div>
-        </div>
 
-        {/* youtube embed */}
-        <Youtube
-          className="frame"
-          videoId={trailerID}
-          opts={{
-            width: '650',
-            height: '365',
-            playerVars: {
-              autoplay: 1,  // autoplay
-              controls: 0,  // disables controls         
-              disablekb: 1, // disables keyboard controls
-              mute: 1,      // mutes
-              rel: 0
-            }
-          }}
-          onReady={(event) => {
-            setYoutubePlayer(event.target)
-            // event.target.seekTo(Math.floor(Math.random() * event.target.getDuration()));
-            // setTimeout(()=>{
-            //   event.target.playVideo();
-            // }, 500)
-          }}
-          key={trailerID}
-        />
-        {/* <iframe
-          ref={iframeRef}
-          className="frame"
-          src={`${youtubePath}${trailerID}`}  
-          title="Embedded youtube"
-        /> */}
-      </div>
-      <button className="new-movie-button" onClick={()=>newRandomMovie()}>New Movie</button>
+            <div className="frameA-wrapper">
+
+              {/* to prevent hovering over the player to see the title */}
+              <div className="frame-blocker" 
+                style={{
+                  backgroundColor: 'transparent',
+                }}>
+              </div> 
+              
+              {/* frame A */}
+              <Youtube className="frameA"
+                videoId={trailerID}
+                opts={{
+                  playerVars: {
+                    enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
+                    autoplay: 0,       // autoplay
+                    controls: 0,       // disables controls         
+                    disablekb: 1,      // disables keyboard controls
+                    mute: 1,           // mutes
+                    rel: 0,            // Makes suggested videos at the end be from the same channel
+                    fs: 0,             // disables fullscreen
+                    iv_load_policy: 3, // disables annotations
+                  }
+                }}
+              />
+
+            </div>
+
+            <div className="frameB-wrapper">
+              
+              {/* to prevent hovering over the player to see the title */}
+              <div className="frame-blocker" 
+                style={{
+                  backgroundColor: 'transparent',
+                }}>
+              </div> 
+
+              {/* frame B */}
+              <Youtube className="frameB"
+                videoId={trailerID}
+                opts={{
+                  playerVars: {
+                    enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
+                    autoplay: 0,       // autoplay
+                    controls: 0,       // disables controls         
+                    disablekb: 1,      // disables keyboard controls
+                    mute: 1,           // mutes
+                    rel: 0,            // Makes suggested videos at the end be from the same channel
+                    fs: 0,             // disables fullscreen
+                    iv_load_policy: 3, // disables annotations
+                  }
+                }}
+              />
+            </div>
+
+      </div> {/*game-wrapper */}
+      <button className="new-movie-button" onClick={()=>newRandomPage()}>New Movie</button>
     </>
   )
 }
