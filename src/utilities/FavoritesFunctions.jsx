@@ -1,5 +1,3 @@
-// favorites functions
-
 const addToFavorites = (movie, favorites, setFavorites) => {
     setFavorites(prevFavorites => [...prevFavorites, movie]);
   }

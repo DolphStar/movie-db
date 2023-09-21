@@ -1,5 +1,3 @@
-// Favorites.js
-
 import { useContext } from "react";
 import { imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";

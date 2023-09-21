@@ -14,7 +14,7 @@ grid-gap: 3vw;
         display: inline-block;
         margin: 0 0 10px 0; 
         .movie-poster {
-            width: 25vw;
+            max-width: 15vw;
         }
         .favorite-button {
             @include fav-btn;
