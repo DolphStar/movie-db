@@ -1,13 +1,14 @@
-import { createContext, useState } from 'react';
-import PropTypes from 'prop-types'; 
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
+import { getFavorites } from "../utilities/favoritesFunctions";
 
-// Create a new context 
+// Create a new context
 const FavoritesContext = createContext();
 
 // Define a provider component for managing favorite movies
 export const FavoritesProvider = ({ children }) => {
   // State hook to manage the list of favorite movies
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(getFavorites());
 
   // Render the Provider component with its value prop set to an object
   // containing the favorites array and the setFavorites function
@@ -16,12 +17,11 @@ export const FavoritesProvider = ({ children }) => {
       {children} {/* Render the child components */}
     </FavoritesContext.Provider>
   );
-}
+};
 
 // Define PropTypes for the children prop to ensure it's a valid React node
 FavoritesProvider.propTypes = {
-  children: PropTypes.node.isRequired 
+  children: PropTypes.node.isRequired,
 };
-
 
 export default FavoritesContext;
