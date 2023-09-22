@@ -1,8 +1,12 @@
 import { apiKey, moviePage, VIDEO_START, MOVIE_START } from "../globals/globalVariables";
 import Youtube from 'react-youtube';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function Trailr() {
+
+  // Frame references
+  const frameAWrapper = useRef(null);
+  const frameBWrapper = useRef(null);
 
   // Holds the movie data for each Frame
   // 0 = FrameA
@@ -32,7 +36,7 @@ function Trailr() {
   // 1 = FrameB
   const [offscreenFrame, setOffscreenFrame] = useState(1);
 
-  // Get a new page
+  // Get a new movie
   async function fetchMovies(){
     const randomPage = Math.floor(Math.random() * moviePage) + 1;
     const moviesEndpoint = `${MOVIE_START}&page=${randomPage}&sort_by=popularity.desc&with_original_language=en&api_key=${apiKey}`;
@@ -81,9 +85,15 @@ function Trailr() {
   // Switch the offscreen frame
   function switchFrame(){
     if(offscreenFrame === 1){
+      // Set the active frame to FrameA and then remove the active-frame class
       setOffscreenFrame(0);
+      frameAWrapper.current.classList.remove('active-frame');
+      frameBWrapper.current.classList.add('active-frame');
     }else{
+      // Set the active frame to FrameB and then remove the active-frame class
       setOffscreenFrame(1);
+      frameBWrapper.current.classList.remove('active-frame');
+      frameAWrapper.current.classList.add('active-frame');
     }
   }
 
@@ -101,16 +111,17 @@ function Trailr() {
     <>
       <h2>Current offscreenFrame: {offscreenFrame}</h2>
       <div className="game-wrapper">
-          <div className="frameA-wrapper"
+          {/* starts as the active frame */}
+          <div className="frameA-wrapper active-frame"
+            ref={frameAWrapper}
             style={{
               right: offscreenFrame === 0 ? '-2000px' : '0%',
-              display: offscreenFrame === 0 ? 'none' : 'block',
             }}>
             {/* prevents hovering over the player to see the title */}
             <div className="frame-blocker" 
               style={{
                 backgroundColor: 'transparent',
-                zIndex: round === true ? 9999 : -1,
+                zIndex: 9999,
               }}>
             </div>
             {/* frame A */}
@@ -133,15 +144,15 @@ function Trailr() {
           </div>
 
           <div className="frameB-wrapper"
+            ref={frameBWrapper}
             style={{
               left: offscreenFrame === 1 ? '-2000px' : '0%',
-              display: frameB.display,
             }}>
             {/* prevents hovering over the player to see the title */}
             <div className="frame-blocker" 
               style={{
                 backgroundColor: 'transparent',
-                zIndex: round === true ? 9999 : -1,
+                zIndex: 9999,
               }}>
             </div> 
 
