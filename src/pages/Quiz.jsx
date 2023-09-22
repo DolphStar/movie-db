@@ -1,126 +1,109 @@
-import { apiKey, moviePage } from "../globals/globalVariables";
+import { apiKey, moviePage, VIDEO_START, MOVIE_START } from "../globals/globalVariables";
 import Youtube from 'react-youtube';
 import { useState, useEffect } from "react";
 
 function Quiz() {
 
-  // Holds random page number 1 to 51, initializes at a random page
-  const [randomPage, setRandomPage] = useState([
-    Math.floor(Math.random() * moviePage) + 1, // FrameA
-    Math.floor(Math.random() * moviePage) + 1, // FrameB
+  // Holds the movie data for each Frame
+  // 0 = FrameA
+  // 1 = FrameB
+  const [movieData, setMovieData] = useState([
+    {}, // FrameA
+    {}, // FrameB
   ]);
-
-  // Holds random movie data
-  const [randomMovie, setRandomMovie] = useState([
-    '',  // FrameA
-    '',  // FrameB
-  ]);
-
-  // Holds random movie video data
-  const [randomMovieVideo, setRandomMovieVideo] = useState([
-    '', // FrameA
-    '', // FrameB
-  ]);
-
-  // Holds the youtube ID for the random movie video
-  const [trailerID, setTrailerID] = useState([
-    '', // FrameA
-    '', // FrameB
+  
+  // Holds the trailerID for each Frame
+  const [videoData, setVideoData] = useState([
+    [// FrameA
+      [], // Trailer Data
+      '', // TrailerID
+    ], // FrameA
+    [// FrameB
+      [], // Trailer Data
+      '', // TrailerID
+    ],
   ]);
 
   // Holds the indice of which frame is currently offscreen
   // 0 = FrameA
   // 1 = FrameB
-  const [offscreenFrame, setOffscreenFrame] = useState(0)
+  const [offscreenFrame, setOffscreenFrame] = useState(1);
 
-  // Gets a new random page
-  function newRandomPage() {
-    setRandomPage(randomPage => {
-      const newRandomPage = [...randomPage];
+  async function fetchMovies(){
+    
+    // Get a new page
+    const randomPage = Math.floor(Math.random() * moviePage) + 1;
+    const moviesEndpoint = `${MOVIE_START}&page=${randomPage}&sort_by=popularity.desc&with_original_language=en&api_key=${apiKey}`;
 
-      // Switch the movie of the offscreen frame
-      newRandomPage[offscreenFrame] = Math.floor(Math.random() * moviePage) + 1
-
-      return newRandomPage;
-    });
-  }
-
-  // Finds the trailer from the video list
-  function getTrailer(){
-    if (randomMovieVideo[offscreenFrame].results) {
-      const id = randomMovieVideo.results.find(video => video.type === 'Trailer');
-      if (id) {
-        setTrailerID(id.key);
-      } else {
-        newRandomPage();
-      }
+    const res = await fetch(moviesEndpoint);
+    if(res.ok){
+      const movieList = await res.json();
+      const randomIndex = (Math.floor(Math.random() * movieList.results.length));
+      
+      // Change the movie data of the offscreen frame
+      setMovieData(movieData => {
+        const newMovieData = [...movieData];
+        newMovieData[offscreenFrame] = movieList.results[randomIndex];
+        // Calling fetch videos here to fix the state update lag issue
+        fetchVideos(newMovieData[offscreenFrame].id);
+        return newMovieData;
+      });
+    }else{
+      console.log("Movie fetch failed ", res.status);
     }
   }
 
-  // Gets movies from the random page and then randomly picks one movie from the page
-  useEffect(()=> {
-    
-    // Api fetch link for a random movie
-    const endPointRandomMovie = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${randomPage[offscreenFrame]}&sort_by=popularity.desc&api_key=${apiKey}`
+  // Get the trailer 
+  async function fetchVideos(id) {
+    const videosEndpoint = `${VIDEO_START}${id}/videos?language=en-US&api_key=${apiKey}`;
+  
+    const res = await fetch(videosEndpoint);
+    if (res.ok) {
+      const video = await res.json();
+      // Get the trailer data and the trailerID from the list of videos
+      setVideoData(videoData => {
+        const newVideoData = [...videoData];
+        newVideoData[offscreenFrame][0] = video.results.find(video => video.type === 'Trailer');
+        if (newVideoData[offscreenFrame][0]) {
+          newVideoData[offscreenFrame][1] = newVideoData[offscreenFrame][0].key;
+        } else {
+          console.log("No trailer found")
+        }
+        return newVideoData;
+      });
+    } else {
+      console.log("Video fetch failed endpoint attempted", videosEndpoint)
+    }
+  }
 
-    // Fetch movies from the randomly selected page and then set one as the random movie
-    const fetchMovies = async () => {
-      const res = await fetch(endPointRandomMovie);
-      if(res.ok){
-        const list = await res.json();
-        const randomIndex = (Math.floor(Math.random() * list.results.length));
-        setRandomMovie(randomMovie => {
-          const newRandomMovie = [...randomMovie];
+  function switchFrame(){
+    if(offscreenFrame === 1){
+      setOffscreenFrame(0);
+    }else{
+      setOffscreenFrame(1);
+    }
+  }
 
-          // Change the movie data of the movie that is not in frame
-          if(offscreenFrame === 0){
-            newRandomMovie[1] = list.results[randomIndex];
-          }else{
-            newRandomMovie[0] = list.results[randomIndex];
-          }
-
-          return newRandomMovie;
-        });
-      }else{
-        console.log("Movie Fetch failed")
-      }
-    };
-
-    fetchMovies();
-  }, [randomPage, offscreenFrame])
-
-  // Gets the videos from the randomly selected movie
-  useEffect(() => {
-
-    // Api fetch link for the videos of the random movie that was chosen
-    const endPointVideos = `https://api.themoviedb.org/3/movie/${randomMovie.id}/videos?language=en-US&api_key=${apiKey}`;
-
-    // Fetch videos from the random movie that was chosen
-    const fetchMovieVideo = async () => {
-      if (randomMovie.id) {
-        const res = await fetch(endPointVideos);
-        const video = await res.json();
-        setRandomMovieVideo(video);
-      }
-    };
-
-    fetchMovieVideo();
-  }, [randomMovie]);
-
-  // Get the trailer when the randomMovieVideo changes
+  // On page load prep the offscreen frame
   useEffect(()=>{
-    getTrailer();
-  }, [randomMovieVideo])
+    fetchMovies();
+  }, [])
+
+  // When the offscreenFrame changes run fetchMovies
+  useEffect(()=>{
+    fetchMovies();
+  }, [offscreenFrame])
 
   return (
     <>
       <div className="game-wrapper">
 
-        <h2>{randomMovie.title}</h2>
+        {/* Show the title of the on screenFrame */}
+        <h2>Current offscreenFrame: {offscreenFrame}</h2>
 
             <div className="frameA-wrapper">
 
-              {/* to prevent hovering over the player to see the title */}
+              {/* prevents hovering over the player to see the title */}
               <div className="frame-blocker" 
                 style={{
                   backgroundColor: 'transparent',
@@ -129,11 +112,11 @@ function Quiz() {
               
               {/* frame A */}
               <Youtube className="frameA"
-                videoId={trailerID}
+                videoId={videoData[0][1]}
                 opts={{
                   playerVars: {
                     enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
-                    autoplay: 0,       // autoplay
+                    autoplay: 1,       // autoplay
                     controls: 0,       // disables controls         
                     disablekb: 1,      // disables keyboard controls
                     mute: 1,           // mutes
@@ -142,13 +125,14 @@ function Quiz() {
                     iv_load_policy: 3, // disables annotations
                   }
                 }}
+                key={videoData[0][1]}
               />
 
             </div>
 
             <div className="frameB-wrapper">
               
-              {/* to prevent hovering over the player to see the title */}
+              {/* prevents hovering over the player to see the title */}
               <div className="frame-blocker" 
                 style={{
                   backgroundColor: 'transparent',
@@ -157,11 +141,11 @@ function Quiz() {
 
               {/* frame B */}
               <Youtube className="frameB"
-                videoId={trailerID}
+                videoId={videoData[1][1]}
                 opts={{
                   playerVars: {
                     enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
-                    autoplay: 0,       // autoplay
+                    autoplay: 1,       // autoplay
                     controls: 0,       // disables controls         
                     disablekb: 1,      // disables keyboard controls
                     mute: 1,           // mutes
@@ -170,11 +154,11 @@ function Quiz() {
                     iv_load_policy: 3, // disables annotations
                   }
                 }}
+                key={videoData[1][1]}
               />
             </div>
-
+            <button className="switch-frame" onClick={()=>switchFrame()}>Switch Offscreen</button>
       </div> {/*game-wrapper */}
-      <button className="new-movie-button" onClick={()=>newRandomPage()}>New Movie</button>
     </>
   )
 }
