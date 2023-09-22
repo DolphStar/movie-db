@@ -1,2 +1,17 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+
+.movie-item {
+    position: relative;
+}
+
+.favorite-button {
+    @include fav-btn;
+}

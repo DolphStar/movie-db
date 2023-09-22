@@ -1,0 +1,24 @@
+@use "../../abstract/variables" as *;
+@use "../../abstract/mixins" as *;
+
+.favorites-main {
+    display: grid;
+grid-template-columns: 32.3% 32.3% 32.3%;
+padding-top: 10%;
+grid-gap: 3vw;
+ .favorite-movie {
+    border: 5px solid rgb(1, 3, 66);
+    min-width: 20vw;
+    .movie-item {
+        position: relative;
+        display: inline-block;
+        margin: 0 0 10px 0; 
+        .movie-poster {
+            max-width: 15vw;
+        }
+        .favorite-button {
+            @include fav-btn;
+        }
+    }
+ }
+}
