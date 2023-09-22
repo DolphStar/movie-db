@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 import PageHome from "../pages/PageHome";
-import Quiz from "../pages/Quiz";
+import Trailr from "../pages/Trailr";
 import About from "../pages/About";
 import Favorites from "../pages/Favorites";
 
@@ -16,7 +16,7 @@ function AppRouter() {
           <main>
             <Routes>
               <Route path="/" exact element={<PageHome/>} />
-              <Route path="/quiz" exact element={<Quiz/>} />
+              <Route path="/trailr" exact element={<Trailr/>} />
               <Route path="/about" exact element={<About/>} />
               <Route path="/favorites" exact element={<Favorites/>} />
             </Routes>

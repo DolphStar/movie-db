@@ -1,3 +1,30 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
 
+.game-wrapper {
+    background-color: burlywood;
+}
+.frameA-wrapper,
+.frameB-wrapper {
+    position: relative;
+    width: 650px;
+    height: 350px;
+}
+
+.frame-blocker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.frameA,
+.frameB {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
