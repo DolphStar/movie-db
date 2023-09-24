@@ -10,3 +10,11 @@
     border: none;
     cursor: pointer;
 }
+
+@mixin frame-blocker($bgColor: rgba(0, 0, 0, 0.5)) {
+    z-index: 9999;
+    background-color: $bgColor;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

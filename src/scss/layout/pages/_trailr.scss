@@ -1,30 +1,30 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
 
-.game-wrapper {
-    background-color: burlywood;
-}
-.frameA-wrapper,
-.frameB-wrapper {
-    position: relative;
-    width: 650px;
-    height: 350px;
-}
-
-.frame-blocker {
+.frameA {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
+    bottom: 0;
+    right: 0;
+
+    .frameA-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker(rgba(0, 128, 0, 0.75));
+        }
+    }
 }
 
-.frameA,
 .frameB {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+
+    .frameB-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker(rgba(255, 0, 0, 0.75));
+        }
+    }
 }

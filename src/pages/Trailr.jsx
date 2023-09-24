@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from "react";
 function Trailr() {
 
   // Frame references
-  const frameAWrapper = useRef(null);
-  const frameBWrapper = useRef(null);
+  const frameA = useRef(null);
+  const frameB = useRef(null);
 
   // Holds the movie data for each Frame
   // 0 = FrameA
@@ -28,8 +28,16 @@ function Trailr() {
     ],
   ]);
 
-  // Holds the current round
-  const [round, setRound] = useState(true);
+  const [frameStyling, setFrameStyling] = useState({
+    alive: {
+      width: '',
+      height: '',
+    },
+    dead: {
+      width: '',
+      height: '',
+    },
+  });
 
   // Holds the indice of which frame is currently offscreen
   // 0 = FrameA
@@ -87,13 +95,13 @@ function Trailr() {
     if(offscreenFrame === 1){
       // Set the active frame to FrameA and then remove the active-frame class
       setOffscreenFrame(0);
-      frameAWrapper.current.classList.remove('active-frame');
-      frameBWrapper.current.classList.add('active-frame');
+      frameA.current.classList.remove('alive');
+      frameB.current.classList.add('dead');
     }else{
       // Set the active frame to FrameB and then remove the active-frame class
       setOffscreenFrame(1);
-      frameBWrapper.current.classList.remove('active-frame');
-      frameAWrapper.current.classList.add('active-frame');
+      frameB.current.classList.remove('dead');
+      frameA.current.classList.add('alive');
     }
   }
 
@@ -110,71 +118,67 @@ function Trailr() {
   return (
     <>
       <h2>Current offscreenFrame: {offscreenFrame}</h2>
-      <div className="game-wrapper">
-          {/* starts as the active frame */}
-          <div className="frameA-wrapper active-frame"
-            ref={frameAWrapper}
+
+      {/* starts as the alive frame */}
+      <div className="frameA alive" ref={frameA}>
+        <div className="frameA-wrapper ">
+          {/* prevents hovering over the player to see the title */}
+          <div className="frame-blocker" 
             style={{
-              right: offscreenFrame === 0 ? '-2000px' : '0%',
+              
             }}>
-            {/* prevents hovering over the player to see the title */}
-            <div className="frame-blocker" 
-              style={{
-                backgroundColor: 'transparent',
-                zIndex: 9999,
-              }}>
-            </div>
-            {/* frame A */}
-            <Youtube className="frameA"
-              videoId={videoData[0][1]}
-              opts={{
-                playerVars: {
-                  enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
-                  autoplay: 0,       // autoplay
-                  controls: 0,       // disables controls         
-                  disablekb: 1,      // disables keyboard controls
-                  mute: 1,           // mutes
-                  rel: 0,            // Makes suggested videos at the end be from the same channel
-                  fs: 0,             // disables fullscreen
-                  iv_load_policy: 3, // disables annotations
-                }
-              }}
-              key={videoData[0][1]}
-            />
           </div>
 
-          <div className="frameB-wrapper"
-            ref={frameBWrapper}
+          {/* frame A */}
+          <Youtube className="youtubeA"
+            videoId={videoData[0][1]}
+            opts={{
+              playerVars: {
+                enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
+                autoplay: 0,       // autoplay
+                controls: 0,       // disables controls         
+                disablekb: 1,      // disables keyboard controls
+                mute: 1,           // mutes
+                rel: 0,            // Makes suggested videos at the end be from the same channel
+                fs: 0,             // disables fullscreen
+                iv_load_policy: 3, // disables annotations
+              }
+            }}
+            key={videoData[0][1]}
+          />
+        </div>
+      </div>
+      
+      {/* starts as the dead frame */}
+      <div className="frameB dead" ref={frameB}>
+        <div className="frameB-wrapper ">
+          {/* prevents hovering over the player to see the title */}
+          <div className="frame-blocker" 
             style={{
-              left: offscreenFrame === 1 ? '-2000px' : '0%',
+              
             }}>
-            {/* prevents hovering over the player to see the title */}
-            <div className="frame-blocker" 
-              style={{
-                backgroundColor: 'transparent',
-                zIndex: 9999,
-              }}>
-            </div> 
+          </div> 
 
-            {/* frame B */}
-            <Youtube className="frameB"
-              videoId={videoData[1][1]}
-              opts={{
-                playerVars: {
-                  enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
-                  autoplay: 0,       // autoplay
-                  controls: 0,       // disables controls         
-                  disablekb: 1,      // disables keyboard controls
-                  mute: 1,           // mutes
-                  rel: 0,            // Makes suggested videos at the end be from the same channel
-                  fs: 0,             // disables fullscreen
-                  iv_load_policy: 3, // disables annotations
-                }
-              }}
-              key={videoData[1][1]}
-            />
-          </div>
-      </div> {/*game-wrapper */}
+          {/* frame B */}
+          <Youtube className="youtubeB"
+            videoId={videoData[1][1]}
+            opts={{
+              playerVars: {
+                enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
+                autoplay: 0,       // autoplay
+                controls: 0,       // disables controls         
+                disablekb: 1,      // disables keyboard controls
+                mute: 1,           // mutes
+                rel: 0,            // Makes suggested videos at the end be from the same channel
+                fs: 0,             // disables fullscreen
+                iv_load_policy: 3, // disables annotations
+              }
+            }}
+            key={videoData[1][1]}
+          />
+        </div>
+      </div>
+
       <button className="switch-frame" onClick={()=>switchFrame()}>Switch Offscreen</button>
     </>
   )
