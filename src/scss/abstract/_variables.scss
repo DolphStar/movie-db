@@ -1,0 +1,27 @@
+@keyframes revive {
+    0% {
+        top: 0%;
+    }
+
+    50% {
+        top: 15%;
+    }
+
+    100% {
+        top: 40%;
+    }
+}
+
+@keyframes kill {
+    0% {
+        top: 40%;
+    }
+
+    50% {
+        top: 75%;
+    }
+
+    100% {
+        top: 100%;
+    }
+}

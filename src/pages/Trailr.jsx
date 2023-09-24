@@ -95,14 +95,16 @@ function Trailr() {
     if(offscreenFrame === 1){
       // Set the active frame to FrameA and then remove the active-frame class
       setOffscreenFrame(0);
-      frameA.current.classList.remove('alive');
-      frameB.current.classList.add('dead');
     }else{
       // Set the active frame to FrameB and then remove the active-frame class
       setOffscreenFrame(1);
-      frameB.current.classList.remove('dead');
-      frameA.current.classList.add('alive');
     }
+
+    // Toggle the alive and dead classes
+    frameA.current.classList.toggle('alive');
+    frameA.current.classList.toggle('dead');
+    frameB.current.classList.toggle('alive');
+    frameB.current.classList.toggle('dead');
   }
 
   // On page load prep the offscreen frame
@@ -117,7 +119,6 @@ function Trailr() {
 
   return (
     <>
-      <h2>Current offscreenFrame: {offscreenFrame}</h2>
 
       {/* starts as the alive frame */}
       <div className="frameA alive" ref={frameA}>
@@ -178,8 +179,10 @@ function Trailr() {
           />
         </div>
       </div>
-
-      <button className="switch-frame" onClick={()=>switchFrame()}>Switch Offscreen</button>
+      <div className="dev-panel">
+        <p>Current offscreenFrame: {offscreenFrame}</p>
+        <button onClick={()=>switchFrame()}>Switch Offscreen</button>
+      </div>
     </>
   )
 }

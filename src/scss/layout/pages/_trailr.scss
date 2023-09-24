@@ -1,10 +1,26 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
 
-.frameA {
+.dev-panel {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    left: 10%;
+    transform: translateX(-50%);
+    border: black 1px solid;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 5%;
+
+    button {
+        max-width: 125px;
+        margin-bottom: 5px;
+    }
+}
+
+.frameA {
+    @include absolute-center;
+    // top: 30%;
 
     .frameA-wrapper {
         position: relative;
@@ -16,9 +32,8 @@
 }
 
 .frameB {
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include absolute-center;
+    // top: -30%;
 
     .frameB-wrapper {
         position: relative;
@@ -27,4 +42,16 @@
             @include frame-blocker(rgba(255, 0, 0, 0.75));
         }
     }
+}
+
+.alive {
+    animation-name: revive;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.dead {
+    animation-name: kill;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }
