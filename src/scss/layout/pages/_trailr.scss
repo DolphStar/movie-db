@@ -20,26 +20,26 @@
 
 .frameA {
     @include absolute-center;
-    // top: 30%;
+    top: 30%;
 
     .frameA-wrapper {
         position: relative;
 
         .frame-blocker {
-            @include frame-blocker(rgba(0, 128, 0, 0.75));
+            @include frame-blocker();
         }
     }
 }
 
 .frameB {
     @include absolute-center;
-    // top: -30%;
+    top: 30%;
 
     .frameB-wrapper {
         position: relative;
 
         .frame-blocker {
-            @include frame-blocker(rgba(255, 0, 0, 0.75));
+            @include frame-blocker();
         }
     }
 }
@@ -47,11 +47,13 @@
 .alive {
     animation-name: revive;
     animation-duration: 2s;
+    animation-timing-function: ease;
     animation-fill-mode: forwards;
 }
 
 .dead {
     animation-name: kill;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
+    animation-timing-function: ease;
     animation-fill-mode: forwards;
 }

@@ -99,7 +99,9 @@ function Trailr() {
       // Set the active frame to FrameB and then remove the active-frame class
       setOffscreenFrame(1);
     }
+  }
 
+  function frameCircleOfLife(){
     // Toggle the alive and dead classes
     frameA.current.classList.toggle('alive');
     frameA.current.classList.toggle('dead');
@@ -126,7 +128,7 @@ function Trailr() {
           {/* prevents hovering over the player to see the title */}
           <div className="frame-blocker" 
             style={{
-              
+              backgroundColor: offscreenFrame === 1 ? 'rgba(0, 128, 0, 0.75)' : 'rgba(255, 0, 0, 0.75)',
             }}>
           </div>
 
@@ -156,7 +158,7 @@ function Trailr() {
           {/* prevents hovering over the player to see the title */}
           <div className="frame-blocker" 
             style={{
-              
+              backgroundColor: offscreenFrame === 0 ? 'rgba(0, 128, 0, 0.75)' : 'rgba(255, 0, 0, 0.75)',
             }}>
           </div> 
 
@@ -182,6 +184,7 @@ function Trailr() {
       <div className="dev-panel">
         <p>Current offscreenFrame: {offscreenFrame}</p>
         <button onClick={()=>switchFrame()}>Switch Offscreen</button>
+        <button onClick={()=>frameCircleOfLife()}>Nants ingonyama</button>
       </div>
     </>
   )
