@@ -1,0 +1,32 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// Trailr frame switch animation
+// Using top instead of transform since transform hides the content of the dead div
+@keyframes revive {
+    0% {
+        top: -40%;
+    }
+
+    50% {
+        top: 30%;
+    }
+
+    100% {
+        top: 30%;
+    }
+}
+
+@keyframes kill {
+    0% {
+        top: 30%;
+    }
+
+    13% {
+        top: 30%;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
