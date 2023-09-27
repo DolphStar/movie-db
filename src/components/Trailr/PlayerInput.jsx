@@ -8,10 +8,8 @@ function PlayerInput({movieData, setMovieData,
                       offscreenFrame, setOffscreenFrame,
                       input, setInput,
                       searchData, setSearchData,
+                      answer, setAnswer,
                       }){
-
-  const [testingSubmit, setTestingSubmit] = useState(false)
-
   
   async function handleInputChange(event){
     setInput((prevInput) => ({
@@ -51,12 +49,13 @@ function PlayerInput({movieData, setMovieData,
   function handleSubmit(){
     if(input.title !== '' && input.id !== null){
       if(input.id === movieData[offscreenFrame === 0 ? 1 : 0].id){
-        setTestingSubmit(1);
-      }else{
-        setTestingSubmit(0);
+        setAnswer(true);
+        setInput({
+          title: '',
+          id: null
+        });
+        setSearchData([]);
       }
-    }else{
-      setTestingSubmit(0);
     }
   }
   
@@ -74,7 +73,7 @@ function PlayerInput({movieData, setMovieData,
         <h3>Input dev panel</h3>
         <p>Current Input: {input.title}</p>
         <p>Current ID: {input.id}</p>
-        <p>Answer: {testingSubmit}</p>
+        <p>Answer: {answer}</p>
       </div>
       <div className='trailr-input'>
         <input 
@@ -86,7 +85,7 @@ function PlayerInput({movieData, setMovieData,
         <button onClick={()=>handleSubmit()}>Submit</button>
         <div className='suggestions'>
           {searchData.length === 0 ? (
-          <div>No search data</div> 
+          <div>:thinking:</div> 
           ) : (
           null
           )}

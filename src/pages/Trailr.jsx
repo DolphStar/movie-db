@@ -31,6 +31,9 @@ function Trailr() {
   // Single source of truth for the round
   const [round, setRound] = useState(0);
 
+  // Single source of truth for the score
+  const [score, setScore] = useState(0);
+
   // Single source of truth for the indice of which frame is currently offscreen
   // 0 = FrameA
   // 1 = FrameB
@@ -39,20 +42,38 @@ function Trailr() {
   // Single source of truth for the player input
   const [input, setInput] = useState({
     title: '',
-    id: ''
+    id: null
   });
+
+  // Single source of truth for the answer submit
+  const [answer, setAnswer] = useState(false)
+
+  // Single source of truth for the game state
+  const [game, setGame] = useState(false);
 
   return (
     <>
+
+      <div className="banner">
+        {answer ? (
+          <h2>{movieData[offscreenFrame === 0 ? 1 : 0].title} is correct!</h2>
+        ) : (
+          <h2>What Movie is this?</h2>
+        )}
+      </div>
+
       <Frames       movieData={movieData} setMovieData={setMovieData}
                     videoData={videoData} setVideoData={setVideoData}
-                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}/>
+                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                    answer={answer} setAnswer={setAnswer}
+                    game={game} setGame={setGame}/>
 
       <PlayerInput  movieData={movieData} setMovieData={setMovieData}
                     videoData={videoData} setVideoData={setVideoData}
                     offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                     input={input} setInput={setInput}
-                    searchData={searchData} setSearchData={setSearchData}/>
+                    searchData={searchData} setSearchData={setSearchData}
+                    answer={answer} setAnswer={setAnswer}/>
     </>
   )
 }

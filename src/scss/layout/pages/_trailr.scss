@@ -10,6 +10,12 @@
     @include dev-panel(50%, 10%)
 }
 
+// Trailr
+.banner {
+    @include absolute-center;
+    top: 20%;
+}
+
 // Frames
 .frameA {
     @include absolute-center;
@@ -20,6 +26,11 @@
 
         .frame-blocker {
             @include frame-blocker();
+
+            button {
+                @include absolute-center;
+                top: 25%;
+            }
         }
     }
 }
@@ -52,6 +63,7 @@
     animation-fill-mode: forwards;
 }
 
+// Input
 .trailr-input {
     @include absolute-center;
     top: 70%;

@@ -5,12 +5,18 @@ import { useState, useEffect, useRef } from "react";
 
 function Frames({movieData, setMovieData,
                  videoData, setVideoData,
-                 offscreenFrame, setOffscreenFrame
+                 offscreenFrame, setOffscreenFrame,
+                 answer, setAnswer,
+                 game, setGame
                  }) {
 
   // Frame references
   const frameA = useRef(null);
   const frameB = useRef(null);
+
+  // Player references
+  const youtubeA = useRef(null);
+  const youtubeB = useRef(null);
 
   // Get a new movie
   async function fetchMovies(){
@@ -60,13 +66,7 @@ function Frames({movieData, setMovieData,
 
   // Switch the offscreen frame
   function switchFrame(){
-    if(offscreenFrame === 1){
-      // Set the active frame to FrameA and then remove the active-frame class
-      setOffscreenFrame(0);
-    }else{
-      // Set the active frame to FrameB and then remove the active-frame class
-      setOffscreenFrame(1);
-    }
+    setOffscreenFrame(offscreenFrame === 0 ? 1 : 0);
   }
 
   // Toggle the alive and dead classes
@@ -76,10 +76,19 @@ function Frames({movieData, setMovieData,
     frameB.current.classList.toggle('alive');
     frameB.current.classList.toggle('dead');
 
-    // Switch the frame after 4 seconds
+    // Switch the frame after 2 seconds
     setTimeout(()=>{
       switchFrame();
-    }, 2000)
+      setAnswer(false);
+    }, 1500)
+  }
+
+  function play(){
+    if(offscreenFrame === 0){
+      youtubeA.current.internalPlayer.playVideo();
+    }else{
+      youtubeB.current.internalPlayer.playVideo();
+    }
   }
 
   // On page load prep the offscreen frame
@@ -92,6 +101,16 @@ function Frames({movieData, setMovieData,
     fetchMovies();
   }, [offscreenFrame])
 
+  // When the correct answer is input change the frame
+  useEffect(()=>{
+    if(answer === true){
+      play();
+      setTimeout(()=>{
+        frameCircleOfLife();
+      }, 3000);
+    }
+  }, [answer]);
+
   return (
     <>
       {/* starts as the alive frame */}
@@ -100,11 +119,25 @@ function Frames({movieData, setMovieData,
           {/* prevents hovering over the player to see the title */}
           <div className="frame-blocker" 
             style={{
+              backgroundColor: game === false ? 'black' : 'transparent'
             }}>
+              {game ? (
+                null
+              ) : (
+                <button
+                  onClick={()=>{
+                    play();
+                    setTimeout(()=>{
+                      setGame(true);
+                      frameCircleOfLife();
+                    }, 3000);
+                }}>Start Game</button>
+              )}
           </div>
 
           {/* frame A */}
           <Youtube className="youtubeA"
+            ref={youtubeA}
             videoId={videoData[0][1]}
             opts={{
               playerVars: {
@@ -118,7 +151,7 @@ function Frames({movieData, setMovieData,
                 iv_load_policy: 3, // disables annotations
               }
             }}
-            key={videoData[0][1]}
+            key={videoData[0][1]}  
           />
         </div>
       </div>
@@ -129,11 +162,13 @@ function Frames({movieData, setMovieData,
           {/* prevents hovering over the player to see the title */}
           <div className="frame-blocker" 
             style={{
+              // backgroundColor: offscreenFrame === 0 ? 'rgba(0, 128, 0, 0.6)' : 'rgba(255, 0, 0, 0.6)'
             }}>
           </div> 
 
           {/* frame B */}
           <Youtube className="youtubeB"
+            ref={youtubeB}
             videoId={videoData[1][1]}
             opts={{
               playerVars: {
@@ -155,6 +190,7 @@ function Frames({movieData, setMovieData,
       <div className="dev-panel-frames">
         <h3>Frames dev panel</h3>
         <p>Current offscreenFrame: {offscreenFrame}</p>
+        {/* <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p> */}
         <button onClick={()=>frameCircleOfLife()}>Nants ingonyama</button>
       </div>
     </>
