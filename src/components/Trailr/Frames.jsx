@@ -7,7 +7,10 @@ function Frames({movieData, setMovieData,
                  videoData, setVideoData,
                  offscreenFrame, setOffscreenFrame,
                  answer, setAnswer,
-                 game, setGame
+                 game, setGame,
+                 countdown, setCountdown,
+                 isCounting, setIsCounting,
+                 enableStart, setEnableStart,
                  }) {
 
   // Frame references
@@ -69,20 +72,22 @@ function Frames({movieData, setMovieData,
     setOffscreenFrame(offscreenFrame === 0 ? 1 : 0);
   }
 
-  // Toggle the alive and dead classes
+  // Switch the frames
   function frameCircleOfLife(){
+    // Toggle the alive and dead classes
     frameA.current.classList.toggle('alive');
     frameA.current.classList.toggle('dead');
     frameB.current.classList.toggle('alive');
     frameB.current.classList.toggle('dead');
 
-    // Switch the frame after 2 seconds
+    // Switch the offscreenframe after the onscreenframe disappears
     setTimeout(()=>{
       switchFrame();
       setAnswer(false);
-    }, 1500)
+    }, 1750)
   }
 
+  // Start player on the offscreenframe
   function play(){
     if(offscreenFrame === 0){
       youtubeA.current.internalPlayer.playVideo();
@@ -111,6 +116,29 @@ function Frames({movieData, setMovieData,
     }
   }, [answer]);
 
+  // Pre-round countdown
+useEffect(() => {
+  let intervalID;
+
+  if (isCounting === true) {
+    if (countdown > 0) {
+      intervalID = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+    } else {
+      setGame(true)
+      setIsCounting(false);
+      setCountdown(4);
+    }
+  }
+
+  // Clear the interval when the component unmounts or when isCounting changes to false
+  return () => {
+    clearInterval(intervalID);
+  };
+}, [isCounting, countdown, setIsCounting, setCountdown]);
+
+
   return (
     <>
       {/* starts as the alive frame */}
@@ -121,17 +149,22 @@ function Frames({movieData, setMovieData,
             style={{
               backgroundColor: game === false ? 'black' : 'transparent'
             }}>
-              {game ? (
-                null
-              ) : (
+              {/* Pregame screen */}
+              {isCounting === false && game === false ? (
                 <button
-                  onClick={()=>{
-                    play();
-                    setTimeout(()=>{
-                      setGame(true);
-                      frameCircleOfLife();
-                    }, 3000);
-                }}>Start Game</button>
+                className='pregame'
+                disabled={enableStart}
+                onClick={()=>{
+                  setIsCounting(true);
+                  play();
+                  setTimeout(()=>{
+                    frameCircleOfLife();
+                  }, 3000);
+              }}>Start Game</button>
+              ) : game === false ? (
+                <div className='pregame'>{countdown}</div>                                                                                                                                   
+              ) : (
+                null
               )}
           </div>
 
@@ -183,6 +216,9 @@ function Frames({movieData, setMovieData,
               }
             }}
             key={videoData[1][1]}
+            onReady={()=>{
+              setEnableStart(false);
+            }}
           />
         </div>
       </div>
@@ -190,8 +226,9 @@ function Frames({movieData, setMovieData,
       <div className="dev-panel-frames">
         <h3>Frames dev panel</h3>
         <p>Current offscreenFrame: {offscreenFrame}</p>
-        {/* <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p> */}
+        <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
         <button onClick={()=>frameCircleOfLife()}>Nants ingonyama</button>
+        <p>{isCounting ? 'true' : 'false'}</p>
       </div>
     </>
   )

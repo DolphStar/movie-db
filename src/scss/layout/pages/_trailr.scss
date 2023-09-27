@@ -27,9 +27,12 @@
         .frame-blocker {
             @include frame-blocker();
 
-            button {
+            .pregame {
                 @include absolute-center;
-                top: 25%;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                font-size: 2rem;
+                font-weight: bold;
             }
         }
     }
@@ -67,5 +70,19 @@
 .trailr-input {
     @include absolute-center;
     top: 70%;
-    width: 630px;
+    width: 650px;
+
+    input {
+        width: 80%;
+        height: 30px;
+    }
+
+    .suggestions {
+        background-color: black;
+    }
+
+    .single-suggest:hover {
+        background-color: rgb(88, 88, 88);
+        cursor: pointer;
+    }
 }

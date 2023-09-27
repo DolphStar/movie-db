@@ -51,6 +51,15 @@ function Trailr() {
   // Single source of truth for the game state
   const [game, setGame] = useState(false);
 
+  // Single source of truth for the pre-game countdown
+  const [countdown, setCountdown] = useState(4);
+
+  // Single source of truth for the countdown check
+  const [isCounting, setIsCounting] = useState(false);
+
+  // Single source of truth to allow the game to start
+  const [enableStart, setEnableStart] = useState(true);
+
   return (
     <>
 
@@ -66,7 +75,10 @@ function Trailr() {
                     videoData={videoData} setVideoData={setVideoData}
                     offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                     answer={answer} setAnswer={setAnswer}
-                    game={game} setGame={setGame}/>
+                    game={game} setGame={setGame}
+                    countdown={countdown} setCountdown={setCountdown}
+                    isCounting={isCounting} setIsCounting={setIsCounting}
+                    enableStart={enableStart} setEnableStart={setEnableStart}/>
 
       <PlayerInput  movieData={movieData} setMovieData={setMovieData}
                     videoData={videoData} setVideoData={setVideoData}

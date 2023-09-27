@@ -75,6 +75,7 @@ function PlayerInput({movieData, setMovieData,
         <p>Current ID: {input.id}</p>
         <p>Answer: {answer}</p>
       </div>
+
       <div className='trailr-input'>
         <input 
           type="text"
@@ -84,13 +85,13 @@ function PlayerInput({movieData, setMovieData,
         />
         <button onClick={()=>handleSubmit()}>Submit</button>
         <div className='suggestions'>
-          {searchData.length === 0 ? (
-          <div>:thinking:</div> 
-          ) : (
-          null
-          )}
           {searchData.map((movie)=> (
-            <div key={movie.id} onClick={()=>handleSelection(movie.id, movie.title)}>{movie.title}</div>
+            <div 
+              key={movie.id} 
+              className='single-suggest' 
+              onClick={()=>handleSelection(movie.id, movie.title)}>
+                {movie.title}
+            </div>
           ))}
         </div>
       </div>
