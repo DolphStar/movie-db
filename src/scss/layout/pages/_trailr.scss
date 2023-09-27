@@ -2,23 +2,15 @@
 @use "../../abstract/mixins" as *;
 @use "../../abstract/animations" as *;
 
-.dev-panel {
-    position: absolute;
-    left: 10%;
-    transform: translateX(-50%);
-    border: black 1px solid;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: 5%;
-
-    button {
-        max-width: 125px;
-        margin-bottom: 5px;
-    }
+.dev-panel-frames {
+    @include dev-panel(5%, 10%)
 }
 
+.dev-panel-input {
+    @include dev-panel(50%, 10%)
+}
+
+// Frames
 .frameA {
     @include absolute-center;
     top: 30%;
@@ -45,6 +37,7 @@
     }
 }
 
+// Animations
 .alive {
     animation-name: revive;
     animation-duration: 2s;
@@ -57,4 +50,10 @@
     animation-duration: 1.5s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
+}
+
+.trailr-input {
+    @include absolute-center;
+    top: 70%;
+    width: 630px;
 }

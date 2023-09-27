@@ -22,3 +22,20 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+@mixin dev-panel($top: 50%, $left: 10%){
+    position: absolute;
+    transform: translate(-50%);
+    border: black 1px solid;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: $top;
+    left: $left;
+
+    button {
+        max-width: 125px;
+        margin-bottom: 5px;
+    }
+}
