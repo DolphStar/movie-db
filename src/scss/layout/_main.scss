@@ -2,3 +2,7 @@
 // Page specific styling in the pages folder
 @use "../abstract/variables" as *;
 @use "../abstract/mixins" as *;
+
+main {
+    margin-top: 40%;
+}

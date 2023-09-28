@@ -35,7 +35,7 @@ export const handleFavorites = (movie, favorites, setFavorites) => {
 // Save favorites to local storage
 const saveFavorites = (favorites) => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
-//   console.log(favorites);
+//   console.log(favorites);    
 };
 
 // Retrieve favorites from local storage
