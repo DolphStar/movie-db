@@ -1,3 +1,5 @@
+@use "variables" as *;
+@use "mixins" as *;
 
 // Trailr frame switch animation
 // Using top instead of transform since transform hides the content of the dead div

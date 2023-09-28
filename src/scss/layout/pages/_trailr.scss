@@ -1,3 +1,88 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
+@use "../../abstract/animations" as *;
 
+.dev-panel-frames {
+    @include dev-panel(5%, 10%)
+}
+
+.dev-panel-input {
+    @include dev-panel(50%, 10%)
+}
+
+// Trailr
+.banner {
+    @include absolute-center;
+    top: 20%;
+}
+
+// Frames
+.frameA {
+    @include absolute-center;
+    top: 30%;
+
+    .frameA-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker();
+
+            .pregame {
+                @include absolute-center;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                font-size: 2rem;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.frameB {
+    @include absolute-center;
+    top: 30%;
+
+    .frameB-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker();
+        }
+    }
+}
+
+// Animations
+.alive {
+    animation-name: revive;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.dead {
+    animation-name: kill;
+    animation-duration: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+// Input
+.trailr-input {
+    @include absolute-center;
+    top: 70%;
+    width: 650px;
+
+    input {
+        width: 80%;
+        height: 30px;
+    }
+
+    .suggestions {
+        background-color: black;
+    }
+
+    .single-suggest:hover {
+        background-color: rgb(88, 88, 88);
+        cursor: pointer;
+    }
+}

@@ -7,5 +7,7 @@ export const MOVIE_START = "https://api.themoviedb.org/3/discover/movie?include_
 
 export const VIDEO_START = "https://api.themoviedb.org/3/movie/";
 
+export const SEARCH_START = "https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&"
+
 // Range of pages that it will choose from
 export const moviePage = 10;
