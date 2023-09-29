@@ -26,7 +26,7 @@ function Trailr() {
   ]);
 
   // Single source of truth for the search data
-  const [searchData, setSearchData] = useState([])
+  const [searchData, setSearchData] = useState([]);
 
   // Single source of truth for the round
   const [round, setRound] = useState(0);
@@ -46,7 +46,7 @@ function Trailr() {
   });
 
   // Single source of truth for the answer submit
-  const [answer, setAnswer] = useState(false)
+  const [answer, setAnswer] = useState(false);
 
   // Single source of truth for the game state
   const [game, setGame] = useState(false);
@@ -59,6 +59,12 @@ function Trailr() {
 
   // Single source of truth to allow the game to start
   const [enableStart, setEnableStart] = useState(true);
+
+  // Single source of truth for the video state
+  const [videoState, setVideoState] = useState({
+    frameA: null,
+    frameB: null,
+  });
 
   return (
     <>
@@ -78,7 +84,8 @@ function Trailr() {
                     game={game} setGame={setGame}
                     countdown={countdown} setCountdown={setCountdown}
                     isCounting={isCounting} setIsCounting={setIsCounting}
-                    enableStart={enableStart} setEnableStart={setEnableStart}/>
+                    enableStart={enableStart} setEnableStart={setEnableStart}
+                    videoState={videoState} setVideoState={setVideoState}/>
 
       <PlayerInput  movieData={movieData} setMovieData={setMovieData}
                     videoData={videoData} setVideoData={setVideoData}
