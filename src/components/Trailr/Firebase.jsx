@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; 
 import { doc, addDoc, setDoc } from "firebase/firestore";
-import { collection, addCollection, setCollection } from "firebase/firestore";
+import { collection } from "firebase/firestore"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,16 +16,25 @@ function Firebase() {
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
-    let newRoomRef = 'Not yet set';
-
-    const roomConfig = {
-      difficulty: "normal",
-      dmgMultiplier: "1",
-      movieID: "926393",
-    };
-
     async function makeRoom(){
-      newRoomRef = await addDoc(db, "rooms", roomConfig);
+      // New room collection ref
+      const newRoom = collection(db, "rooms");
+
+      // Create a new room
+      const newRoomRef = await addDoc(newRoom, {
+        dmgMultiplier: 1,
+        movieID: "Spiderman",
+      });
+
+      // New player collection ref
+      const newPlayer = collection(db, "rooms", newRoomRef.id, "playerA");
+
+      // Set the data of the new player
+      const newPlayerRef = await addDoc(newPlayer, {
+        hp: "TESTING"
+      });
+
+      console.log("Auto-generated document ID: ", newRoomRef.id);
     }
 
   return (
@@ -33,7 +42,6 @@ function Firebase() {
     
     <div className="firebase">
       <button onClick={makeRoom}>Generate Room</button>
-      <p>{newRoomRef}</p>
     </div>
 
     </>
