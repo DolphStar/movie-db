@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore ,doc ,setDoc } from "firebase/firestore"; 
+import { getFirestore, doc, setDoc } from "firebase/firestore"; 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,8 +21,10 @@ function Firebase() {
         "aquaman"
     ];
 
+    const room = "randomRoomName";
+
     async function setDB(){
-        await setDoc(doc(db, "movies", "active"), {
+        await setDoc(doc(db, "rooms", `${room}`), {
             title: movies[Math.floor(Math.random() * 4)],
         });
     }
