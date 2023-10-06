@@ -10,6 +10,10 @@
     @include dev-panel(50%, 10%)
 }
 
+.dev-panel-firebase {
+    @include dev-panel(5%, 85%)
+}
+
 // Trailr
 .banner {
     @include absolute-center;
@@ -85,9 +89,4 @@
         background-color: rgb(88, 88, 88);
         cursor: pointer;
     }
-}
-
-.firebase {
-    @include absolute-center;
-    bottom: 5%;
 }

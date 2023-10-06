@@ -17,19 +17,20 @@ function Firebase() {
     const db = getFirestore(app);
 
     async function makeRoom(){
-      // New room collection ref
+
+      // New room ref
       const newRoom = collection(db, "rooms");
 
-      // Create a new room
+      // Create a new room **DOCUMENT**
       const newRoomRef = await addDoc(newRoom, {
         dmgMultiplier: 1,
         movieID: "Spiderman",
       });
 
-      // New player collection ref
+      // New player ref
       const newPlayer = collection(db, "rooms", newRoomRef.id, "playerA");
 
-      // Set the data of the new player
+      // Create playerA **COLLECTION**
       const newPlayerRef = await addDoc(newPlayer, {
         hp: "TESTING"
       });
@@ -37,10 +38,15 @@ function Firebase() {
       console.log("Auto-generated document ID: ", newRoomRef.id);
     }
 
+    async function makeNewRoom(){
+    }
+
   return (
     <>
     
-    <div className="firebase">
+    <div className="dev-panel-firebase">
+      <h3>Firebase dev panel</h3>
+      <p>Firebase testing</p>
       <button onClick={makeRoom}>Generate Room</button>
     </div>
 
