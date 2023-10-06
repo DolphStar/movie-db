@@ -9,7 +9,6 @@ export const VIDEO_START = "https://api.themoviedb.org/3/movie/";
 
 export const SEARCH_START = "https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&"
 
-<<<<<<< HEAD
 // Range of pages that trailr will choose from
 export const moviePage = 10;
 
@@ -21,7 +20,3 @@ export const firebaseConfig = {
   messagingSenderId: "1096065471677",
   appId: "1:1096065471677:web:1cbf71f9839de157da13d4"
 };
-=======
-// Range of pages that it will choose from
-export const moviePage = 5;
->>>>>>> c0cd42e3df7a2ebb5242810dc66d414c9932c06f

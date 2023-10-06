@@ -14,18 +14,12 @@ function Firebase() {
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
-    const movies = [
-        "spiderman",
-        "batman",
-        "superman",
-        "aquaman"
-    ];
-
-    const room = "randomRoomName";
-
     async function setDB(){
-        await setDoc(doc(db, "rooms", `${room}`), {
-            title: movies[Math.floor(Math.random() * 4)],
+        await setDoc(doc(db, "rooms", "roomA", "playerA"), {
+            testing: {
+              title: "spiderman",
+              testing: "test",
+            }
         });
     }
 
