@@ -7,6 +7,7 @@ import PageHome from "../pages/PageHome";
 import Trailr from "../pages/Trailr";
 import About from "../pages/About";
 import Favorites from "../pages/Favorites";
+import Search from "../pages/PageSearch";
 
 function AppRouter() {
   return (
@@ -19,6 +20,7 @@ function AppRouter() {
               <Route path="/trailr" exact element={<Trailr/>} />
               <Route path="/about" exact element={<About/>} />
               <Route path="/favorites" exact element={<Favorites/>} />
+              <Route path="/search" exact element={<Search/>} />
             </Routes>
           </main>
         <Footer />

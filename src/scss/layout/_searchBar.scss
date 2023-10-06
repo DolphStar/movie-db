@@ -1,0 +1,27 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.search-bar {
+    position: absolute;
+    top: 4.5%;
+    left: 70%;
+    transform: translateX(-70%);
+    z-index: 99;
+}
+
+.suggested-movie {
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 0.3em;
+    font-size: 1em;
+    font-weight: 400;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    transition: border-color 0.25s;
+    
+}
+
+.suggested-movie:hover {
+    border-color: #646cff;
+  }

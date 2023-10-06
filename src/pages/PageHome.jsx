@@ -9,20 +9,23 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   // Holds user inputted search data
-  const [searchQuery, setSearchQuery] = useState("spiderman");
+  // const [searchQuery, setSearchQuery] = useState("spiderman");
 
   // Api fetch link for searching
-  const endPointSearch = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}`;
+  // const endPointSearch = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}`;
 
   // Api fetch link for popularity
   const endPointMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${apiKey}`;
 
   const { favorites, setFavorites } = useContext(FavoritesContext);
 
+
   // Function to handle adding/removing from favorites
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites);
   };
+
+
 
   useEffect(() => {
     const fetchMovies = async () => {

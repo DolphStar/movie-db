@@ -8,6 +8,7 @@ function Nav() {
             <li><NavLink to='/trailr'>Trailr</NavLink></li>
             <li><NavLink to='/about'>About</NavLink></li>
             <li><NavLink to='/favorites'>Favorites</NavLink></li>
+            {/* <li><NavLink to='/search'>Search</NavLink></li>  */}
         </ul>
     </nav>
   )

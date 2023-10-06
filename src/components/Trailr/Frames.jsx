@@ -11,7 +11,8 @@ function Frames({movieData, setMovieData,
                  countdown, setCountdown,
                  isCounting, setIsCounting,
                  enableStart, setEnableStart,
-                 }) {
+                 videoState, setVideoState
+                 }){
 
   // Frame references
   const frameA = useRef(null);
@@ -96,12 +97,7 @@ function Frames({movieData, setMovieData,
     }
   }
 
-  // On page load prep the offscreen frame
-  useEffect(()=>{
-    fetchMovies();
-  }, [])
-
-  // When the offscreenFrame changes run fetchMovies
+  // When the offscreenFrame changes run fetchMovies (runs on initial load)
   useEffect(()=>{
     fetchMovies();
   }, [offscreenFrame])
@@ -117,27 +113,26 @@ function Frames({movieData, setMovieData,
   }, [answer]);
 
   // Pre-round countdown
-useEffect(() => {
-  let intervalID;
+  useEffect(() => {
+    let intervalID;
 
-  if (isCounting === true) {
-    if (countdown > 0) {
-      intervalID = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
-    } else {
-      setGame(true)
-      setIsCounting(false);
-      setCountdown(4);
+    if (isCounting === true) {
+      if (countdown > 0) {
+        intervalID = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+      } else {
+        setGame(true)
+        setIsCounting(false);
+        setCountdown(4);
+      }
     }
-  }
 
-  // Clear the interval when the component unmounts or when isCounting changes to false
-  return () => {
-    clearInterval(intervalID);
-  };
-}, [isCounting, countdown, setIsCounting, setCountdown]);
-
+    // Clear the interval when the component unmounts or when isCounting changes to false
+    return () => {
+      clearInterval(intervalID);
+    };
+  }, [isCounting, countdown, setIsCounting, setCountdown]);
 
   return (
     <>
@@ -184,7 +179,13 @@ useEffect(() => {
                 iv_load_policy: 3, // disables annotations
               }
             }}
-            key={videoData[0][1]}  
+            key={videoData[0][1]}
+            onStateChange={(event)=>{
+              setVideoState((prevVideoState) => ({
+                ...prevVideoState,
+                frameA: event.data,
+              }));
+            }}
           />
         </div>
       </div>
@@ -219,6 +220,12 @@ useEffect(() => {
             onReady={()=>{
               setEnableStart(false);
             }}
+            onStateChange={(event)=>{
+              setVideoState((prevVideoState) => ({
+                ...prevVideoState,
+                frameB: event.data,
+              }));
+            }}
           />
         </div>
       </div>
@@ -227,8 +234,9 @@ useEffect(() => {
         <h3>Frames dev panel</h3>
         <p>Current offscreenFrame: {offscreenFrame}</p>
         <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
-        <button onClick={()=>frameCircleOfLife()}>Nants ingonyama</button>
         <p>{isCounting ? 'true' : 'false'}</p>
+        <p>FrameA state: {videoState.frameA}</p>
+        <p>FrameB state: {videoState.frameB}</p>
       </div>
     </>
   )
