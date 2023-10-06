@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 // Trailr Components
 import Frames from "../components/Trailr/frames";
 import PlayerInput from "../components/Trailr/playerInput";
+import Firebase from "../components/Trailr/Firebase";
 
 function Trailr() {
 
@@ -86,6 +87,8 @@ function Trailr() {
                     input={input} setInput={setInput}
                     searchData={searchData} setSearchData={setSearchData}
                     answer={answer} setAnswer={setAnswer}/>
+
+      <Firebase />
     </>
   )
 }

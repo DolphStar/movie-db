@@ -86,3 +86,8 @@
         cursor: pointer;
     }
 }
+
+.firebase {
+    @include absolute-center;
+    top: 0;
+}

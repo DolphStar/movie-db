@@ -162,7 +162,7 @@ useEffect(() => {
                   }, 3000);
               }}>Start Game</button>
               ) : game === false ? (
-                <div className='pregame'>{countdown}</div>                                                                                                                                   
+                <div className='pregame'>{countdown}</div>                                                
               ) : (
                 null
               )}
