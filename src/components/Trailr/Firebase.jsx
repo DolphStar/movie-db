@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc } from "firebase/firestore"; 
+import { getFirestore } from "firebase/firestore"; 
+import { doc, addDoc, setDoc } from "firebase/firestore";
+import { collection, addCollection, setCollection } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,17 +16,27 @@ function Firebase() {
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
-    async function setDB(){
-        await setDoc(doc(db, "rooms", "roomA", "playerA"), {
-            testing: {
-              title: "spiderman",
-              testing: "test",
-            }
-        });
+    let newRoomRef = 'Not yet set';
+
+    const roomConfig = {
+      difficulty: "normal",
+      dmgMultiplier: "1",
+      movieID: "926393",
+    };
+
+    async function makeRoom(){
+      newRoomRef = await addDoc(db, "rooms", roomConfig);
     }
 
   return (
-    <button className="firebase" onClick={setDB}>Add spiderman to db</button>
+    <>
+    
+    <div className="firebase">
+      <button onClick={makeRoom}>Generate Room</button>
+      <p>{newRoomRef}</p>
+    </div>
+
+    </>
   )
 }
 
