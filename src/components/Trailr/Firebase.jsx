@@ -2,7 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; 
 import { doc, addDoc, setDoc } from "firebase/firestore";
-import { collection } from "firebase/firestore"
+import { collection } from "firebase/firestore";
+
+import { useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,9 +18,12 @@ function Firebase() {
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
 
+    // Single source of truth for the roomID
+    const [roomID, setRoomID] = useState('Not in a room');
+
     async function makeRoom(){
 
-      // New room ref
+      // Room collection ref
       const newRoom = collection(db, "rooms");
 
       // Create a new room **DOCUMENT**
@@ -27,15 +32,20 @@ function Firebase() {
         movieID: "Spiderman",
       });
 
-      // New player ref
-      const newPlayer = collection(db, "rooms", newRoomRef.id, "playerA");
+      // New player ref (inside of the room that was just created)
+      const newPlayer = collection(newRoom, newRoomRef.id, "playerA");
 
-      // Create playerA **COLLECTION**
-      const newPlayerRef = await addDoc(newPlayer, {
-        hp: "TESTING"
+      // New player data ref (inside of the playerA collection)
+      const newPlayerData = doc(newPlayer, "playerData")
+
+      // Set the initial playerA data
+      await setDoc(newPlayerData, {
+        hp: 'testing',
       });
 
-      console.log("Auto-generated document ID: ", newRoomRef.id);
+      setRoomID(newRoomRef.id);
+
+      console.log("Auto-generated room ID: ", newRoomRef.id);
     }
 
     async function makeNewRoom(){
@@ -46,7 +56,7 @@ function Firebase() {
     
     <div className="dev-panel-firebase">
       <h3>Firebase dev panel</h3>
-      <p>Firebase testing</p>
+      <p>Current Room: {roomID}</p>
       <button onClick={makeRoom}>Generate Room</button>
     </div>
 
