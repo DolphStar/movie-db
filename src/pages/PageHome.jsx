@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { apiKey, imgPath } from "../globals/globalVariables"
+import { apiKey, imgPath } from "../globals/globalVariables";
+import Carousel from "../components/Carousel";
 
 function App() {
   
@@ -33,6 +34,7 @@ function App() {
       <>
         <div className="main-wrapper">
           <h1>Movies</h1>
+          <Carousel />
           <div className="movie-list">
           {movies.map((movie) => {
             return(

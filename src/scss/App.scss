@@ -17,3 +17,112 @@
 @use "layout/pages/favourites";
 @use "layout/pages/home";
 @use "layout/pages/trailr";
+
+//will update carousel css to match sass later on
+.swiper-wrapper {
+    /* height: 40rem; */
+    background: transparent;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    
+  }
+  /* html,
+  body {
+    position: relative;
+    height: 100%;
+  }
+   */
+  /* body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  } */
+  
+//   .swiper {
+//     width: 100%;
+//     height: 100%;
+//   }
+  
+//   .swiper-slide {
+//     text-align: center;
+//     font-size: 18px;
+//     background: #fff;
+//     flex-direction: column;
+//     /* Center slide text vertically */
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position:relative;
+//   }
+
+
+//   .swiper-slide img {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }
+
+  /* adjust trending text position layering*/
+
+.carousel-content{
+    z-index: 100;
+    position: absolute;
+    left:8rem;  
+    bottom:6rem; 
+    display:flex;
+    flex-direction: column;
+}
+// .carousel-content h2{
+//     position:relative;
+//     font-size: 3rem;
+//     color:white;
+//     text-align: left;
+//     bottom: 3rem;
+//     margin: 0;
+// }
+
+// .carousel-content-details{
+//     position:relative;
+//     color:white;
+//     text-align: left;
+//     display:flex;
+//     justify-content: center;
+//     align-items: center;
+//     gap:1rem;
+//     bottom: 2.7rem;
+// }
+
+// .carousel-text{
+//     z-index:100;
+//     position:absolute;
+//     left:8rem;
+//     bottom: 4rem;
+//     font-size: 1.5rem;
+//     text-align: left;
+//     color:white;
+// }
+
+// .carousel-info-button{
+//     position: absolute;
+//     left:8rem;
+//     bottom:3rem;
+//     background-color: violet;
+//     padding:.5rem;
+//     border-radius: 25px;
+// }
+
+.carousel-2-swiper-slide{
+    width:100%;
+    
+}
+
+// .carousel-2-swiper-slide article img{
+//     width:100%;
+// }
