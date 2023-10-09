@@ -35,12 +35,14 @@ function Firebase() {
       // New player ref (inside of the room that was just created)
       const newPlayer = collection(newRoom, newRoomRef.id, "playerA");
 
-      // New player data ref (inside of the playerA collection)
+      // New player data doc ref (inside of the playerA collection)
       const newPlayerData = doc(newPlayer, "playerData")
 
       // Set the initial playerA data
       await setDoc(newPlayerData, {
         hp: 'testing',
+        uid: '123456789',
+
       });
 
       setRoomID(newRoomRef.id);
