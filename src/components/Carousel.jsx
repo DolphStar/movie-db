@@ -73,22 +73,26 @@ const Carousel=()=> {
     
     <section className="carousel-2-swiper-slide">
         <Swiper
-            slidesPerView={1}
+            slidesPerView={2}
             spaceBetween={10}
             navigation={true}
             pagination={true}
             breakpoints={{
                 400: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                },
-                660: {
                     slidesPerView: 3,
                     spaceBetween: 15,
                 },
-                1000: {
+                660: {
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                },
+                800:{
                     slidesPerView: 5,
-                    spaceBetween: 40,
+                    spaceBetween: 20,
+                },
+                1000: {
+                    slidesPerView: 6,
+                    spaceBetween: 20,
                 }
             }}
             modules={[Pagination,Navigation]}
@@ -96,11 +100,10 @@ const Carousel=()=> {
         >
             {dataNowPlaying?.results?.map((oneNowPlaying)=>(
             <SwiperSlide key={oneNowPlaying.id}>
-                <article>
+                <article className='carousel-2-swiper-slide-content'>
                     <img src={`https://image.tmdb.org/t/p/w342${oneNowPlaying.poster_path}`} alt={oneNowPlaying.title} />
                     <div>
-                        <h3>{oneNowPlaying.original_title}</h3>
-                        <p>boop</p>
+                        <p>{oneNowPlaying.original_title}</p>
                     </div>
                 </article>
             </SwiperSlide>

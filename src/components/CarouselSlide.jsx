@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 //Import CSS styles
-// import '../styles/Carousel.css';
+import '../styles/Carousel.css';
 
 // import required modules
 import { Navigation } from 'swiper/modules';
@@ -45,18 +45,23 @@ const CarouselSlide = ({trending, genresArr}) => {
 
   return (
         <article>
-            <img src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`} alt={trending.title} />
-            
-            
+            <div className='carousel-content-image-wrapper'>
+                <img src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`} alt={trending.title} />
+                <div className='gradient-overlay'></div>
+            </div>
             <div key={generateKey(trending.id)} className="carousel-content">
                 <h2>{trending.title}</h2>
+                <div className='carousel-content-details-wrapper'>
                 <p>{trending.release_date}</p>
                     <div className="carousel-content-details">
                     {commonGenres?.map((oneGenre)=>(
                         <span key={oneGenre.id}>{oneGenre.name}</span>
                     ))}
                     </div>
-                <p className="carousel-text">{tagLineText}</p>
+                <p>{tagLineText}</p>
+                </div>
+            </div>
+            <div>
                 <li key={trending.id}>
                     <Link to ={`/movie/${trending.id}`} className="carousel-info-button">More Info</Link>
                 </li>
