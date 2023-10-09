@@ -1,18 +1,31 @@
 /* eslint-disable react/prop-types */
-import Youtube from 'react-youtube';
-import { apiKey, moviePage, VIDEO_START, MOVIE_START } from "../../globals/globalVariables";
-import { useState, useEffect, useRef } from "react";
+// Global Variable Imports
+import { apiKey, firebaseConfig } from "../../globals/globalVariables";
+import { moviePage } from "../../globals/globalVariables";
+import { VIDEO_START, MOVIE_START } from "../../globals/globalVariables";
 
-function Frames({movieData, setMovieData,
-                 videoData, setVideoData,
-                 offscreenFrame, setOffscreenFrame,
-                 answer, setAnswer,
-                 game, setGame,
-                 countdown, setCountdown,
-                 isCounting, setIsCounting,
-                 enableStart, setEnableStart,
-                 videoState, setVideoState
-                 }){
+// Firebase imports
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore"; 
+import { doc, addDoc, setDoc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+
+// React Imports
+import { useState, useEffect, useRef } from "react";
+import Youtube from 'react-youtube';
+
+function Frames({
+                movieData, setMovieData,
+                videoData, setVideoData,
+                offscreenFrame, setOffscreenFrame,
+                answer, setAnswer,
+                game, setGame,
+                countdown, setCountdown,
+                isCounting, setIsCounting,
+                enableStart, setEnableStart,
+                videoState, setVideoState,
+                roomID, setRoomID,
+                }){
 
   // Frame references
   const frameA = useRef(null);
@@ -21,6 +34,12 @@ function Frames({movieData, setMovieData,
   // Player references
   const youtubeA = useRef(null);
   const youtubeB = useRef(null);
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
 
   // Get a new movie
   async function fetchMovies(){
@@ -228,16 +247,7 @@ function Frames({movieData, setMovieData,
             }}
           />
         </div>
-      </div>
-      {/* buttons for testing */}
-      <div className="dev-panel-frames">
-        <h3>Frames dev panel</h3>
-        <p>Current offscreenFrame: {offscreenFrame}</p>
-        <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
-        <p>{isCounting ? 'true' : 'false'}</p>
-        <p>FrameA state: {videoState.frameA}</p>
-        <p>FrameB state: {videoState.frameB}</p>
-      </div>
+      </div>      
     </>
   )
 }

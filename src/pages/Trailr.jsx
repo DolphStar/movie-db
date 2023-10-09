@@ -67,35 +67,64 @@ function Trailr() {
     frameB: null,
   });
 
+  const [roomID, setRoomID] = useState('');
+
   return (
     <>
+      {roomID === '' ? (
+        <>
+          <Firebase     roomID={roomID} setRoomID={setRoomID}/>
+        </>
+      ) : (
+        <>
+          <div className="banner">
+            {answer ? (
+              <h2>{movieData[offscreenFrame === 0 ? 1 : 0].title} is correct!</h2>
+            ) : (
+              <h2>What Movie is this?</h2>
+            )}
+          </div>
+          <Frames       movieData={movieData} setMovieData={setMovieData}
+                      videoData={videoData} setVideoData={setVideoData}
+                      offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                      answer={answer} setAnswer={setAnswer}
+                      game={game} setGame={setGame}
+                      countdown={countdown} setCountdown={setCountdown}
+                      isCounting={isCounting} setIsCounting={setIsCounting}
+                      enableStart={enableStart} setEnableStart={setEnableStart}
+                      videoState={videoState} setVideoState={setVideoState}
+                      roomID={roomID} setRoomID={setRoomID}/>
 
-      <div className="banner">
-        {answer ? (
-          <h2>{movieData[offscreenFrame === 0 ? 1 : 0].title} is correct!</h2>
-        ) : (
-          <h2>What Movie is this?</h2>
-        )}
+          <PlayerInput  movieData={movieData} setMovieData={setMovieData}
+                        videoData={videoData} setVideoData={setVideoData}
+                        offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        input={input} setInput={setInput}
+                        searchData={searchData} setSearchData={setSearchData}
+                        answer={answer} setAnswer={setAnswer}/>
+        </>
+      )}
+
+      {/* DEV PANELS */}
+      <div className="dev-panel-firebase">
+        <h3>Firebase dev panel</h3>
+        <p>Current Room: {roomID}</p>
       </div>
 
-      <Frames       movieData={movieData} setMovieData={setMovieData}
-                    videoData={videoData} setVideoData={setVideoData}
-                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    answer={answer} setAnswer={setAnswer}
-                    game={game} setGame={setGame}
-                    countdown={countdown} setCountdown={setCountdown}
-                    isCounting={isCounting} setIsCounting={setIsCounting}
-                    enableStart={enableStart} setEnableStart={setEnableStart}
-                    videoState={videoState} setVideoState={setVideoState}/>
+      <div className="dev-panel-frames">
+        <h3>Frames dev panel</h3>
+        <p>Current offscreenFrame: {offscreenFrame}</p>
+        <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
+        <p>{isCounting ? 'true' : 'false'}</p>
+        <p>FrameA state: {videoState.frameA}</p>
+        <p>FrameB state: {videoState.frameB}</p>
+      </div>
 
-      <PlayerInput  movieData={movieData} setMovieData={setMovieData}
-                    videoData={videoData} setVideoData={setVideoData}
-                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    input={input} setInput={setInput}
-                    searchData={searchData} setSearchData={setSearchData}
-                    answer={answer} setAnswer={setAnswer}/>
-
-      <Firebase />
+      <div className='dev-panel-input'>
+        <h3>Input dev panel</h3>
+        <p>Current Input: {input.title}</p>
+        <p>Current ID: {input.id}</p>
+        <p>Answer: {answer}</p>
+      </div>
     </>
   )
 }

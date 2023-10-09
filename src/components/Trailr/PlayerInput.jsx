@@ -3,13 +3,14 @@
 import {useState} from 'react'
 import { SEARCH_START, apiKey } from '../../globals/globalVariables';
 
-function PlayerInput({movieData, setMovieData,
-                      videoData, setVideoData,
-                      offscreenFrame, setOffscreenFrame,
-                      input, setInput,
-                      searchData, setSearchData,
-                      answer, setAnswer,
-                      }){
+function PlayerInput({
+                    movieData, setMovieData,
+                    videoData, setVideoData,
+                    offscreenFrame, setOffscreenFrame,
+                    input, setInput,
+                    searchData, setSearchData,
+                    answer, setAnswer,
+                    }){
   
   async function handleInputChange(event){
     setInput((prevInput) => ({
@@ -69,13 +70,6 @@ function PlayerInput({movieData, setMovieData,
 
   return (
     <>
-      <div className='dev-panel-input'>
-        <h3>Input dev panel</h3>
-        <p>Current Input: {input.title}</p>
-        <p>Current ID: {input.id}</p>
-        <p>Answer: {answer}</p>
-      </div>
-
       <div className='trailr-input'>
         <input 
           type="text"

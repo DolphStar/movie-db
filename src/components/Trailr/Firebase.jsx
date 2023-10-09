@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; 
@@ -10,16 +11,15 @@ import { useState } from "react";
 
 import { firebaseConfig } from "../../globals/globalVariables";
 
-function Firebase() {
+function Firebase({
+                  roomID, setRoomID,
+                  }){
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
 
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore(app);
-
-    // Single source of truth for the roomID
-    const [roomID, setRoomID] = useState('Not in a room');
 
     async function makeRoom(){
 
@@ -55,11 +55,9 @@ function Firebase() {
 
   return (
     <>
-    
-    <div className="dev-panel-firebase">
-      <h3>Firebase dev panel</h3>
-      <p>Current Room: {roomID}</p>
-      <button onClick={makeRoom}>Generate Room</button>
+
+    <div>
+      <button onClick={makeRoom}>Create a Room</button>
     </div>
 
     </>
