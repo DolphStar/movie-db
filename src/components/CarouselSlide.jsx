@@ -46,7 +46,10 @@ const CarouselSlide = ({trending, genresArr}) => {
   return (
         <article>
             <div className='carousel-content-image-wrapper'>
-                <img src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`} alt={trending.title} />
+                <picture>
+                    <source srcset={`https://image.tmdb.org/t/p/original${trending.poster_path}`} alt={trending.title}  media="(max-width: 600px)" />
+                    <img src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`} alt={trending.title} />
+                </picture>
                 <div className='gradient-overlay'></div>
             </div>
             <div key={generateKey(trending.id)} className="carousel-content">

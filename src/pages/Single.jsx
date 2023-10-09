@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiKey, imgPath } from "../globals/globalVariables";
 import { youtubePath } from "../globals/globalVariables";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 
 // import required modules
-import { Navigation } from 'swiper/modules';
-import { Pagination } from 'swiper/modules';
-import '../styles/Acting.css'
+import { Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
+import "../styles/Acting.css";
 
 function Single() {
   const { id } = useParams();
@@ -28,11 +28,10 @@ function Single() {
       movie?.site?.toLowerCase() === "youtube"
   );
 
-  const castDetails = singleMovieData?.credits?.cast
+  const castDetails = singleMovieData?.credits?.cast;
   const actingCast = castDetails?.filter(
-   (castType) => 
-    castType?.known_for_department?.toLowerCase() === "acting"
-  )
+    (castType) => castType?.known_for_department?.toLowerCase() === "acting"
+  );
 
   const trailer = `${youtubePath}${trailerPath?.key}`;
 
@@ -65,79 +64,86 @@ function Single() {
   }
 
   return (
-  <div className="single-movie-content-wrapper">
-    <section>
-      <article id="single-movie-info">
-        <iframe height="320" width="240" src={trailer} allowFullScreen></iframe>
+    <div className="single-movie-content-wrapper">
+      <section>
+        <article id="single-movie-info">
+          <iframe
+            height="320"
+            width="240"
+            src={trailer}
+            allowFullScreen
+          ></iframe>
 
-        <h2>{singleMovieData?.title}</h2>
-        <div id="single-movie-genres">
-        {singleMovieGenres?.map((singleMovieGenre) => (
-          <p key={singleMovieGenre.id}>{singleMovieGenre.name}</p>
-        ))}
-        
-        </div>
-        <p>Release Date: {singleMovieData?.release_date}</p>
-        <time>Film length: 
-          {/* time tag, date */}
-           {MinutestoHours(movieMinuteLength)?.hours} hours{" "}
-          {MinutestoHours(movieMinuteLength)?.minutes} minutes
-        </time>
-        <h3>Overview</h3>
-        <p>{singleMovieData?.overview}</p>
-        
+          <h2>{singleMovieData?.title}</h2>
+          <div id="single-movie-genres">
+            {singleMovieGenres?.map((singleMovieGenre) => (
+              <p key={singleMovieGenre.id}>{singleMovieGenre.name}</p>
+            ))}
+          </div>
+          <p>Release Date: {singleMovieData?.release_date}</p>
+          <time>
+            Film length:
+            {/* time tag, date */}
+            {` ${MinutestoHours(movieMinuteLength)?.hours} hour${
+              MinutestoHours(movieMinuteLength)?.hours > 1 ? "s" : ""
+            } `}
+            {`${MinutestoHours(movieMinuteLength)?.minutes} minute${
+              MinutestoHours(movieMinuteLength)?.minutes > 1 ? "s" : ""
+            }`}
+          </time>
+          <h3>Overview</h3>
+          <p>{singleMovieData?.overview}</p>
 
-        <img  
-          id="acting-profile-picture"
-          src={`https://image.tmdb.org/t/p/w342${singleMovieData?.poster_path}`}
-          alt={singleMovieData?.title}
-        />
-        
-        
-        
-        <h3>Cast</h3>
-        
+          <img
+            id="acting-profile-picture"
+            src={`https://image.tmdb.org/t/p/w342${singleMovieData?.poster_path}`}
+            alt={singleMovieData?.title}
+          />
 
-      </article>
-    </section>
+          <h3>Cast</h3>
+        </article>
+      </section>
 
-    <section>
-    <Swiper
-            slidesPerView={2}
-            spaceBetween={10}
-            navigation={true}
-            pagination={true}
-            breakpoints={{
-                400: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                },
-                660: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                },
-                1000: {
-                    slidesPerView: 5,
-                    spaceBetween: 40,
-                }
-            }}
-            modules={[Pagination,Navigation]}
-            className="mySwiper"
+      <section>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={10}
+          navigation={true}
+          pagination={true}
+          breakpoints={{
+            400: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            660: {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            1000: {
+              slidesPerView: 5,
+              spaceBetween: 40,
+            },
+          }}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
         >
           {actingCast?.map((actCast) => (
             <SwiperSlide key={actCast?.cast_id}>
               <article className="acting-bio">
-                <img src={`https://image.tmdb.org/t/p/w342${actCast.profile_path}`} alt={actCast.name} />
+                <img
+                  src={`https://image.tmdb.org/t/p/w342${actCast.profile_path}`}
+                  alt={actCast.name}
+                />
                 <div>
                   <span key={actCast?.id}>{actCast?.name}</span>
                   <p>{actCast?.character}</p>
                 </div>
               </article>
             </SwiperSlide>
-        ))}
+          ))}
         </Swiper>
-    </section>
-  </div>
+      </section>
+    </div>
   );
 }
 
