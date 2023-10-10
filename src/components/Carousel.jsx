@@ -13,6 +13,7 @@ import { Pagination } from 'swiper/modules';
 //Import 
 import {apiKey} from "../globals/globalVariables";
 import CarouselSlide from './CarouselSlide';
+import Rating from './Rating';
 
 
 const Carousel=()=> {
@@ -55,7 +56,7 @@ const Carousel=()=> {
 
   return (
     <>
-    <section>
+    <section className='hero-section-carousel'>
           <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
             
                {/* optional chaining because useEffect runs at the end, if no ? then won't find data at first then error  */}
@@ -78,20 +79,20 @@ const Carousel=()=> {
             navigation={true}
             pagination={true}
             breakpoints={{
-                400: {
-                    slidesPerView: 3,
+                359: {
+                    slidesPerView: 2,
                     spaceBetween: 15,
                 },
                 660: {
-                    slidesPerView: 4,
+                    slidesPerView: 3,
                     spaceBetween: 15,
                 },
                 800:{
-                    slidesPerView: 5,
-                    spaceBetween: 20,
+                    slidesPerView: 4,
+                    spaceBetween: 15,
                 },
                 1000: {
-                    slidesPerView: 6,
+                    slidesPerView: 5,
                     spaceBetween: 20,
                 }
             }}
@@ -102,7 +103,8 @@ const Carousel=()=> {
             <SwiperSlide key={oneNowPlaying.id}>
                 <article className='carousel-2-swiper-slide-content'>
                     <img src={`https://image.tmdb.org/t/p/w342${oneNowPlaying.poster_path}`} alt={oneNowPlaying.title} />
-                    <div>
+                    <Rating rate={oneNowPlaying.vote_average}/>
+                    <div className='carousel-2-swiper-slide-title'>
                         <p>{oneNowPlaying.original_title}</p>
                     </div>
                 </article>

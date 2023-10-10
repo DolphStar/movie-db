@@ -1,78 +1,81 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useRef, useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 //Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 
 //Import CSS styles
-import '../styles/Carousel.css';
+import "../styles/Carousel.css";
 
 // import required modules
-import { Navigation } from 'swiper/modules';
-import {apiKey} from "../globals/globalVariables";
-import { Link } from 'react-router-dom';
+import { Navigation } from "swiper/modules";
+import { apiKey } from "../globals/globalVariables";
+import { Link } from "react-router-dom";
 
+const CarouselSlide = ({ trending, genresArr }) => {
+  // need to filter which genres id according to the list of genres
+  const commonGenres = genresArr.filter((genre) =>
+    trending.genre_ids.includes(genre.id)
+  );
+  console.log(commonGenres);
 
-const CarouselSlide = ({trending, genresArr}) => {
+  //movie tagline
+  const movieTagline = `https://api.themoviedb.org/3/movie/${trending.id}?api_key=${apiKey}`;
 
-    // need to filter which genres id according to the list of genres
-    const commonGenres = genresArr.filter((genre)=>
-        trending.genre_ids.includes(genre.id) 
-    )
-    console.log(commonGenres)
+  const [tagLine, setTagLine] = useState(null);
 
-    //movie tagline
-    const movieTagline = `https://api.themoviedb.org/3/movie/${trending.id}?api_key=${apiKey}`;
+  useEffect(() => {
+    const tagLineData = async () => {
+      const response_tagline = await fetch(movieTagline);
+      const jsonTagLine = await response_tagline.json();
+      setTagLine(jsonTagLine);
+    };
+    tagLineData();
+  }, [movieTagline]);
 
-    const [tagLine, setTagLine] = useState(null);
+  console.log(tagLine);
 
-    useEffect(() => {
-        const tagLineData = async () => {
-          const response_tagline = await fetch(movieTagline);
-          const jsonTagLine = await response_tagline.json();
-          setTagLine(jsonTagLine);
-        };
-        tagLineData();
-      }, [movieTagline]);
+  const tagLineText = tagLine?.tagline;
 
-      console.log(tagLine)
-
-      const tagLineText = tagLine?.tagline
-
-      const generateKey = (pre) => {
-        return `${ pre }_${ new Date().getTime() }`;
-    }
+  const generateKey = (pre) => {
+    return `${pre}_${new Date().getTime()}`;
+  };
 
   return (
-        <article>
-            <div className='carousel-content-image-wrapper'>
-                <picture>
-                    <source srcset={`https://image.tmdb.org/t/p/original${trending.poster_path}`} alt={trending.title}  media="(max-width: 600px)" />
-                    <img src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`} alt={trending.title} />
-                </picture>
-                <div className='gradient-overlay'></div>
-            </div>
-            <div key={generateKey(trending.id)} className="carousel-content">
-                <h2>{trending.title}</h2>
-                <div className='carousel-content-details-wrapper'>
-                <p>{trending.release_date}</p>
-                    <div className="carousel-content-details">
-                    {commonGenres?.map((oneGenre)=>(
-                        <span key={oneGenre.id}>{oneGenre.name}</span>
-                    ))}
-                    </div>
-                <p>{tagLineText}</p>
-                </div>
-            </div>
-            <div>
-                <li key={trending.id}>
-                    <Link to ={`/movie/${trending.id}`} className="carousel-info-button">More Info</Link>
-                </li>
-            </div>
-            
-            
-        </article>
-  )
-}
+    <article>
+      <div className="carousel-content-image-wrapper">
+        <picture>
+          <source
+            srcset={`https://image.tmdb.org/t/p/original${trending.poster_path}`}
+            alt={trending.title}
+            media="(max-width: 600px)"
+          />
+          <img
+            src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`}
+            alt={trending.title}
+          />
+        </picture>
+        <div className="gradient-overlay"></div>
+      </div>
+      <div key={generateKey(trending.id)} className="carousel-content">
+        <h2>{trending.title}</h2>
+        <div className="carousel-content-details-wrapper">
+          <p>{trending.release_date}</p>
+          <div className="carousel-content-details">
+            {commonGenres?.map((oneGenre) => (
+              <span key={oneGenre.id}>{oneGenre.name}</span>
+            ))}
+          </div>
+          <p>{tagLineText}</p>
+          {/* <li key={trending.id}> */}
+            <Link to={`/movie/${trending.id}`} className="carousel-info-button">
+              More Info
+            </Link>
+          {/* </li> */}
+        </div>
+      </div>
+    </article>
+  );
+};
 
 export default CarouselSlide;

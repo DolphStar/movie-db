@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { apiKey, imgPath } from "../globals/globalVariables";
 import { youtubePath } from "../globals/globalVariables";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Rating from "../components/Rating";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -75,10 +77,14 @@ function Single() {
           ></iframe>
 
           <h2>{singleMovieData?.title}</h2>
-          <div id="single-movie-genres">
-            {singleMovieGenres?.map((singleMovieGenre) => (
-              <p key={singleMovieGenre.id}>{singleMovieGenre.name}</p>
-            ))}
+          <div className="single-movie-rating-genre-wrapper">
+            <Rating rate={singleMovieData?.vote_average} />
+
+            <div id="single-movie-genres">
+              {singleMovieGenres?.map((singleMovieGenre) => (
+                <p key={singleMovieGenre.id}>{singleMovieGenre.name}</p>
+              ))}
+            </div>
           </div>
           <p>Release Date: {singleMovieData?.release_date}</p>
           <time>
@@ -112,16 +118,20 @@ function Single() {
           pagination={true}
           breakpoints={{
             400: {
-              slidesPerView: 2,
+              slidesPerView: 3,
               spaceBetween: 10,
             },
             660: {
               slidesPerView: 3,
               spaceBetween: 15,
             },
+            800: {
+              slidesPerView: 4,
+              spaceBetween: 15,
+            },
             1000: {
               slidesPerView: 5,
-              spaceBetween: 40,
+              spaceBetween: 20,
             },
           }}
           modules={[Pagination, Navigation]}
