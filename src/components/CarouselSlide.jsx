@@ -42,7 +42,7 @@ const CarouselSlide = ({ trending, genresArr }) => {
   };
 
   return (
-    <article>
+    <article className="carousel-content-wrapper">
       <div className="carousel-content-image-wrapper">
         <picture>
           <source

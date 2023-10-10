@@ -66,23 +66,34 @@
   height: 100%;
   background: linear-gradient(
       77deg,
-      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 0.7) 1%,
       rgba(255, 255, 0, 0) 100%,
       rgba(238, 130, 238, 1) 100%
     ),
     linear-gradient(
       33deg,
-      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 0.7) 1%,
       rgba(255, 255, 0, 0) 100%,
       rgba(238, 130, 238, 1) 100%
     );
 }
+.carousel-content-wrapper{
+  position:relative;
+}
 
 .carousel-content {
-  z-index: 100;
   color: white;
   width:100%;
 }
+
+@media screen and (min-width:450px) and (max-width:600px){
+  .carousel-content{
+    position: absolute;
+    bottom:3rem;
+  }
+}
+
+
 .carousel-content h2 {
   position: relative;
   font-size: 1.2rem;
@@ -90,7 +101,7 @@
   top: -1rem;
   left: -7rem;
   margin: 0;
-
+  width:80%;
 }
 
 @media screen and (min-width: 600px) {
