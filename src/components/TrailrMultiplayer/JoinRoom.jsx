@@ -16,21 +16,20 @@ import { useEffect } from 'react';
 // React Router Imports
 import { useSearchParams } from "react-router-dom";
 
-function CreateRoom({
+function JoinRoom({
                     roomID, setRoomID,
                     player, setPlayer,
                     }){
 
   return (
     <>
-      <h2>Invite another player</h2>
-      <p>Current room: {roomID}</p>
-      <p>Invite link: LINK GOES HERE</p>
+    <h2>Join a room</h2>
+    <p>Connected room: {roomID}</p>
     </>
   )
 }
 
-export default CreateRoom;
+export default JoinRoom;
 
 // async function makeRoom(){
 

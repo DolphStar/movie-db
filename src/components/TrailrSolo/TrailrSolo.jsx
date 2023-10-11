@@ -5,7 +5,6 @@
 import PlayerInput from "./PlayerInput";
 import Frames from "./Frames";
 
-
 function TrailrSolo({
                     movieData, setMovieData,
                     videoData, setVideoData,

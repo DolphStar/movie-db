@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // GRANDPARENT COMPONENT OF ALL TRAILR COMPONENTS
 /* eslint-disable react/prop-types */
 // React Imports
@@ -5,8 +6,6 @@ import { useState, useEffect, useRef } from "react";
 
 // React Router imports
 import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 // Trailr Global Components
 import MainMenu from "../components/TrailrGlobal/MainMenu";
@@ -42,12 +41,6 @@ function Trailr() {
   // Single source of truth for the search data
   const [searchData, setSearchData] = useState([]);
 
-  // Single source of truth for the round
-  const [round, setRound] = useState(0);
-
-  // Single source of truth for the score
-  const [score, setScore] = useState(0);
-
   // Single source of truth for the indice of which frame is currently offscreen
   // 0 = FrameA
   // 1 = FrameB
@@ -80,28 +73,30 @@ function Trailr() {
     frameB: null,
   });
 
-  // Single source of truth for the roomID
-  const [roomID, setRoomID] = useState('');
-
-  // Single source of truth for the game difficulty
-  const [difficulty, setDifficulty] = useState('');
-
   // Single source of truth for the selected game mode
   const [gameMode, setGameMode] = useState('');
 
-  // Search Params testing
+  // Single source of truth for the roomID
+  const [roomID, setRoomID] = useState('');
+
+  // Single source of truth for the player
+  const [player, setPlayer] = useState('');
+
+  // Single source of truth for the params state
+  const [params, setParams] = useState({});
+
+  // URL Params Ref
   const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(()=>{
-
-  }, [])
 
   return (
     <>
       {
         gameMode === '' ? (
         <MainMenu           gameMode={gameMode} setGameMode={setGameMode}
-                            difficulty={difficulty} setDifficulty={setDifficulty}/>
+                            searchParams={searchParams} setSearchParams={setSearchParams}
+                            params={params} setParams={setParams}
+                            player={player} setPlayer={setPlayer}
+                            roomID={roomID} setRoomID={setRoomID}/>
       ) 
       : gameMode === 'solo' ? (
         <TrailrSolo         movieData={movieData} setMovieData={setMovieData}
@@ -116,8 +111,16 @@ function Trailr() {
                             videoState={videoState} setVideoState={setVideoState}
                             input={input} setInput={setInput}/>
       ) 
-      : gameMode === 'multliplayer' ? (
-        <TrailrMultiplayer  />
+      : gameMode === 'multiplayer' ? (
+        <TrailrMultiplayer  offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            answer={answer} setAnswer={setAnswer}
+                            videoState={videoState} setVideoState={setVideoState}
+                            searchData={searchData} setSearchData={setSearchData}
+                            roomID={roomID} setRoomID={setRoomID}
+                            player={player} setPlayer={setPlayer}
+                            params={params} setParams={setParams}
+                            gameMode={gameMode} setGameMode={setGameMode}
+                            searchParams={searchParams} setSearchParams={setSearchParams}/>
       )
       : (
         <div>

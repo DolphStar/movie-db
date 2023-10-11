@@ -1,81 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-// React Router imports
-import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
-function Lobby({
+import { useEffect } from 'react';
+function MainMenu({
                 difficulty, setDifficulty,
                 gameMode, setGameMode,
+                searchParams, setSearchParams,
+                params, setParams,
+                player, setPlayer,
+                roomID, setRoomID,
                 }){
 
-  // URL Params
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-
+  // Sets the selected mode as the state and add it as a param in the URL
   function handleGameModeSelect(mode){
-
-    // Update query params and game mode state
-    queryParams.set("mode", mode);
+    setSearchParams({ mode: mode });
     setGameMode(mode);
-
-    // Create new search string and navigate to it
-    const newSearch = `${queryParams.toString()}`;
-    navigate({ search: newSearch });
-
   }
 
-  function handleDifficultySelect(dif){
-    
-    // Update query params and dif state
-    queryParams.set("dif", dif);
-    setDifficulty(dif);
+  // When the page loads check the params and update the state if there is any
+  useEffect(()=>{
+    setParams(Object.fromEntries(searchParams.entries()));
+  }, []);
 
-    // Create new search string and navigate to it
-    const newSearch = `${queryParams.toString()}`;
-    navigate({ search: newSearch });
-  }
-  
+  // Every time the params are updated, check to see if a player, roomID, or gameMode is present
+  // If so, update the states accordingly
+  useEffect(()=>{
+    if(params.player !== undefined){
+      setPlayer(params.player);
+    }
+    if(params.roomID !== undefined){
+      setRoomID(params.roomID);
+    }
+    if(params.mode !== undefined){
+      setGameMode(params.mode);
+    }
+  }, [params])
+
   return (
     <>
       <div className="game-modes">
         <h2>Welcome to Trailr</h2>
-        {gameMode === '' ? (
-          <>
-            <h2>Choose Game Mode</h2>
-            <ul>
-              <li>
-                <button onClick={()=>handleGameModeSelect('solo')}>Solo</button>
-              </li>
-              <li>
-                <button onClick={() => handleGameModeSelect('multiplayer')}>Multiplayer</button>
-              </li>
-            </ul>
-          </>
-        ) : gameMode !== '' && difficulty === '' ? (
-          <>
-            <h2>Choose the difficulty</h2>
-            <div>
-              <button onClick={()=>handleDifficultySelect('easy')}>Easy</button>
-              <button onClick={()=>handleDifficultySelect('medium')}>Medium</button>
-              <button onClick={()=>handleDifficultySelect('hard')}>Hard</button>
-            </div>
-          </>
-        ) : gameMode === 'solo' ? (
-          <>
-            <h2>Solo</h2>
-            <p>This is the Solo game screen</p>
-          </>
-        ) : gameMode === 'multiplayer' ? (
-          <>
-            <h2>Multiplayer</h2>
-            <p>This is the multiplayer game screen</p>
-          </>
-        ) : null}
+          <p>Choose Game Mode</p>
+          <ul>
+            <li>
+              <button onClick={()=>handleGameModeSelect('solo')}>Solo</button>
+            </li>
+            <li>
+              <button onClick={() => handleGameModeSelect('multiplayer')}>Multiplayer</button>
+            </li>
+          </ul>
       </div>
     </>
   );
 }
   
-  export default Lobby;
+  export default MainMenu;
