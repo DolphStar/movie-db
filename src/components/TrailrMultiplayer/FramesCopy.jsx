@@ -24,7 +24,6 @@ function Frames({
                 isCounting, setIsCounting,
                 enableStart, setEnableStart,
                 videoState, setVideoState,
-                roomID, setRoomID,
                 }){
 
   // Frame references
@@ -43,6 +42,7 @@ function Frames({
 
   // Get a new movie
   async function fetchMovies(){
+
     const randomPage = Math.floor(Math.random() * moviePage) + 1;
     const moviesEndpoint = `${MOVIE_START}&page=${randomPage}&sort_by=popularity.desc&with_original_language=en&api_key=${apiKey}`;
 
@@ -55,8 +55,9 @@ function Frames({
       setMovieData(movieData => {
         const newMovieData = [...movieData];
         newMovieData[offscreenFrame] = movieList.results[randomIndex];
-        // Calling fetch videos here to fix the state update lag issue
+        // Calling functions here to fix the state update lag issue
         fetchVideos(newMovieData[offscreenFrame].id);
+        setRoomMovieID(newMovieData[offscreenFrame].id);
         return newMovieData;
       });
     }else{
@@ -114,6 +115,14 @@ function Frames({
     }else{
       youtubeB.current.internalPlayer.playVideo();
     }
+  }
+
+  // Send the chosen movie to the db room
+  async function setRoomMovieID(id){
+    const roomRef = doc(db, "rooms", roomID);
+    await setDoc(roomRef, {
+      movieID: id,
+    });
   }
 
   // When the offscreenFrame changes run fetchMovies (runs on initial load)
