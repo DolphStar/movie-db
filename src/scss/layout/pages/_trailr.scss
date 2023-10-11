@@ -90,3 +90,18 @@
         cursor: pointer;
     }
 }
+
+// Main Menu Styling
+.game-modes {
+    border: green 1px solid;
+    padding: 50px;
+    ul {
+        list-style: none;
+        
+        li {
+            justify-content: center;
+            align-self: center;
+            
+        }
+    }
+}

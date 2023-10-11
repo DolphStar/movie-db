@@ -9,7 +9,7 @@ function Lobby({
                 gameMode, setGameMode,
                 }){
 
-  // Params
+  // URL Params
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -39,7 +39,7 @@ function Lobby({
   
   return (
     <>
-      <div className="lobby">
+      <div className="game-modes">
         <h2>Welcome to Trailr</h2>
         {gameMode === '' ? (
           <>

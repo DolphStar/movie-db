@@ -92,11 +92,16 @@ function Trailr() {
   // Search Params testing
   const [searchParams, setSearchParams] = useSearchParams();
 
+  useEffect(()=>{
+
+  }, [])
+
   return (
     <>
       {
         gameMode === '' ? (
-        <MainMenu           />
+        <MainMenu           gameMode={gameMode} setGameMode={setGameMode}
+                            difficulty={difficulty} setDifficulty={setDifficulty}/>
       ) 
       : gameMode === 'solo' ? (
         <TrailrSolo         movieData={movieData} setMovieData={setMovieData}
@@ -105,7 +110,7 @@ function Trailr() {
                             offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                             answer={answer} setAnswer={setAnswer}
                             game={game} setGame={setGame}
-                            countDown={countdown} setCoundown={setCountdown}
+                            countDown={countdown} setCountdown={setCountdown}
                             isCounting={isCounting} setIsCounting={setIsCounting}
                             enableStart={enableStart} setEnableStart={setEnableStart}
                             videoState={videoState} setVideoState={setVideoState}
