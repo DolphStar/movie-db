@@ -22,14 +22,14 @@ import { useSearchParams } from "react-router-dom";
 
 function TrailrMultiplayer({
                             offscreenFrame, setOffscreenFrame,
-                            answer, setAnswer,
                             videoState, setVideoState,
                             searchData, setSearchData,
                             roomID, setRoomID,
                             player, setPlayer,
                             params, setParams,
                             gameMode, setGameMode,
-                            searchParams, setSearchParams
+                            searchParams, setSearchParams,
+                            input, setInput,
                             }){
 
   // Initialize Firebase
@@ -67,8 +67,6 @@ function TrailrMultiplayer({
     const newRoomRef = await addDoc(newRoom, {
       dmgMultiplier: 1,
       movieID: "Waiting for playerB",
-      playerAReady: false,
-      playerBReady: false,
     });
 
     // New player data doc ref (inside of the playerA collection)
@@ -78,6 +76,7 @@ function TrailrMultiplayer({
     await setDoc(newPlayerData, {
       hp: 5000,
       uid: "Hippolyta",
+      ready: false,
     });
 
     // Update the URL params
@@ -97,8 +96,12 @@ function TrailrMultiplayer({
       </div>
     ) 
     : (
-      <Room roomID={roomID} setRoomID={setRoomID}
+      <Room offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+            videoState={videoState} setVideoState={setVideoState}
+            searchData={searchData} setSearchData={setSearchData}
+            roomID={roomID} setRoomID={setRoomID}
             player={player} setPlayer={setPlayer}
+            input={input} setInput={setInput}
             app={app} db={db}/>
     )}
     </>

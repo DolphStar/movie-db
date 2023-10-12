@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import {useState} from 'react'
+import { useState } from 'react'
 import { SEARCH_START, apiKey } from '../../globals/globalVariables';
 
 function PlayerInput({
-                    movieData, setMovieData,
-                    videoData, setVideoData,
                     offscreenFrame, setOffscreenFrame,
                     input, setInput,
                     searchData, setSearchData,
-                    answer, setAnswer,
                     }){
   
   async function handleInputChange(event){
@@ -47,19 +44,6 @@ function PlayerInput({
       console.log("Search Fetch Failed");
     }
   }
-
-  function handleSubmit(){
-    if(input.title !== '' && input.id !== null){
-      if(input.id === movieData[offscreenFrame === 0 ? 1 : 0].id){
-        setAnswer(true);
-        setInput({
-          title: '',
-          id: null
-        });
-        setSearchData([]);
-      }
-    }
-  }
   
   function handleSelection(id, title){
     setInput((prevInput) => ({
@@ -67,6 +51,10 @@ function PlayerInput({
       title: title,
       id: id,
     }));
+  }
+
+  async function handleSubmit(){
+    console.log("Send the answer to firebase");
   }
 
   return (
@@ -78,8 +66,8 @@ function PlayerInput({
           onChange={handleInputChange}
           placeholder='What movie is this?'
         />
-        <button onClick={()=>handleSubmit()}>Submit</button>
-        <div className='suggestions'>
+        <button onClick={handleSubmit}>Submit</button>
+        {/* <div className='suggestions'>
           {searchData.map((movie)=> (
             <div 
               key={movie.id} 
@@ -88,7 +76,7 @@ function PlayerInput({
                 {movie.title}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   )
