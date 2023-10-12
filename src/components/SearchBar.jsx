@@ -8,6 +8,23 @@ function SearchBar() {
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate(); //  allowing programmatically navigating to different routes
 
+  const filterHighestRated = (results) => {
+    // store movies with their title as the key
+    const movieMap = {};
+  
+    results.forEach((movie) => {
+      // check if the movie's title is not already a key in movieMap 
+      // If it is, check if the current movie's rating is higher than the one stored in movieMap.
+      if (!movieMap[movie.title] || movieMap[movie.title].rating < movie.rating) {
+        movieMap[movie.title] = movie;
+      }
+    });
+    // If either of the above conditions are met, 
+    // set the movieMap with the current movie using its title as the key.
+    return Object.values(movieMap);
+  };
+  
+
   const handleInputChange = async (e) => {
     // set the search query with the current input value
     const value = e.target.value;
@@ -19,7 +36,8 @@ function SearchBar() {
     // If the search query is not empty and it passes regex pattern, fetch the results
     if (isValidInput(value)) {
       const results = await fetchSearchResults(value);
-      setSuggestions(results.slice(0, 5)); // Show only top 5 results
+      const uniqueHighestRatedMovies = filterHighestRated(results)
+      setSuggestions(uniqueHighestRatedMovies.slice(0, 5)); // Show only top 5 results
     } else {
       setSuggestions([]); // Empty the suggestions if the search query is empty
     }
