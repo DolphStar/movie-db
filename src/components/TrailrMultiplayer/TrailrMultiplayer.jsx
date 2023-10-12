@@ -3,8 +3,7 @@
 // PARENT COMPONENT OF THE MULTIPLAYER TRAILR COMPONENTS
 
 // Trailr Component Imports
-import CreateRoom from "./CreateRoom";
-import JoinRoom from "./JoinRoom";
+import Room from "./Room";
 
 // Firebase Imports
 import { initializeApp } from "firebase/app";
@@ -44,7 +43,7 @@ function TrailrMultiplayer({
     setParams(Object.fromEntries(searchParams.entries()));
   }, []);
 
-  // Every time the params are updated, check to see if a player or a roomID is present
+  // Every time the params are updated, check to see if a player, roomID, or gameMode is present
   // If so, update the player/roomID states accordingly
   useEffect(()=>{
     if(params.player !== undefined){
@@ -68,6 +67,8 @@ function TrailrMultiplayer({
     const newRoomRef = await addDoc(newRoom, {
       dmgMultiplier: 1,
       movieID: "Waiting for playerB",
+      playerAReady: false,
+      playerBReady: false,
     });
 
     // New player data doc ref (inside of the playerA collection)
@@ -95,18 +96,10 @@ function TrailrMultiplayer({
         <button onClick={createRoom}>Create Room</button>
       </div>
     ) 
-    : player === 'playerA' ? (
-      <CreateRoom roomID={roomID} setRoomID={setRoomID}
-                  player={player} setPlayer={setPlayer}/>
-    ) 
-    : player === 'playerB' ? ( 
-      <JoinRoom   />
-    ) 
     : (
-      <div>
-        <h2>How did you even get to this page?</h2>
-        <a href="#">Go back to the main menu and choose a game mode...</a>
-      </div>
+      <Room roomID={roomID} setRoomID={setRoomID}
+            player={player} setPlayer={setPlayer}
+            app={app} db={db}/>
     )}
     </>
   )
