@@ -55,6 +55,7 @@ function Room({
     await setDoc(selfRef, {
       ready: true,
     });
+    setPlayerReady()
   }
 
   // Use effect to monitor if the other player is ready
