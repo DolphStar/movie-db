@@ -1,18 +1,24 @@
 /* eslint-disable react/prop-types */
-import Youtube from 'react-youtube';
-import { apiKey, moviePage, VIDEO_START, MOVIE_START } from "../../globals/globalVariables";
-import { useState, useEffect, useRef } from "react";
+// Global Variable Imports
+import { apiKey } from "../../globals/globalVariables";
+import { moviePage } from "../../globals/globalVariables";
+import { VIDEO_START, MOVIE_START } from "../../globals/globalVariables";
 
-function Frames({movieData, setMovieData,
-                 videoData, setVideoData,
-                 offscreenFrame, setOffscreenFrame,
-                 answer, setAnswer,
-                 game, setGame,
-                 countdown, setCountdown,
-                 isCounting, setIsCounting,
-                 enableStart, setEnableStart,
-                 videoState, setVideoState
-                 }){
+// React Imports
+import { useState, useEffect, useRef } from "react";
+import Youtube from 'react-youtube';
+
+function Frames({
+                movieData, setMovieData,
+                videoData, setVideoData,
+                offscreenFrame, setOffscreenFrame,
+                answer, setAnswer,
+                game, setGame,
+                countdown, setCountdown,
+                isCounting, setIsCounting,
+                enableStart, setEnableStart,
+                videoState, setVideoState,
+                }){
 
   // Frame references
   const frameA = useRef(null);
@@ -24,6 +30,7 @@ function Frames({movieData, setMovieData,
 
   // Get a new movie
   async function fetchMovies(){
+
     const randomPage = Math.floor(Math.random() * moviePage) + 1;
     const moviesEndpoint = `${MOVIE_START}&page=${randomPage}&sort_by=popularity.desc&with_original_language=en&api_key=${apiKey}`;
 
@@ -36,7 +43,7 @@ function Frames({movieData, setMovieData,
       setMovieData(movieData => {
         const newMovieData = [...movieData];
         newMovieData[offscreenFrame] = movieList.results[randomIndex];
-        // Calling fetch videos here to fix the state update lag issue
+        // Calling functions here to fix the state update lag issue
         fetchVideos(newMovieData[offscreenFrame].id);
         return newMovieData;
       });
@@ -64,7 +71,7 @@ function Frames({movieData, setMovieData,
         return newVideoData;
       });
     } else {
-      console.log("Video fetch failed endpoint attempted", videosEndpoint)
+      console.log("Video fetch failed, endpoint attempted: ", videosEndpoint)
     }
   }
 
@@ -228,16 +235,7 @@ function Frames({movieData, setMovieData,
             }}
           />
         </div>
-      </div>
-      {/* buttons for testing */}
-      <div className="dev-panel-frames">
-        <h3>Frames dev panel</h3>
-        <p>Current offscreenFrame: {offscreenFrame}</p>
-        <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
-        <p>{isCounting ? 'true' : 'false'}</p>
-        <p>FrameA state: {videoState.frameA}</p>
-        <p>FrameB state: {videoState.frameB}</p>
-      </div>
+      </div>      
     </>
   )
 }

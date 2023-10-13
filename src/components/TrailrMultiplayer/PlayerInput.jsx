@@ -1,15 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import {useState} from 'react'
+import { useState } from 'react'
 import { SEARCH_START, apiKey } from '../../globals/globalVariables';
 
-function PlayerInput({movieData, setMovieData,
-                      videoData, setVideoData,
-                      offscreenFrame, setOffscreenFrame,
-                      input, setInput,
-                      searchData, setSearchData,
-                      answer, setAnswer,
-                      }){
+function PlayerInput({
+                    offscreenFrame, setOffscreenFrame,
+                    input, setInput,
+                    searchData, setSearchData,
+                    }){
   
   async function handleInputChange(event){
     setInput((prevInput) => ({
@@ -25,6 +23,7 @@ function PlayerInput({movieData, setMovieData,
 
       // Filter out the duplicate movie titles (movie with the highest popularity stays)
       const filteredSearchList = searchList.results.reduce((accumulator, currentMovie) => {
+        
         const existingMovieIndex = accumulator.findIndex((movie) => movie.title === currentMovie.title);
         
         // If a movie with the same title exists
@@ -45,19 +44,6 @@ function PlayerInput({movieData, setMovieData,
       console.log("Search Fetch Failed");
     }
   }
-
-  function handleSubmit(){
-    if(input.title !== '' && input.id !== null){
-      if(input.id === movieData[offscreenFrame === 0 ? 1 : 0].id){
-        setAnswer(true);
-        setInput({
-          title: '',
-          id: null
-        });
-        setSearchData([]);
-      }
-    }
-  }
   
   function handleSelection(id, title){
     setInput((prevInput) => ({
@@ -67,15 +53,12 @@ function PlayerInput({movieData, setMovieData,
     }));
   }
 
+  async function handleSubmit(){
+    console.log("Send the answer to firebase");
+  }
+
   return (
     <>
-      <div className='dev-panel-input'>
-        <h3>Input dev panel</h3>
-        <p>Current Input: {input.title}</p>
-        <p>Current ID: {input.id}</p>
-        <p>Answer: {answer}</p>
-      </div>
-
       <div className='trailr-input'>
         <input 
           type="text"
@@ -83,8 +66,8 @@ function PlayerInput({movieData, setMovieData,
           onChange={handleInputChange}
           placeholder='What movie is this?'
         />
-        <button onClick={()=>handleSubmit()}>Submit</button>
-        <div className='suggestions'>
+        <button onClick={handleSubmit}>Submit</button>
+        {/* <div className='suggestions'>
           {searchData.map((movie)=> (
             <div 
               key={movie.id} 
@@ -93,7 +76,7 @@ function PlayerInput({movieData, setMovieData,
                 {movie.title}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   )

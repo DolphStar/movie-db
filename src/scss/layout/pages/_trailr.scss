@@ -90,3 +90,29 @@
         cursor: pointer;
     }
 }
+
+// Main Menu Styling
+.game-modes {
+    border: green 1px solid;
+    padding: 50px;
+    ul {
+        list-style: none;
+        
+        li {
+            justify-content: center;
+            align-self: center;
+            
+        }
+    }
+}
+
+// Multiplayer Styling
+.playerA {
+    position: absolute;
+    left: 8%;
+}
+
+.playerB {
+    position: absolute;
+    right: 8%;
+}

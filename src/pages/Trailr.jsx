@@ -1,8 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+// GRANDPARENT COMPONENT OF ALL TRAILR COMPONENTS
+/* eslint-disable react/prop-types */
+// React Imports
 import { useState, useEffect, useRef } from "react";
-// Trailr Components
-import Frames from "../components/Trailr/frames";
-import PlayerInput from "../components/Trailr/playerInput";
-import Firebase from "../components/Trailr/Firebase";
+
+// React Router imports
+import { useSearchParams } from "react-router-dom";
+
+// Trailr Global Components
+import MainMenu from "../components/TrailrGlobal/MainMenu";
+
+// Trailr Multiplayer Import
+import TrailrMultiplayer from "../components/TrailrMultiplayer/TrailrMultiplayer"
+ 
+// Trailr Solo Import
+import TrailrSolo from "../components/TrailrSolo/TrailrSolo";
 
 function Trailr() {
 
@@ -19,7 +31,7 @@ function Trailr() {
     [// FrameA
       [], // Trailer Data
       '', // TrailerID
-    ], // FrameA
+    ],
     [// FrameB
       [], // Trailer Data
       '', // TrailerID
@@ -28,12 +40,6 @@ function Trailr() {
 
   // Single source of truth for the search data
   const [searchData, setSearchData] = useState([]);
-
-  // Single source of truth for the round
-  const [round, setRound] = useState(0);
-
-  // Single source of truth for the score
-  const [score, setScore] = useState(0);
 
   // Single source of truth for the indice of which frame is currently offscreen
   // 0 = FrameA
@@ -67,35 +73,61 @@ function Trailr() {
     frameB: null,
   });
 
+  // Single source of truth for the selected game mode
+  const [gameMode, setGameMode] = useState('');
+
+  // Single source of truth for the roomID
+  const [roomID, setRoomID] = useState('');
+
+  // Single source of truth for the player
+  const [player, setPlayer] = useState('');
+
+  // Single source of truth for the params state
+  const [params, setParams] = useState({});
+
+  // URL Params Ref
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <>
-
-      <div className="banner">
-        {answer ? (
-          <h2>{movieData[offscreenFrame === 0 ? 1 : 0].title} is correct!</h2>
-        ) : (
-          <h2>What Movie is this?</h2>
-        )}
-      </div>
-
-      <Frames       movieData={movieData} setMovieData={setMovieData}
-                    videoData={videoData} setVideoData={setVideoData}
-                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    answer={answer} setAnswer={setAnswer}
-                    game={game} setGame={setGame}
-                    countdown={countdown} setCountdown={setCountdown}
-                    isCounting={isCounting} setIsCounting={setIsCounting}
-                    enableStart={enableStart} setEnableStart={setEnableStart}
-                    videoState={videoState} setVideoState={setVideoState}/>
-
-      <PlayerInput  movieData={movieData} setMovieData={setMovieData}
-                    videoData={videoData} setVideoData={setVideoData}
-                    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    input={input} setInput={setInput}
-                    searchData={searchData} setSearchData={setSearchData}
-                    answer={answer} setAnswer={setAnswer}/>
-
-      <Firebase />
+      {
+        gameMode === '' ? (
+        <MainMenu           gameMode={gameMode} setGameMode={setGameMode}
+                            searchParams={searchParams} setSearchParams={setSearchParams}
+                            params={params} setParams={setParams}
+                            player={player} setPlayer={setPlayer}
+                            roomID={roomID} setRoomID={setRoomID}/>
+      ) 
+      : gameMode === 'solo' ? (
+        <TrailrSolo         movieData={movieData} setMovieData={setMovieData}
+                            videoData={videoData} setVideoData={setVideoData}
+                            searchData={searchData} setSearchData={setSearchData}
+                            offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            answer={answer} setAnswer={setAnswer}
+                            game={game} setGame={setGame}
+                            countDown={countdown} setCountdown={setCountdown}
+                            isCounting={isCounting} setIsCounting={setIsCounting}
+                            enableStart={enableStart} setEnableStart={setEnableStart}
+                            videoState={videoState} setVideoState={setVideoState}
+                            input={input} setInput={setInput}/>
+      ) 
+      : gameMode === 'multiplayer' ? (
+        <TrailrMultiplayer  offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            videoState={videoState} setVideoState={setVideoState}
+                            searchData={searchData} setSearchData={setSearchData}
+                            input={input} setInput={setInput}
+                            roomID={roomID} setRoomID={setRoomID}
+                            player={player} setPlayer={setPlayer}
+                            params={params} setParams={setParams}
+                            gameMode={gameMode} setGameMode={setGameMode}
+                            searchParams={searchParams} setSearchParams={setSearchParams}/>
+      )
+      : (
+        <div>
+          <h2>How did you even get to this page?</h2>
+          <a href="#">Go back to the main menu and choose a game mode...</a>
+        </div>
+      )}
     </>
   )
 }
