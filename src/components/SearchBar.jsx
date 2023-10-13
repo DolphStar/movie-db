@@ -13,8 +13,8 @@ function SearchBar() {
     const movieMap = {};
   
     results.forEach((movie) => {
-      // check if the movie's title is not already a key in movieMap 
-      // If it is, check if the current movie's rating is higher than the one stored in movieMap.
+      // check if the movie title is not already a key in movieMap 
+      // If it is, check if the current movie rating is higher than the one stored in movieMap.
       if (!movieMap[movie.title] || movieMap[movie.title].rating < movie.rating) {
         movieMap[movie.title] = movie;
       }

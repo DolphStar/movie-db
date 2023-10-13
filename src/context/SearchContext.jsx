@@ -8,9 +8,7 @@ export const SearchProvider = ({ children }) => {
     const [searchResult, setSearchResult] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [allGenres, setAllGenres] = useState([]);
-
-
-
+    
     return (
         <SearchContext.Provider value={{ searchQuery, setSearchQuery, searchResult, setSearchResult, selectedGenres, setSelectedGenres, allGenres, setAllGenres }}>
             {children}
