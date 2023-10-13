@@ -27,6 +27,7 @@ function TrailrSolo({
         <h2>What Movie is this?</h2>
       )}
     </div>
+    
     <Frames       movieData={movieData} setMovieData={setMovieData}
                   videoData={videoData} setVideoData={setVideoData}
                   offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
