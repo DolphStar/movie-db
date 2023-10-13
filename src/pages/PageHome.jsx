@@ -1,38 +1,67 @@
 import { useEffect, useState } from "react";
-import { appTitle } from "../globals/globalVariables";
+import { apiKey, imgPath } from "../globals/globalVariables";
+import Carousel from "../components/Carousel";
 
-function PageHome() {
+function App() {
+  
+  // Holds api request data
+  const [movies, setMovies] = useState([]);
 
-      // just testing
-    const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZGU1ZWY2NDc4Y2I3YTFiNWI2NjY0ODhkOTY0ZDI2NyIsInN1YiI6IjY0ZmUwOGJkZTBjYTdmMDEwZGU4ZmY0YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sz4ddBjyp5Fkh5Yk8mXGxrr2MU_4ZdJKnWNrrpVxF2o'
-        }
-      };
+  // Holds user inputted search data
+  const [searchQuery, setSearchQuery] = useState('spiderman');
+
+  // Api fetch link for searching
+  const endPointSearch = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}`;
+
+  // Api fetch link for popularity
+  const endPointMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${apiKey}`
+
+
+  useEffect(()=>{
+
+    const fetchMovies = async () => {
+      const res = await fetch(endPointMovies);
+      let list = await res.json();
+      let shortList = list.results.slice(0, 12);
+      setMovies(shortList);
+    };
+
+    fetchMovies();
+  },[])
+
+
+  return (
+      <>
+        <div className="main-wrapper">
+          <h1>Movies</h1>
+          <Carousel />
+          <div className="movie-list">
+          {movies.map((movie) => {
+            return(
+              <div
+                key={movie.id}
+                className="single-movie"
+                style={{
+                  width: 300,
+                }}>
+                  <h2 className="movie-title">{movie.title}</h2>
+                  <img 
+                      src={`${imgPath}${movie.poster_path}`} 
+                      alt={movie.title} 
+                      className="movie-poster"
+                      />
+                  <div 
+                      className="movie-overview"
+                      >{movie.overview}</div>
+              </div>
+            );
+            })} 
+          </div>
+        </div>
+      </>
+    );
+  
     
-    useEffect( ()=>{
-        const fetchMovieList = async () => {
-          const res = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options);
-          let data = await res.json();
-    
-          console.log("List", data);
-        }
-        fetchMovieList();
-    
-      },[])
-
-    useEffect(() => {
-        document.title = `${appTitle} - Home`;
-      }, []);
-
-      return (
-        <main>
-            <h2>main</h2>;
-        </main>
-      )
 }
 
-
-export default PageHome;
+export default App;

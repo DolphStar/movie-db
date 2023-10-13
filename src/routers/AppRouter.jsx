@@ -3,19 +3,35 @@ import { appTitle } from "../globals/globalVariables";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "../components/Header";
-import App from "../components/App";
 import Footer from "../components/Footer";
-import PageHome from "../pages/PageHome";
+// import Carousel from "../components/Carousel";
 
+
+
+import PageHome from "../pages/PageHome";
+import Quiz from "../pages/Quiz";
+import About from "../pages/About";
+import Favorites from "../pages/Favorites";
+import Single from "../pages/Single";
 
 function AppRouter() {
   return (
     <BrowserRouter>
-      <div className="wrapper">
-        <Header title={appTitle}/>
-        <PageHome />
+      <Header />
+    
+    <div className="wrapper">
+        <Header />
+          <main>
+            <Routes>
+              <Route path="/" exact element={<PageHome/>} />
+              <Route path="/quiz" exact element={<Quiz/>} />
+              <Route path="/about" exact element={<About/>} />
+              <Route path="/favorites" exact element={<Favorites/>} />
+              <Route path="/movie/:id" exact element={<Single />} />
+            </Routes>
+          </main>
         <Footer />
-      </div>
+      </div>  
     </BrowserRouter>
   );
 }
