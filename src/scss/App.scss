@@ -19,6 +19,7 @@
 @use "layout/pages/favorites";
 @use "layout/pages/home";
 @use "layout/pages/trailr";
+@use "layout/pages/search";
 
 //will update carousel css to match sass later on
 .swiper-wrapper {
@@ -128,4 +129,4 @@
 // .carousel-2-swiper-slide article img{
 //     width:100%;
 // }
-@use "layout/pages/search";
+
