@@ -1,0 +1,31 @@
+@use "../../abstract/variables" as *;
+@use "../../abstract/mixins" as *;
+@use "../../abstract/animations" as *;
+
+.genre-filters {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    input {
+      margin-right: 8px;
+    }
+  }
+}
+
+h1 {
+  padding-top: 5%;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: 32.3% 32.3% 32.3%;
+  padding-top: 5%;
+  grid-gap: 3vw;
+  .movie-poster {
+    max-width: 15vw;
+  }
+}

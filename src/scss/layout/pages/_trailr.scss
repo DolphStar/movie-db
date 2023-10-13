@@ -1,45 +1,92 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
+@use "../../abstract/animations" as *;
 
-.random-movie-details {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 700px;
-    height: 500px;
+.dev-panel-frames {
+    @include dev-panel(5%, 10%)
 }
 
-.random-movie-details .frame {
-    /* width: 650px;
-    height: 365px; */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+.dev-panel-input {
+    @include dev-panel(50%, 10%)
 }
 
-.random-movie-details .countdown {
-    width: 690px;
-    height: 380px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 9;
-    transform: translateX(-50%) translateY(-50%);
+.dev-panel-firebase {
+    @include dev-panel(5%, 85%)
 }
 
-.random-movie-details h2 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
+// Trailr
+.banner {
+    @include absolute-center;
+    top: 20%;
 }
 
-.random-movie-details .title-blocker {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 50px;
-    background-color: black;
-    z-index: 99;
+// Frames
+.frameA {
+    @include absolute-center;
+    top: 30%;
+
+    .frameA-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker();
+
+            .pregame {
+                @include absolute-center;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                font-size: 2rem;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.frameB {
+    @include absolute-center;
+    top: 30%;
+
+    .frameB-wrapper {
+        position: relative;
+
+        .frame-blocker {
+            @include frame-blocker();
+        }
+    }
+}
+
+// Animations
+.alive {
+    animation-name: revive;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.dead {
+    animation-name: kill;
+    animation-duration: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+// Input
+.trailr-input {
+    @include absolute-center;
+    top: 70%;
+    width: 650px;
+
+    input {
+        width: 80%;
+        height: 30px;
+    }
+
+    .suggestions {
+        background-color: black;
+    }
+
+    .single-suggest:hover {
+        background-color: rgb(88, 88, 88);
+        cursor: pointer;
+    }
 }

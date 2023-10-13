@@ -9,10 +9,11 @@ import Footer from "../components/Footer";
 
 
 import PageHome from "../pages/PageHome";
-import Quiz from "../pages/Quiz";
+import Trailr from "../pages/Trailr";
 import About from "../pages/About";
 import Favorites from "../pages/Favorites";
 import Single from "../pages/Single";
+import Search from "../pages/PageSearch";
 
 function AppRouter() {
   return (
@@ -24,10 +25,11 @@ function AppRouter() {
           <main>
             <Routes>
               <Route path="/" exact element={<PageHome/>} />
-              <Route path="/quiz" exact element={<Quiz/>} />
+              <Route path="/trailr" exact element={<Trailr/>} />
               <Route path="/about" exact element={<About/>} />
               <Route path="/favorites" exact element={<Favorites/>} />
               <Route path="/movie/:id" exact element={<Single />} />
+              <Route path="/search" exact element={<Search/>} />
             </Routes>
           </main>
         <Footer />

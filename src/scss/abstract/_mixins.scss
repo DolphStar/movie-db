@@ -1,1 +1,41 @@
 @use "variables" as *;
+
+
+@mixin fav-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@mixin frame-blocker() {
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin absolute-center(){
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin dev-panel($top: 50%, $left: 10%){
+    position: absolute;
+    transform: translate(-50%);
+    border: black 1px solid;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: $top;
+    left: $left;
+
+    button {
+        max-width: 125px;
+        margin-bottom: 5px;
+    }
+}
