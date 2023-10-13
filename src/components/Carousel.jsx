@@ -73,6 +73,7 @@ const Carousel=()=> {
     </section>
     
     <section className="carousel-2-swiper-slide">
+        <h2>Trending Now</h2>
         <Swiper
             slidesPerView={2}
             spaceBetween={10}

@@ -48,15 +48,16 @@
 
 /* adjust trending text position layering*/
 
-@media screen and (min-width:1400px){
-  .hero-section-carousel{
-    height:80vh;
+@media screen and (min-width: 1400px) {
+  .hero-section-carousel {
+    height: 80vh;
   }
 }
 
 .carousel-content-image-wrapper {
   position: relative;
 }
+
 
 .gradient-overlay {
   position: absolute;
@@ -77,31 +78,49 @@
       rgba(238, 130, 238, 1) 100%
     );
 }
-.carousel-content-wrapper{
-  position:relative;
+.carousel-content-wrapper {
+  position: relative;
 }
 
 .carousel-content {
   color: white;
-  width:100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: left;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-@media screen and (min-width:450px) and (max-width:600px){
-  .carousel-content{
+@media screen and (min-width: 450px) and (max-width: 600px) {
+  .carousel-content {
     position: absolute;
-    bottom:3rem;
+    bottom: 3rem;
   }
 }
 
+@media screen and (min-width: 600px) {
+  .carousel-content {
+    position: absolute;
+    bottom: 8rem;
+  }
+}
 
-.carousel-content h2 {
-  position: relative;
+.carousel-content-wrapper h2 {
+  /* position: relative; */
   font-size: 1.2rem;
   text-align: left;
-  top: -1rem;
-  left: -7rem;
+  /* top: -1rem; */
+  /* left: -7rem; */
   margin: 0;
-  width:80%;
+  width: 80%;
+}
+
+.carousel-content-wrapper p {
+  margin: 0;
 }
 
 @media screen and (min-width: 600px) {
@@ -140,14 +159,15 @@
 }
 
 .carousel-info-button {
-  position: absolute;
-  right: 8.4rem;
-  bottom: -2.5rem;
+  /* position: absolute; */
+  /* right: 8.4rem; */
+  /* bottom: -2.5rem; */
   background-color: #646cff;
   color: white;
   font-size: 0.7rem;
   padding: 0.5rem;
   border-radius: 25px;
+  align-self: self-start;
 }
 
 .carousel-2-swiper-slide {
@@ -159,15 +179,15 @@
   background-color: #646cff;
   color: white;
   border-radius: 15px;
-  position:relative;
+  position: relative;
 }
 
-.carousel-2-swiper-slide-content .rating-circle{
-  position:absolute;
-  top:2%;
-  right:2%;
-  width:70px;
-  height:70px;
+.carousel-2-swiper-slide-content .rating-circle {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 70px;
+  height: 70px;
   background-color: #000;
   border-radius: 50%;
 }
@@ -175,11 +195,11 @@
 .carousel-2-swiper-slide-title {
   text-align: left;
   padding-left: 20px;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
-@media screen and (min-width:420px){
-  .carousel-2-swiper-slide-title{
+@media screen and (min-width: 420px) {
+  .carousel-2-swiper-slide-title {
     font-size: 1rem;
   }
 }
