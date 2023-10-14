@@ -4,7 +4,6 @@
 // TrailrSolo Component Imports
 import PlayerInput from "./PlayerInput";
 import Frames from "./Frames";
-import VictoryScreen from "./VictoryScreen";
 
 function TrailrSolo({
                     movieData, setMovieData,

@@ -22,6 +22,7 @@ import { useSearchParams } from "react-router-dom";
 
 function TrailrMultiplayer({
                             offscreenFrame, setOffscreenFrame,
+                            movieData, setMovieData,
                             videoState, setVideoState,
                             searchData, setSearchData,
                             roomID, setRoomID,
@@ -97,6 +98,7 @@ function TrailrMultiplayer({
     ) 
     : (
       <Room offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+            movieData={movieData} setMovieData={setMovieData}
             videoState={videoState} setVideoState={setVideoState}
             searchData={searchData} setSearchData={setSearchData}
             roomID={roomID} setRoomID={setRoomID}

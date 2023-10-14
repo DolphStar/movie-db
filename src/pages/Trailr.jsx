@@ -113,6 +113,7 @@ function Trailr() {
       ) 
       : gameMode === 'multiplayer' ? (
         <TrailrMultiplayer  offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            movieData={movieData} setMovieData={setMovieData}
                             videoState={videoState} setVideoState={setVideoState}
                             searchData={searchData} setSearchData={setSearchData}
                             input={input} setInput={setInput}
