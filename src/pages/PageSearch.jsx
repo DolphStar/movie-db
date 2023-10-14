@@ -4,6 +4,7 @@ import FavoritesContext from "../context/FavoritesContext";
 import { fetchSearchResults, fetchGenres } from "../utilities/SearchFunctions";
 import { imgPath } from "../globals/globalVariables";
 import favoriteIcon from "../icons/favorite.svg";
+import notfavoriteIcon from "../icons/notfavorite.svg";
 import { handleFavorites } from "../utilities/favoritesFunctions";
 
 function Search() {
@@ -13,6 +14,10 @@ function Search() {
 
     const handleFavs = (movie) => {
       handleFavorites(movie, favorites, setFavorites);
+    };
+
+    const isFavorite = (movie) => {
+      return favorites.some((favorite) => favorite.id === movie.id);
     };
 
    // fetch search results when searchQuery or selectedGenres change
@@ -88,7 +93,7 @@ function Search() {
                 >
                   <img
                     className="favorite-icon"
-                    src={favoriteIcon}
+                    src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
                     alt="Favorite"
                   />
                 </button>
