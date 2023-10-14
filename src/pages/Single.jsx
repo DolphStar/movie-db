@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { apiKey, imgPath } from "../globals/globalVariables";
 import { youtubePath } from "../globals/globalVariables";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { handleFavorites } from "../utilities/favoritesFunctions";
+import FavoritesContext from "../context/FavoritesContext";
+import favoriteIcon from "../icons/favorite.svg";
+import notfavoriteIcon from "../icons/notfavorite.svg";
 import Rating from "../components/Rating";
 
 // Import Swiper styles
@@ -21,6 +25,17 @@ function Single() {
   // const [trailerData, setTrailerData] = useState(null);
   const allVideos = singleMovieData?.videos?.results;
   //use find instead of filter (find returns one. filter returns all that match)
+
+  const { favorites, setFavorites } = useContext(FavoritesContext);
+
+    // Function to handle adding/removing from favorites
+    const handleFavs = (movie) => {
+      handleFavorites(movie, favorites, setFavorites);
+    };
+    // check if movie is already in favorites, to detirmine which icon use
+    const isFavorite = (movie) => {
+      return favorites.some((favorite) => favorite.id === movie.id);
+    };
 
   const trailerPath = allVideos?.find(
     (movie) =>
@@ -105,6 +120,21 @@ function Single() {
             src={`https://image.tmdb.org/t/p/w342${singleMovieData?.poster_path}`}
             alt={singleMovieData?.title}
           />
+
+          <button
+                    className="favorite-button"
+                    onClick={() => handleFavs(singleMovieData)}
+                  >
+          <img
+            className="favorite-icon"
+            src={
+              singleMovieData && isFavorite(singleMovieData) 
+                ? favoriteIcon 
+                : notfavoriteIcon
+            }
+            alt="Favorite"
+          />
+          </button>
 
           <h3>Cast</h3>
         </article>

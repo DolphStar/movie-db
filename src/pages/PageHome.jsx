@@ -4,6 +4,7 @@ import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
+import notfavoriteIcon from "../icons/notfavorite.svg";
 
 function App() {
   // Holds api request data
@@ -26,6 +27,9 @@ function App() {
     handleFavorites(movie, favorites, setFavorites);
   };
 
+  const isFavorite = (movie) => {
+    return favorites.some((favorite) => favorite.id === movie.id);
+  };
 
 
   useEffect(() => {
@@ -65,11 +69,11 @@ function App() {
                     className="favorite-button"
                     onClick={() => handleFavs(movie)}
                   >
-                    <img
-                      className="favorite-icon"
-                      src={favoriteIcon}
-                      alt="Favorite"
-                    />
+                  <img
+                    className="favorite-icon"
+                    src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
+                    alt="Favorite"
+                  />
                   </button>
                   <div className="movie-overview">{movie.overview}</div>
                 </div>

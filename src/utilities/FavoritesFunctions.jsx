@@ -44,3 +44,5 @@ export const getFavorites = () => {
 //   console.log(favorites);
   return favorites ? JSON.parse(favorites) : [];
 };
+
+
