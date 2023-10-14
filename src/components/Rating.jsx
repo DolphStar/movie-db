@@ -1,6 +1,5 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
-import "../styles/rating-circle.css";
 import React from "react";
 
 const Rating = ({rate}) => {
