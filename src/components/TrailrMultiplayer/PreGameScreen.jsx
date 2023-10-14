@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 // Firebase Imports
-import { doc, addDoc, setDoc } from "firebase/firestore";
+import { doc, addDoc, setDoc, getDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
 
@@ -39,9 +39,30 @@ function PreGameScreen({
   // When playerB joins create a playerB playerData doc in the db
   useEffect(()=>{
     if(player === 'playerB'){
-      
+      createPlayerBDoc()
     }
   }, [])
+
+  // Create playerB if there isn't already a playerB in the room collection
+  async function createPlayerBDoc(){
+    try {
+      const docSnap = await getDoc(selfRef);
+      if(!docSnap.exists()){
+        await setDoc(selfRef, {
+          ready: false,
+          name: 'Norb',
+          hp: 5000,
+          guess: '',
+          present: true,
+        });
+        console.log("PlayerB Doc created");
+      } else {
+        console.log("PlayerB Doc exists");
+      }
+    } catch (error) {
+      console.log('Error connecting to DB: ', error)
+    }
+  }
 
   // Copy the invite link to clipboard
   async function copyToClipBoard(){
