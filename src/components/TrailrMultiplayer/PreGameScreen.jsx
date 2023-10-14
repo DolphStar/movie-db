@@ -47,6 +47,7 @@ function PreGameScreen({
       [player]: {
         ...prevPlayerData[player],
         name: newName,
+        ready: true,
       },
     }));
   }
