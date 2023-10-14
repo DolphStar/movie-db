@@ -46,6 +46,7 @@ function SearchBar() {
   const selectSuggestion = (movie) => {
     setSearchQuery(movie.title);
     setSuggestions([]);
+    navigate(`/movie/${movie.id}`);
     // Add navigate to solo movie page when clicked later
   };
 
