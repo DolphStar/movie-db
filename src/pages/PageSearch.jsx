@@ -6,6 +6,7 @@ import { imgPath } from "../globals/globalVariables";
 import favoriteIcon from "../icons/favorite.svg";
 import notfavoriteIcon from "../icons/notfavorite.svg";
 import { handleFavorites } from "../utilities/favoritesFunctions";
+import { Link } from "react-router-dom";
 
 function Search() {
   const { searchQuery, searchResult, setSearchResult, selectedGenres, setSelectedGenres, allGenres, setAllGenres } =
@@ -97,6 +98,9 @@ function Search() {
                     alt="Favorite"
                   />
                 </button>
+                <Link to={`/movie/${movie.id}`} className="carousel-info-button">
+                  More Info
+                </Link>
                 {/* <div className="movie-overview">{movie.overview}</div> */}
               </div>
             </div>

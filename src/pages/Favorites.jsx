@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
+import { Link } from "react-router-dom";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
 import notfavoriteIcon from "../icons/notfavorite.svg";
 
 function Favorites() {
   const { favorites, setFavorites } = useContext(FavoritesContext);
+
 
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites);
@@ -39,6 +41,9 @@ function Favorites() {
                     alt="Favorite"
                   />
                 </button>
+                <Link to={`/movie/${favorites.id}`} className="carousel-info-button">
+                  More Info
+                </Link>
               </div>
             </div>
           ))}
