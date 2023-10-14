@@ -2,15 +2,12 @@
 @use "../../abstract/mixins" as *;
 @use "../../abstract/animations" as *;
 
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
 
 .movie-item {
     position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .favorite-button {

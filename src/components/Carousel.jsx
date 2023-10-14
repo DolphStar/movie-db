@@ -7,8 +7,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 // import required modules
-import { Navigation } from 'swiper/modules';
-import { Pagination } from 'swiper/modules';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
 
 //Import 
 import {apiKey} from "../globals/globalVariables";
@@ -79,6 +79,10 @@ const Carousel=()=> {
             spaceBetween={10}
             navigation={true}
             pagination={true}
+            autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
             breakpoints={{
                 359: {
                     slidesPerView: 2,
@@ -97,7 +101,7 @@ const Carousel=()=> {
                     spaceBetween: 20,
                 }
             }}
-            modules={[Pagination,Navigation]}
+            modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper"
         >
             {dataNowPlaying?.results?.map((oneNowPlaying)=>(

@@ -20,13 +20,10 @@ function App() {
 
   const { favorites, setFavorites } = useContext(FavoritesContext);
 
-
   // Function to handle adding/removing from favorites
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites);
   };
-
-
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -42,8 +39,11 @@ function App() {
   return (
     <>
       <div className="main-wrapper">
-        <h1>Movies</h1>
-          <Carousel />
+        <Carousel />
+        <button>Popular</button>
+        <button>Top Rated</button>
+        <button>Now Playing</button>
+        <button>Upcoming</button>
         <div className="movie-list">
           {movies.map((movie) => {
             return (
