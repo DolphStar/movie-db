@@ -68,7 +68,9 @@ function Room({
       playerData.playerA.ready === false || playerData.playerB.ready === false ? (
         <PreGameScreen  roomID={roomID} setRoomID={setRoomID}
                         player={player} setPlayer={setPlayer}
-                        playerData={playerData} setPlayerData={setPlayerData}/>
+                        playerData={playerData} setPlayerData={setPlayerData}
+                        selfRef={selfRef} enemyRef={enemyRef}
+                        app={app} db={db}/>
       ) : (
         <>
         <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}

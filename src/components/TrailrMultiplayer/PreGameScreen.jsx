@@ -17,6 +17,8 @@ function PreGameScreen({
                         roomID, setRoomID,
                         player, setPlayer,
                         playerData, setPlayerData,
+                        selfRef, enemyRef,
+                        app, db,
                         }){
 
   const [newName, setNewName] = useState('');
@@ -31,6 +33,13 @@ function PreGameScreen({
       const currentURL = window.location.href;
       const newURL = currentURL.replace('playerA', 'playerB');
       setInviteLink(newURL);
+    }
+  }, [])
+
+  // When playerB joins create a playerB playerData doc in the db
+  useEffect(()=>{
+    if(player === 'playerB'){
+      
     }
   }, [])
 
