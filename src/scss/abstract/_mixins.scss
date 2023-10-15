@@ -5,6 +5,10 @@
     background: none;
     border: none;
     cursor: pointer;
+  // This will remove the outline for mouse users but keep it for keyboard navigation
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 @mixin frame-blocker() {
