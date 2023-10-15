@@ -4,10 +4,13 @@ import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
+import Rating from "../components/Rating";
+import { Link } from "react-router-dom";
 
 function App() {
   // Holds api request data
   const [movies, setMovies] = useState([]);
+  const [category, setCategory] = useState("popular");
 
   // Holds user inputted search data
   // const [searchQuery, setSearchQuery] = useState("spiderman");
@@ -16,7 +19,6 @@ function App() {
   // const endPointSearch = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}`;
 
   // Api fetch link for popularity
-  const endPointMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${apiKey}`;
 
   const { favorites, setFavorites } = useContext(FavoritesContext);
 
@@ -27,6 +29,7 @@ function App() {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      const endPointMovies = `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1'&api_key=${apiKey}`;
       const res = await fetch(endPointMovies);
       let list = await res.json();
       let shortList = list.results.slice(0, 12);
@@ -34,27 +37,58 @@ function App() {
     };
 
     fetchMovies();
-  }, []);
+  }, [category]);
+
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
 
   return (
     <>
       <div className="main-wrapper">
         <Carousel />
-        <button>Popular</button>
-        <button>Top Rated</button>
-        <button>Now Playing</button>
-        <button>Upcoming</button>
+        <div className="radio-buttons">
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="popular"
+              onChange={handleCategory}
+            />
+            <span>Popular</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="now_playing"
+              onChange={handleCategory}
+            />
+            <span>Now Playing</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="top_rated"
+              onChange={handleCategory}
+            />
+            <span>Top Rated</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="upcoming"
+              onChange={handleCategory}
+            />
+            <span>Upcoming</span>
+          </label>
+        </div>
         <div className="movie-list">
           {movies.map((movie) => {
             return (
-              <div
-                key={movie.id}
-                className="single-movie"
-                style={{
-                  width: 300,
-                }}
-              >
-                <h2 className="movie-title">{movie.title}</h2>
+              <div key={movie.id} className="single-movie">
                 <div className="movie-item">
                   <img
                     src={`${imgPath}${movie.poster_path}`}
@@ -71,7 +105,18 @@ function App() {
                       alt="Favorite"
                     />
                   </button>
-                  <div className="movie-overview">{movie.overview}</div>
+                  <h2 className="movie-title">{movie.title}</h2>
+                  <div className="home-movie-content">
+                  <Rating rate={movie?.vote_average}/>
+                  <div>{movie?.release_date}</div>
+                  </div>
+                  <div className="movie-overview">{movie?.overview}</div>
+                  <Link
+                    to={`/movie/${movie?.id}`}
+                    className="carousel-info-button"
+                  >
+                    More Info
+                  </Link>
                 </div>
               </div>
             );
