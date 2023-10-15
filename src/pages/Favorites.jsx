@@ -62,7 +62,9 @@ function Favorites() {
               </Link> */}
                 </div>
                 <div className="movie-hover">
-                  <div className="movie-overview">{favorites.overview}</div>
+                  <div className="movie-overview">{favorites.overview}
+                  <p>Release Date: {favorites.release_date}</p>
+                  </div>
                 </div>
               </div>
             </Link>

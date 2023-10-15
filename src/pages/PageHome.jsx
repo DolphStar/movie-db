@@ -74,7 +74,9 @@ function App() {
                   </button>
                 </div>
                 <div className="movie-hover">
-                  <div className="movie-overview">{movie.overview}</div>
+                  <div className="movie-overview">{movie.overview}
+                  <p>Release Date: {movie.release_date}</p>
+                  </div>
                 </div>
               </div>
             </Link>
