@@ -4,6 +4,7 @@ import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
+import placeholder from "../icons/placeholder.png";
 import Rating from "../components/Rating";
 import { Link } from "react-router-dom";
 
@@ -53,6 +54,7 @@ function App() {
               type="radio"
               name="radios"
               value="popular"
+              checked={category === "popular"}
               onChange={handleCategory}
             />
             <span>Popular</span>
@@ -62,6 +64,7 @@ function App() {
               type="radio"
               name="radios"
               value="now_playing"
+              checked={category === "now_playing"}
               onChange={handleCategory}
             />
             <span>Now Playing</span>
@@ -71,6 +74,7 @@ function App() {
               type="radio"
               name="radios"
               value="top_rated"
+              checked={category === "top_rated"}
               onChange={handleCategory}
             />
             <span>Top Rated</span>
@@ -80,6 +84,7 @@ function App() {
               type="radio"
               name="radios"
               value="upcoming"
+              checked={category === "upcoming"}
               onChange={handleCategory}
             />
             <span>Upcoming</span>
@@ -90,33 +95,42 @@ function App() {
             return (
               <div key={movie.id} className="single-movie">
                 <div className="movie-item">
-                  <img
-                    src={`${imgPath}${movie.poster_path}`}
-                    alt={movie.title}
-                    className="movie-poster"
-                  />
-                  <button
-                    className="favorite-button"
-                    onClick={() => handleFavs(movie)}
-                  >
+                  <div className="poster-text">
                     <img
-                      className="favorite-icon"
-                      src={favoriteIcon}
-                      alt="Favorite"
+                      src={
+                        movie.poster_path
+                          ? `${imgPath}${movie.poster_path}`
+                          : { placeholder }
+                      }
+                      alt={movie.title}
+                      className="movie-poster"
                     />
-                  </button>
-                  <h2 className="movie-title">{movie.title}</h2>
-                  <div className="home-movie-content">
-                  <Rating rate={movie?.vote_average}/>
-                  <div>{movie?.release_date}</div>
+                    <div className="movie-overview">{movie?.overview}</div>
+                    <button
+                      className="favorite-button"
+                      onClick={() => handleFavs(movie)}
+                    >
+                      <img
+                        className="favorite-icon"
+                        src={favoriteIcon}
+                        alt="Favorite"
+                      />
+                    </button>
                   </div>
-                  <div className="movie-overview">{movie?.overview}</div>
-                  <Link
-                    to={`/movie/${movie?.id}`}
-                    className="carousel-info-button"
-                  >
-                    More Info
-                  </Link>
+
+                  <h2 className="movie-title">{movie.title}</h2>
+                  <div className="content-button-wrapper">
+                    <div className="home-movie-content">
+                      <Rating rate={movie?.vote_average} />
+                      <div>{movie?.release_date}</div>
+                    </div>
+                    <Link
+                      to={`/movie/${movie?.id}`}
+                      className="carousel-info-button"
+                    >
+                      More Info
+                    </Link>
+                  </div>
                 </div>
               </div>
             );

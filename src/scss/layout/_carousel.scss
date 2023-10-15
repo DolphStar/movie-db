@@ -119,9 +119,14 @@
 }
 .carousel-2-swiper-slide-title {
 	text-align: left;
-	padding-left: 20px;
+	padding: 10px;
 	font-size: 0.8rem;
+	p{
+		margin:0;
+	}
 }
+
+
 @media screen and (min-width: 1400px) {
 	.hero-section-carousel {
 		height: 80vh;

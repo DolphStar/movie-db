@@ -17,13 +17,8 @@ import "../styles/Acting.css";
 function Single() {
   const { id } = useParams();
   const singleMovieDetails = `https://api.themoviedb.org/3/movie/${id}?append_to_response=videos%2Ccredits&language=en-US&api_key=${apiKey}`;
-  const singleMovieImageRecommendations = `https://api.themoviedb.org/3/movie/${id}?append_to_response=images%2Crecommendations&api_key=${apiKey}`;
 
   const [singleMovieData, setSingleMovieData] = useState(null);
-  const [
-    singleMovieImageRecommendationsData,
-    setSingleMovieImageRecommendationsData,
-  ] = useState(null);
   // const [trailerData, setTrailerData] = useState(null);
   const allVideos = singleMovieData?.videos?.results;
   //use find instead of filter (find returns one. filter returns all that match)
@@ -46,28 +41,15 @@ function Single() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(singleMovieDetails);
-      const response_image_recommendation = await fetch(
-        singleMovieImageRecommendations
-      );
-
       const json = await response.json();
-      const json_image_recommendation =
-        await response_image_recommendation.json();
-
       setSingleMovieData(json);
-      setSingleMovieImageRecommendationsData(json_image_recommendation);
+
     };
     fetchData();
-  }, [singleMovieDetails, singleMovieImageRecommendations]);
+  }, [singleMovieDetails]);
 
   const singleMovieGenres = singleMovieData?.genres;
   const movieMinuteLength = singleMovieData?.runtime;
-  const singleMovieImages =
-    singleMovieImageRecommendationsData?.images?.backdrops?.filter(
-      (poster) => poster.height === 2160
-    );
-
-  console.log(singleMovieImages);
 
   //Changing time format
   function MinutestoHours(totalMinutes) {
@@ -165,24 +147,6 @@ function Single() {
           ))}
         </Swiper>
       </section>
-      <div className="image-container">
-        {singleMovieImages
-          ?.slice(0, 3)
-          .map((item, index) =>
-            index == 0 ? (
-              <img
-                className="first-image"
-                key={index}
-                src={`https://image.tmdb.org/t/p/original${item.file_path}`}
-              />
-            ) : (
-              <img
-                key={index}
-                src={`https://image.tmdb.org/t/p/original${item.file_path}`}
-              />
-            )
-          )}
-      </div>
     </div>
   );
 }

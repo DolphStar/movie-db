@@ -52,10 +52,30 @@
 }
 
 //overview hover
+.poster-text{
+    position:relative;
+}
+
 .movie-overview{
     display:none;
+    position:absolute;
+    bottom:0rem;
+    padding:1rem;
+    background-color:rgba(0, 0, 0, 0.632);
+}
+
+.favorite-button{
+    position:absolute;
+    top:2%;
+    right:2%;
 }
 
 .single-movie:hover .movie-overview{
     display:block;
+}
+
+.content-button-wrapper{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 }
