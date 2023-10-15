@@ -69,6 +69,16 @@
     }
 }
 
+
+.suggestions-list {
+    display: none;  // Hide by default
+  
+    @media (min-width: 1000px) {
+      display: block; 
+    }
+  }
+  
+
 // nav ul {
 //     list-style: none;
 //     padding: 0;

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
 import notfavoriteIcon from "../icons/notfavorite.svg";
+// import infoIcon from "../icons/info.svg";
+import Rating from "../components/Rating";
 
 function Favorites() {
   const { favorites, setFavorites } = useContext(FavoritesContext);
@@ -19,32 +21,51 @@ function Favorites() {
 
   return (
     <div className="favorites-wrapper">
+      <h2 className="fav-header">Your Favourites</h2>
       {favorites && favorites.length > 0 ? (
         <section className="favorites-main">
           {favorites.map((favorites, index) => (
-            <div key={index} className="favorite-movie">
-              <h2 className="movie-title">{favorites.title}</h2>
-              <div className="movie-item">
-                <img
-                  src={`${imgPath}${favorites.poster_path}`}
-                  alt={favorites.title}
-                  className="movie-poster"
-                />
-                <button
-                  className="favorite-button"
-                  onClick={() => handleFavs(favorites)}
-                >
-                  <img
-                    className="favorite-icon"
-                    src={isFavorite(favorites) ? favoriteIcon : notfavoriteIcon}
-                    alt="Favorite"
-                  />
-                </button>
-                <Link to={`/movie/${favorites.id}`} className="carousel-info-button">
-                  More Info
-                </Link>
+            <Link to={`/movie/${favorites.id}`} key={index}>
+              <div
+                key={index}
+                className="movie-item"
+                style={{
+                  backgroundImage: `url(${imgPath}${favorites.poster_path})`,
+                }}
+              >
+                <div className="overlay">
+                  <div className="rating">
+                    <Rating rate={favorites.vote_average} />
+                  </div>
+                  <h2 className="movie-title">{favorites.title}</h2>
+                  <button
+                    className="favorite-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleFavs(favorites);
+                    }}
+                  >
+                    <img
+                      className="favorite-icon"
+                      src={
+                        isFavorite(favorites) ? favoriteIcon : notfavoriteIcon
+                      }
+                      alt="Favorite"
+                    />
+                  </button>
+                  {/* <Link to={`/movie/${favorites.id}`} className="info-button">
+               <img
+               className="info-icon"
+               src={infoIcon}
+               alt="Info"
+               />
+              </Link> */}
+                </div>
+                <div className="movie-hover">
+                  <div className="movie-overview">{favorites.overview}</div>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </section>
       ) : (

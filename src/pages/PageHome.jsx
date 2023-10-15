@@ -2,19 +2,16 @@ import Carousel from "../components/Carousel";
 import { useEffect, useState, useContext } from "react";
 import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
+import { Link } from "react-router-dom";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
 import notfavoriteIcon from "../icons/notfavorite.svg";
+import Rating from "../components/Rating";
 
 function App() {
   // Holds api request data
   const [movies, setMovies] = useState([]);
 
-  // Holds user inputted search data
-  // const [searchQuery, setSearchQuery] = useState("spiderman");
-
-  // Api fetch link for searching
-  // const endPointSearch = `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=${apiKey}`;
 
   // Api fetch link for popularity
   const endPointMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${apiKey}`;
@@ -45,41 +42,43 @@ function App() {
 
   return (
     <>
-      <div className="main-wrapper">
+     <div className="main-wrapper">
         <h1>Movies</h1>
-          <Carousel />
+        <Carousel />
         <div className="movie-list">
-          {movies.map((movie) => {
-            return (
+          {movies.map((movie, index) => (
+            <Link to={`/movie/${movie.id}`} key={index}>
               <div
-                key={movie.id}
-                className="single-movie"
+                className="movie-item"
                 style={{
-                  width: 300,
+                  backgroundImage: `url(${imgPath}${movie.poster_path})`,
                 }}
               >
-                <h2 className="movie-title">{movie.title}</h2>
-                <div className="movie-item">
-                  <img
-                    src={`${imgPath}${movie.poster_path}`}
-                    alt={movie.title}
-                    className="movie-poster"
-                  />
+                <div className="overlay">
+                  <div className="rating">
+                    <Rating rate={movie.vote_average} />
+                  </div>
+                  <h2 className="movie-title">{movie.title}</h2>
                   <button
                     className="favorite-button"
-                    onClick={() => handleFavs(movie)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleFavs(movie);
+                    }}
                   >
-                  <img
-                    className="favorite-icon"
-                    src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
-                    alt="Favorite"
-                  />
+                    <img
+                      className="favorite-icon"
+                      src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
+                      alt="Favorite"
+                    />
                   </button>
+                </div>
+                <div className="movie-hover">
                   <div className="movie-overview">{movie.overview}</div>
                 </div>
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
       </div>
     </>
