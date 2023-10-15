@@ -2,6 +2,62 @@
 
 
   .tmdb-icon {
-    width: 5rem;
-    height: 5rem;
+    width: 7rem;
+    height: 7rem;
   }
+
+
+  .about-container {
+    // background: #121212; 
+  }
+  
+  .about-wrapper {
+    margin: 3rem auto;
+    max-width: 800px;
+    // background: #121212;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-section, .api-section, .team-section {
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #646cff;
+  }
+  
+  .section-content {
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  
+  
+  .team-list {
+    list-style: none;
+    padding: 0;
+    
+    .team-member {
+    //   background: #343434;
+    display: flex;
+    align-items: center;
+      margin: 0.1rem 0;
+      padding: 0.3rem;
+      border-radius: 4px;
+      font-weight: bold;
+      .linkedin-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.2rem; // Adds some left margin for spacing
+      }
+    }
+  }
+  
+
+  
