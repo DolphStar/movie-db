@@ -27,6 +27,7 @@ function TrailrSolo({
         <h2>What Movie is this?</h2>
       )}
     </div>
+
     <Frames       movieData={movieData} setMovieData={setMovieData}
                   videoData={videoData} setVideoData={setVideoData}
                   offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
@@ -43,6 +44,25 @@ function TrailrSolo({
                   answer={answer} setAnswer={setAnswer}
                   input={input} setInput={setInput}
                   searchData={searchData} setSearchData={setSearchData}/>
+
+                {/* buttons for testing */}
+    <div className="dev-panel-frames">
+      <h3>Frames dev panel</h3>
+      <p>Current offscreenFrame: {offscreenFrame}</p>
+      <p>On Screen Movie: {movieData[offscreenFrame === 0 ? 1 : 0].title}</p>
+      <p>FrameA state: {videoState.frameA}</p>
+      <p>FrameB state: {videoState.frameB}</p>
+      <p>Answer: {answer ? 'true' : 'false'}</p>
+    </div>
+
+    <div className="dev-panel-firebase">
+      <h3>Firebase Dev panel</h3>
+      
+    </div>
+
+    <div className="dev-panel-input">
+      <h3>Input dev panel</h3>
+    </div>
     </>
   )
 }

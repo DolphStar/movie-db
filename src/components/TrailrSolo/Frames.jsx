@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 // Global Variable Imports
 import { apiKey } from "../../globals/globalVariables";
@@ -43,7 +44,7 @@ function Frames({
       setMovieData(movieData => {
         const newMovieData = [...movieData];
         newMovieData[offscreenFrame] = movieList.results[randomIndex];
-        // Calling functions here to fix the state update lag issue
+        // Calling fetch video here to fix the state update lag issue
         fetchVideos(newMovieData[offscreenFrame].id);
         return newMovieData;
       });
@@ -104,45 +105,30 @@ function Frames({
     }
   }
 
+  // When the correct answer is inputted, set answer to true to show the victory screen
+  useEffect(()=>{
+    
+  }, [answer])
+
   // When the offscreenFrame changes run fetchMovies (runs on initial load)
   useEffect(()=>{
     fetchMovies();
   }, [offscreenFrame])
 
-  // When the correct answer is input change the frame
-  useEffect(()=>{
-    if(answer === true){
-      play();
-      setTimeout(()=>{
-        frameCircleOfLife();
-      }, 3000);
-    }
-  }, [answer]);
-
-  // Pre-round countdown
-  useEffect(() => {
-    let intervalID;
-
-    if (isCounting === true) {
-      if (countdown > 0) {
-        intervalID = setInterval(() => {
-          setCountdown((prevCountdown) => prevCountdown - 1);
-        }, 1000);
-      } else {
-        setGame(true)
-        setIsCounting(false);
-        setCountdown(4);
-      }
-    }
-
-    // Clear the interval when the component unmounts or when isCounting changes to false
-    return () => {
-      clearInterval(intervalID);
-    };
-  }, [isCounting, countdown, setIsCounting, setCountdown]);
-
   return (
     <>
+
+      {
+        answer ? (
+          <div className="victory-screen">
+            <h3>Put movie title here</h3>
+            <div>Movie Image goes here</div>
+            <p>Put the movie description here</p>
+            <a href="#">Single movie page link goes here</a>
+          </div>
+        ) : (
+          null
+        )}
       {/* starts as the alive frame */}
       <div className="frameA alive" ref={frameA}>
         <div className="frameA-wrapper ">
