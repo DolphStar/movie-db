@@ -18,7 +18,7 @@ function Nav() {
         <button className='trailr-btn'>
           <NavLink className="trailr-navlink" to='/trailr'>Trailr</NavLink>
         </button>
-        <button className='down-arrow' onClick={toggleMenu}>
+        <button className='arrow' onClick={toggleMenu}>
           {
             menuOpen === false ? (
               <img src={downArrow} alt="expand menu" />
@@ -27,11 +27,17 @@ function Nav() {
             )
           }
         </button>
-      </div>
-      <ul className='sub-menu'>
-        <li><NavLink to='/about'>About</NavLink></li>
-        <li><NavLink to='/favorites'>Favorites</NavLink></li>
-      </ul>
+        { 
+          menuOpen === true ? (
+            <ul className='sub-menu'>
+              <li><NavLink to='/favorites'>Favorites</NavLink></li>
+              <li><NavLink to='/about'>About</NavLink></li>
+            </ul>
+          ) : (
+            null
+          )
+        } 
+      </div>   
     </nav>
   )
 }

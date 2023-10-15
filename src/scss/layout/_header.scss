@@ -6,8 +6,8 @@
 .main-header {
     top: 3%;
     z-index: 9999;
+    position: sticky;
     height: $header-item-height;
-    background-color: black;
 
     .header-wrapper {
         display: flex;
@@ -17,21 +17,23 @@
         position: relative;
         height: $header-item-height;
 
+        // Logo Styling
         .logo {
-            width: 50px;
-            min-width: 50px;
+            width: 75px;
+            min-width: 40px;
             align-items: center;
         }
 
+        // Search Bar styling
         .search-bar {
             background-color: rgba(0, 0, 0, 0.384);
-            padding: 10px 30px;
+            padding: 10px 10px;
             border: 1px solid whitesmoke;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            min-width: 35px;
+            min-width: 30px;
             box-sizing: border-box;
             position: relative;
             margin: 0 5px;
@@ -49,10 +51,15 @@
             }
         }
 
+        @media screen and (min-width: 500px) {
+            .search-bar{
+                padding: 10px 30px;
+            }
+        }
+
+        // Nav bar styling
         .main-nav {
-            border: 1px solid white;
             z-index: 9999;
-            background-color: white;
 
             ul {
                 @include remove-default-styling;
@@ -64,34 +71,61 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
+                position: relative;
 
                 .trailr-btn {
                     @include remove-default-styling;
-                    margin-bottom: 5px;
-                    font-size: 1.4em;
+                    border-radius: 0;
+                    border: 1px solid white;
+                    background-color: rgba(0, 0, 0, 0.384);
+                    border-right: none;
+                    padding: 3px 10px;
+                    height: 35px;
                 }
 
-                .down-arrow {
+                @media screen and (min-width: 500px){
+                    .trailr-btn{
+                        padding: 3px 15px;
+                        font-size: 1.4em;
+                    }
+                }
+
+                .arrow {
                     @include remove-default-styling;
+                    border-radius: 0;
                     transition: background-color 0.2s ease-in-out;
                     padding: 0 15px;
-                    border-radius: 3px;
+                    height: 35px;
+                    background-color: whitesmoke;
+                    border: 1px solid white;
 
                     img {
+                        min-width: 15px;
                         width: 25px;
                     }
                 }
 
-                .down-arrow:hover {
-                    background-color: whitesmoke;
+                .arrow:hover {
+                    border-color: black;
                 }
             }
 
             .sub-menu {
+                @include remove-default-styling;
                 position: absolute;
-                height: 0;
+                top: 100%;
                 transition: height 0.3s ease-in-out;
-                overflow: hidden;
+                background-color: rgba(0, 0, 0, 0.384);
+                padding: 0 20px;
+                border: 1px white solid;
+                border-top: none;
+            }
+
+            @media screen and (min-width: 500px){
+                .sub-menu{
+                    padding: 0 24px;
+                    font-size: 1.4em;
+                }
             }
         }
     }
