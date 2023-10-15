@@ -6,8 +6,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import Carousel from "../components/Carousel";
 
-
-
 import PageHome from "../pages/PageHome";
 import Trailr from "../pages/Trailr";
 import About from "../pages/About";
@@ -18,9 +16,7 @@ import Search from "../pages/PageSearch";
 function AppRouter() {
   return (
     <BrowserRouter>
-      <Header />
-    
-    <div className="wrapper">
+      <div className="wrapper">
         <Header />
           <main>
             <Routes>

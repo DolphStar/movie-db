@@ -2,25 +2,77 @@
 @use "../abstract/mixins" as *;
 @use "../abstract/animations" as *;
 
-nav {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%)
+
+.main-header {
+    // background-color: rgba(0, 0, 0, 0.75);
+    position: sticky;
+    top: 3%;
+    z-index: 9999;
+    height: $header-item-height;
+
+    .header-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        height: $header-item-height;
+
+        .search-bar {
+            @include absolute-center;
+            background-color: rgba(0, 0, 0, 0.384);
+            padding: 10px 30px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+        
+            .search-bar-input {
+                @include remove-default-styling;
+            }
+        
+            .search-button {
+                @include remove-default-styling;
+                width: 20px;
+            }
+
+            .suggested-movie {
+                cursor: pointer;
+                border-radius: 8px;
+                border: 1px solid black;
+                padding: 0.3em;
+                font-size: 1em;
+                font-weight: 400;
+                font-family: inherit;
+                background-color: #1a1a1a;
+                transition: border-color 0.25s;
+            }
+            
+            .suggested-movie:hover {
+                border-color: #646cff;
+            }
+        }
+
+        .logo {
+            width: 50px;
+            align-items: center;
+        }
+    
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+    
+            li {
+                margin: 5px;
+            }
+        }
+    }
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav li {
-    margin-right: 20px;
-}
-
-nav li:last-child {
-    margin-right: 0px;
-}
+// nav ul {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//     display: flex;
+//     justify-content: center;
+// }
