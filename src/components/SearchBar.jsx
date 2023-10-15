@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import { fetchSearchResults } from '../utilities/SearchFunctions';
 import { useNavigate } from 'react-router-dom';
+import search from '../icons/search.svg'
 
 function SearchBar() {
   const { searchQuery, setSearchQuery } = useContext(SearchContext);
@@ -59,13 +60,18 @@ function SearchBar() {
 
   return (
     <div className="search-bar">
-      <input 
+      <input
+        className='search-bar-input'
         type="text" 
         value={searchQuery} 
         onChange={handleInputChange} 
-        placeholder="Search for a movie..."
+        placeholder="Search..."
       />
-      <button onClick={() => handleSearch(navigate, searchQuery)}>Search</button>
+      <button className='search-button' onClick={() => handleSearch(navigate, searchQuery)}>
+        <img 
+          src={search}
+          />
+      </button>
       <div className="suggestions-list">
         {suggestions.map((movie) => (
           <div key={movie.id} className="suggested-movie" onClick={() => selectSuggestion(movie)}>
