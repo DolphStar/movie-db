@@ -9,7 +9,6 @@ import notfavoriteIcon from "../icons/notfavorite.svg";
 function Favorites() {
   const { favorites, setFavorites } = useContext(FavoritesContext);
 
-
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites);
   };
