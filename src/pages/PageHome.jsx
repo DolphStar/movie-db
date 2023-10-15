@@ -46,8 +46,7 @@ function App() {
   return (
     <>
       <div className="main-wrapper">
-        <h1>Movies</h1>
-          <Carousel />
+        <Carousel />
         <div className="movie-list">
           {movies.map((movie) => {
             return (
