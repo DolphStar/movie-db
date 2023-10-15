@@ -4,10 +4,9 @@
 
 
 .main-header {
-    // background-color: rgba(0, 0, 0, 0.75);
-    position: sticky;
     top: 3%;
     z-index: 9999;
+    position: sticky;
     height: $header-item-height;
 
     .header-wrapper {
@@ -18,13 +17,26 @@
         position: relative;
         height: $header-item-height;
 
+        // Logo Styling
+        .logo {
+            width: 75px;
+            min-width: 40px;
+            align-items: center;
+        }
+
+        // Search Bar styling
         .search-bar {
-            @include absolute-center;
             background-color: rgba(0, 0, 0, 0.384);
-            padding: 10px 30px;
-            border-radius: 25px;
+            padding: 10px 10px;
+            border: 1px solid whitesmoke;
+            border-radius: 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            min-width: 30px;
+            box-sizing: border-box;
+            position: relative;
+            margin: 0 5px;
         
             .search-bar-input {
                 @include remove-default-styling;
@@ -32,43 +44,94 @@
         
             .search-button {
                 @include remove-default-styling;
+                position: absolute;
+                right: 8%;
                 width: 20px;
-            }
-
-            .suggested-movie {
-                cursor: pointer;
-                border-radius: 8px;
-                border: 1px solid black;
-                padding: 0.3em;
-                font-size: 1em;
-                font-weight: 400;
-                font-family: inherit;
-                background-color: #1a1a1a;
-                transition: border-color 0.25s;
-            }
-            
-            .suggested-movie:hover {
-                border-color: #646cff;
+                min-width: 20px;
             }
         }
 
-        .logo {
-            width: 50px;
-            align-items: center;
+        @media screen and (min-width: 500px) {
+            .search-bar{
+                padding: 10px 30px;
+            }
         }
-    
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-    
-            li {
-                margin: 5px;
+
+        // Nav bar styling
+        .main-nav {
+            z-index: 9999;
+
+            ul {
+                @include remove-default-styling;
+                list-style: none;
+            }
+
+            .dropdown {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+
+                .trailr-btn {
+                    @include remove-default-styling;
+                    border-radius: 0;
+                    border: 1px solid white;
+                    background-color: rgba(0, 0, 0, 0.384);
+                    border-right: none;
+                    padding: 3px 10px;
+                    height: 35px;
+                }
+
+                @media screen and (min-width: 500px){
+                    .trailr-btn{
+                        padding: 3px 15px;
+                        font-size: 1.4em;
+                    }
+                }
+
+                .arrow {
+                    @include remove-default-styling;
+                    border-radius: 0;
+                    transition: background-color 0.2s ease-in-out;
+                    padding: 0 15px;
+                    height: 35px;
+                    background-color: whitesmoke;
+                    border: 1px solid white;
+
+                    img {
+                        min-width: 15px;
+                        width: 25px;
+                    }
+                }
+
+                .arrow:hover {
+                    border-color: black;
+                }
+            }
+
+            .sub-menu {
+                @include remove-default-styling;
+                position: absolute;
+                top: 100%;
+                transition: height 0.3s ease-in-out;
+                background-color: rgba(0, 0, 0, 0.384);
+                padding: 0 20px;
+                border: 1px white solid;
+                border-top: none;
+            }
+
+            @media screen and (min-width: 500px){
+                .sub-menu{
+                    padding: 0 24px;
+                    font-size: 1.4em;
+                }
             }
         }
     }
 }
 
+<<<<<<< HEAD
 
 .suggestions-list {
     display: none;  // Hide by default
@@ -86,3 +149,29 @@
 //     display: flex;
 //     justify-content: center;
 // }
+=======
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    margin: 0 auto;
+    max-width: 300px;
+    transition: height 0.3 ease-in-out
+}
+
+.suggested-movie {
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 0.3em;
+    font-size: 1em;
+    font-weight: 400;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    transition: border-color 0.25s;
+    overflow: hidden;
+}
+
+.suggested-movie:hover {
+    border-color: #646cff;
+}
+>>>>>>> 6f637cee9ff468b29e73675e42ed3d510ceddf68

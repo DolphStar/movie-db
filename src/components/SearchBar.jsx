@@ -39,8 +39,10 @@ function SearchBar() {
       const results = await fetchSearchResults(value);
       const uniqueHighestRatedMovies = filterHighestRated(results)
       setSuggestions(uniqueHighestRatedMovies.slice(0, 5)); // Show only top 5 results
+      setSuggestionsVisible(true); // Show suggestions
     } else {
       setSuggestions([]); // Empty the suggestions if the search query is empty
+      setSuggestionsVisible(false); // Hide suggestions
     }
   };
 
@@ -59,6 +61,7 @@ function SearchBar() {
 };
 
   return (
+    <>
     <div className="search-bar">
       <input
         className='search-bar-input'
@@ -72,16 +75,17 @@ function SearchBar() {
           src={search}
           />
       </button>
-      <div className="suggestions-list">
-        {suggestions.map((movie) => (
-          <div key={movie.id} className="suggested-movie" onClick={() => selectSuggestion(movie)}>
-            <div className="movie-title">
-              {movie.title}
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
+    <div className='suggestions-list'>
+    {suggestions.map((movie) => (
+      <div key={movie.id} className="suggested-movie" onClick={() => selectSuggestion(movie)}>
+        <div className="movie-title">
+          {movie.title}
+        </div>
+      </div>
+    ))}
+    </div>
+    </>
   );
 }
 
