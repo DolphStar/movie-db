@@ -6,7 +6,7 @@
 .main-header {
     // background-color: rgba(0, 0, 0, 0.75);
     position: sticky;
-    top: 0;
+    top: 3%;
     z-index: 9999;
     height: $header-item-height;
 
@@ -20,11 +20,11 @@
 
         .search-bar {
             @include absolute-center;
-            min-width: 150px;
-            max-width: 400px;
             background-color: rgba(0, 0, 0, 0.384);
             padding: 10px 30px;
             border-radius: 25px;
+            display: flex;
+            align-items: center;
         
             .search-bar-input {
                 @include remove-default-styling;
@@ -34,22 +34,22 @@
                 @include remove-default-styling;
                 width: 20px;
             }
-        }
-        
-        .suggested-movie {
-            cursor: pointer;
-            border-radius: 8px;
-            border: 1px solid black;
-            padding: 0.3em;
-            font-size: 1em;
-            font-weight: 400;
-            font-family: inherit;
-            background-color: #1a1a1a;
-            transition: border-color 0.25s;
-        }
-        
-        .suggested-movie:hover {
-            border-color: #646cff;
+
+            .suggested-movie {
+                cursor: pointer;
+                border-radius: 8px;
+                border: 1px solid black;
+                padding: 0.3em;
+                font-size: 1em;
+                font-weight: 400;
+                font-family: inherit;
+                background-color: #1a1a1a;
+                transition: border-color 0.25s;
+            }
+            
+            .suggested-movie:hover {
+                border-color: #646cff;
+            }
         }
 
         .logo {
@@ -64,10 +64,6 @@
     
             li {
                 margin: 5px;
-            }
-
-            .trailr-nav {
-                background-color: red;
             }
         }
     }
