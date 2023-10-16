@@ -17,7 +17,7 @@ import Search from "../pages/PageSearch";
 
 function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/movie-night">
       <Header />
     
     <div className="wrapper">

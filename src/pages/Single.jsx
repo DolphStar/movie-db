@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Navigation } from "swiper/modules";
 import { Pagination } from "swiper/modules";
-import "../styles/Acting.css";
+
 
 function Single() {
   const { id } = useParams();
