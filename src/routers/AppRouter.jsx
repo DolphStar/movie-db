@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Import state to disable scrolling on trailr
 import { useState } from 'react';
+import { useEffect } from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -17,6 +18,10 @@ import Single from "../pages/Single";
 import Search from "../pages/PageSearch";
 
 function AppRouter() {
+
+  useEffect(()=>{
+    document.title = "MovieNight";
+  }, [])
 
   return (
     <BrowserRouter>
