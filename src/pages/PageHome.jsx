@@ -21,8 +21,9 @@ function App() {
     handleFavorites(movie, favorites, setFavorites);
   };
 
+  console.log(favorites);
   const isFavorite = (movie) => {
-    return favorites.some((favorite) => favorite.id === movie.id);
+    return favorites.some((favorite) => favorite.id == movie.id);
   };
 
   useEffect(() => {
@@ -87,42 +88,53 @@ function App() {
             <span>Upcoming</span>
           </label>
         </div>
-        <div className="movie-list">
-          {movies.map((movie, index) => (
-            <Link to={`/movie/${movie.id}`} key={index}>
-              <div
-                className="movie-item"
-                style={{
-                  backgroundImage: `url(${imgPath}${movie.poster_path})`,
-                }}
-              >
-                <div className="overlay">
-                  <div className="rating">
-                    <Rating rate={movie.vote_average} />
-                  </div>
-                  <h2 className="movie-title">{movie.title}</h2>
-                  <button
-                    className="favorite-button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleFavs(movie);
-                    }}
-                  >
+        <div className="movie-list-home">
+          {movies.map((movie) => {
+            return (
+              <div key={movie.id} className="single-movie-home">
+                <div className="movie-item-home">
+                  <div className="poster-text-home">
                     <img
-                      className="favorite-icon"
-                      src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
-                      alt="Favorite"
+                      src={
+                        movie.poster_path
+                          ? `${imgPath}${movie.poster_path}`
+                          : { placeholder }
+                      }
+                      alt={movie.title}
                     />
-                  </button>
-                </div>
-                <div className="movie-hover">
-                  <div className="movie-overview">{movie.overview}
-                  <p>Release Date: {movie.release_date}</p>
+                    <div className="movie-overview-home">
+                      {movie?.overview.length > 236
+                        ? `${movie?.overview.slice(0, 237)}...`
+                        : movie?.overview}
+                    </div>
+                    <button
+                      className="favorite-button-home"
+                      onClick={() => handleFavs(movie)}
+                    >
+                      <img
+                        src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
+                        alt="Favorite"
+                      />
+                    </button>
+                  </div>
+
+                  <h2 className="movie-title">{movie.title}</h2>
+                  <div className="content-button-wrapper-home">
+                    <div className="home-movie-content">
+                      <Rating rate={movie?.vote_average} />
+                      <div>{movie?.release_date}</div>
+                    </div>
+                    <Link
+                      to={`/movie/${movie?.id}`}
+                      className="carousel-info-button home-more-info"
+                    >
+                      More Info
+                    </Link>
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>
