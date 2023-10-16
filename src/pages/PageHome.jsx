@@ -4,6 +4,7 @@ import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
+import notfavoriteIcon from "../icons/notfavorite.svg";
 import placeholder from "../icons/placeholder.png";
 import Rating from "../components/Rating";
 import { Link } from "react-router-dom";
@@ -18,6 +19,10 @@ function App() {
   // Function to handle adding/removing from favorites
   const handleFavs = (movie) => {
     handleFavorites(movie, favorites, setFavorites);
+  };
+
+  const isFavorite = (movie) => {
+    return favorites.some((favorite) => favorite.id === movie.id);
   };
 
   useEffect(() => {
@@ -83,50 +88,41 @@ function App() {
           </label>
         </div>
         <div className="movie-list">
-          {movies.map((movie) => {
-            return (
-              <div key={movie.id} className="single-movie">
-                <div className="movie-item">
-                  <div className="poster-text">
-                    <img
-                      src={
-                        movie.poster_path
-                          ? `${imgPath}${movie.poster_path}`
-                          : { placeholder }
-                      }
-                      alt={movie.title}
-                      className="movie-poster"
-                    />
-                    <div className="movie-overview">{movie?.overview}</div>
-                    <button
-                      className="favorite-button"
-                      onClick={() => handleFavs(movie)}
-                    >
-                      <img
-                        className="favorite-icon"
-                        src={favoriteIcon}
-                        alt="Favorite"
-                      />
-                    </button>
+          {movies.map((movie, index) => (
+            <Link to={`/movie/${movie.id}`} key={index}>
+              <div
+                className="movie-item"
+                style={{
+                  backgroundImage: `url(${imgPath}${movie.poster_path})`,
+                }}
+              >
+                <div className="overlay">
+                  <div className="rating">
+                    <Rating rate={movie.vote_average} />
                   </div>
-
                   <h2 className="movie-title">{movie.title}</h2>
-                  <div className="content-button-wrapper">
-                    <div className="home-movie-content">
-                      <Rating rate={movie?.vote_average} />
-                      <div>{movie?.release_date}</div>
-                    </div>
-                    <Link
-                      to={`/movie/${movie?.id}`}
-                      className="carousel-info-button"
-                    >
-                      More Info
-                    </Link>
+                  <button
+                    className="favorite-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleFavs(movie);
+                    }}
+                  >
+                    <img
+                      className="favorite-icon"
+                      src={isFavorite(movie) ? favoriteIcon : notfavoriteIcon}
+                      alt="Favorite"
+                    />
+                  </button>
+                </div>
+                <div className="movie-hover">
+                  <div className="movie-overview">{movie.overview}
+                  <p>Release Date: {movie.release_date}</p>
                   </div>
                 </div>
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
       </div>
     </>

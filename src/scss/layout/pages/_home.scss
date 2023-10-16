@@ -15,7 +15,7 @@
 
 .movie-list{
     margin: 0 auto;
-    width: 95%;
+    width: 90%;
 }
 
 @media screen and (min-width: 500px) {
@@ -56,13 +56,13 @@
     position:relative;
 }
 
-.movie-overview{
-    display:none;
-    position:absolute;
-    bottom:0rem;
-    padding:1rem;
-    background-color:rgba(0, 0, 0, 0.632);
-}
+// .movie-overview{
+//     display:none;
+//     position:absolute;
+//     bottom:0rem;
+//     padding:1rem;
+//     background-color:rgba(0, 0, 0, 0.632);
+// }
 
 .favorite-button{
     position:absolute;
@@ -79,3 +79,12 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.movie-item {
+  position: relative;
+}
+
+.favorite-button {
+  @include fav-btn;
+}
+
