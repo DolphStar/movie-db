@@ -19,7 +19,6 @@ function PreGameScreen({
                         playerData, setPlayerData,
                         roomData, setRoomData,
                         selfRef, enemyRef, roomRef,
-                        uns
                         app, db,
                         enemy,
                         }){

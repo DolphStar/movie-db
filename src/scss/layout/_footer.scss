@@ -2,9 +2,12 @@
 @use "../abstract/mixins" as *;
 @use "../abstract/animations" as *;
 
-// footer {
-//     position: absolute;
-//     bottom: 0;
-//     left: 50%;
-//     transform: translateX(-50%)
-// }
+footer {
+    position: relative;
+    bottom: 0;
+    background-color:#646cff;
+    p{
+        margin-bottom: 0;
+        padding-left: 2rem;
+    }
+}

@@ -1,18 +1,81 @@
 @use "../../abstract/variables" as *;
 @use "../../abstract/mixins" as *;
 @use "../../abstract/animations" as *;
-
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
+@use "../ratingCircle";
 
 .movie-item {
-    position: relative;
+  position: relative;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .favorite-button {
-    @include fav-btn;
+  @include fav-btn;
+}
+
+.movie-list{
+    margin: 0 auto;
+    width: 95%;
+}
+
+@media screen and (min-width: 500px) {
+  .movie-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5%;
+    grid-gap: 3vw;
+  }
+}
+
+@media screen and (min-width: 900px) {
+    .movie-list {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+
+.home-movie-score {
+  width: 30px;
+  height: 30px;
+}
+
+.home-movie-content{
+    display:flex;
+    align-items: center;
+    gap:1rem;
+    .rating-circle{
+        width:50px;
+        height:50px;
+        background-color: black;
+        border-radius: 50%;
+    }
+}
+
+//overview hover
+.poster-text{
+    position:relative;
+}
+
+.movie-overview{
+    display:none;
+    position:absolute;
+    bottom:0rem;
+    padding:1rem;
+    background-color:rgba(0, 0, 0, 0.632);
+}
+
+.favorite-button{
+    position:absolute;
+    top:2%;
+    right:2%;
+}
+
+.single-movie:hover .movie-overview{
+    display:block;
+}
+
+.content-button-wrapper{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 }
