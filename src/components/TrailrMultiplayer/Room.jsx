@@ -36,22 +36,34 @@ function Room({
   // Single source of truth for the playerData
   const [playerData, setPlayerData] = useState({
     playerA: {
-      ready: false,
-      name: 'Hippolyta',
-      hp: 5000,
       guess: '',
+      hp: 5000,
+      frameReady: false,
+      ready: false,
+      uid: 'Hippolyta',
     },
     playerB: {
-      ready: false,
-      name: 'Norb',
-      hp: 5000,
       guess: '',
+      hp: 5000,
       present: false,
+      frameReady: false,
+      ready: false,
+      uid: 'Norb',
     },
-  })
+  });
+
+  // Single source of truth for the roomData
+  const [roomData, setRoomData] = useState({
+    round: 0,
+    dmgMultiplier: 1,
+    movieID: "",
+  });
 
   // Single source of truth for the endRound state
   const [endRound, setEndRound] = useState(false);
+
+  // Single source of truth for the enemy player ref
+  const [enemy] = useState(player === 'playerA' ? 'playerB' : 'playerA');
 
   // Room Firestore Ref
   const roomRef = doc(db, "rooms", roomID);
@@ -60,32 +72,36 @@ function Room({
   const selfRef = doc(roomRef, player, "playerData");
 
   // Enemy Firestore Ref
-  const enemyRef = doc(roomRef, player === "playerA" ? "playerB" : "playerA", "playerData");
+  const enemyRef = doc(roomRef, enemy, "playerData");
 
   return (
     <>
     {
-      playerData.playerA.ready === false || playerData.playerB.ready === false ? (
+      roomData.round === 0 ? (
         <PreGameScreen  roomID={roomID} setRoomID={setRoomID}
                         player={player} setPlayer={setPlayer}
                         playerData={playerData} setPlayerData={setPlayerData}
-                        selfRef={selfRef} enemyRef={enemyRef}
-                        app={app} db={db}/>
-      ) : (
+                        roomData={roomData} setRoomData={setRoomData}
+                        selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
+                        app={app} db={db}
+                        enemy={enemy}/>
+      ) : 
+      endRound === false ? (
         <>
         <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        movieData={movieData} setMovieData={movieData}
                         videoState={videoState} setVideoState={setVideoState}/>
 
         <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                         searchData={searchData} setSearchData={setSearchData}
                         input={input} setInput={setInput}
                         endRound={endRound} setEndRound={setEndRound}/>
-        
+        </>
+      ) : (
         <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                         playerData={playerData} setPlayerData={setPlayerData}
                         movieData={movieData} setMovieData={setMovieData}
                         endRound={endRound} setEndRound={setEndRound}/>
-        </>
       )}
     </>
   )

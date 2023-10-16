@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 // Firebase Imports
-import { doc, addDoc, setDoc, getDoc } from "firebase/firestore";
+import { doc, addDoc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
 
@@ -17,8 +17,11 @@ function PreGameScreen({
                         roomID, setRoomID,
                         player, setPlayer,
                         playerData, setPlayerData,
-                        selfRef, enemyRef,
+                        roomData, setRoomData,
+                        selfRef, enemyRef, roomRef,
+                        uns
                         app, db,
+                        enemy,
                         }){
 
   const [newName, setNewName] = useState('');
@@ -36,31 +39,84 @@ function PreGameScreen({
     }
   }, [])
 
-  // When playerB joins create a playerB playerData doc in the db
+  // OnSnapShot to listen to room changes
+  useEffect(()=>{
+    const unsubscribeRoom = onSnapshot(roomRef, (doc) => {
+      if(doc.exists()){
+        const data = doc.data();
+        setRoomData((prevRoomData) => ({
+          ...prevRoomData,
+          ...data,
+        }));
+      }
+    });
+
+    // Store the unsubscribe function state for when the game is over
+    setUnsubscribers((prevUnsubscribers) => ({
+      ...prevUnsubscribers,
+      room: unsubscribeRoom,
+    }));
+  }, [])
+
+  // OnSnapShot to listen to the enemy playerData change
+  useEffect(()=>{
+    const unsubscribeEnemy = onSnapshot(enemyRef, (doc) => {
+      if(doc.exists()){
+        const data = doc.data();
+        setPlayerData((prevPlayerData) => ({
+          ...prevPlayerData,
+          [enemy]: {
+            ...prevPlayerData[enemy],
+            ...data,
+          },
+        }));
+      }
+    });
+
+    // Store the unsubscribe function state for when the game is over
+    setUnsubscribers((prevUnsubscribers) => ({
+      ...prevUnsubscribers,
+      enemy: unsubscribeEnemy,
+    }));
+  }, [])
+
+  // OnSnapShot to listen to self playerData change
+  useEffect(()=>{
+    const unsubscribeSelf = onSnapshot(selfRef, (doc) => {
+      if(doc.exists()){
+        const data = doc.data();
+        setPlayerData((prevPlayerData) => ({
+          ...prevPlayerData,
+          [player]: {
+            ...prevPlayerData[player],
+            ...data,
+          },
+        }));
+      }
+    });
+
+    // Store the unsubscribe function state for when the game is over
+    setUnsubscribers((prevUnsubscribers) => ({
+      ...prevUnsubscribers,
+      self: unsubscribeSelf,
+    }));
+  }, [])
+
+  // When playerB joins set playerB present to true in db
   useEffect(()=>{
     if(player === 'playerB'){
-      createPlayerBDoc()
+      playerBAttendance()
     }
   }, [])
 
-  // Create playerB if there isn't already a playerB in the room collection
-  async function createPlayerBDoc(){
+  // When playerB joins the room, set playerB as present in DB
+  async function playerBAttendance(){
     try {
-      const docSnap = await getDoc(selfRef);
-      if(!docSnap.exists()){
-        await setDoc(selfRef, {
-          ready: false,
-          name: 'Norb',
-          hp: 5000,
-          guess: '',
-          present: true,
-        });
-        console.log("PlayerB Doc created");
-      } else {
-        console.log("PlayerB Doc exists");
-      }
+      await updateDoc(selfRef, {
+        present: true,
+      })
     } catch (error) {
-      console.log('Error connecting to DB: ', error)
+      console.log("Error setting playerB as present: ", error)
     }
   }
 
@@ -70,16 +126,27 @@ function PreGameScreen({
     setLinkCopied(true);
   }
 
-  // Change the player name
-  function changePlayerName(){
-    setPlayerData((prevPlayerData) => ({
-      ...prevPlayerData,
-      [player]: {
-        ...prevPlayerData[player],
-        name: newName,
+  // Update player name
+  async function changePlayerName(){
+    try {
+      await updateDoc(selfRef, {
+        uid: newName,
         ready: true,
-      },
-    }));
+      })
+    } catch (error) {
+      console.log("Error updating name");
+    }
+  }
+
+  // Start the game
+  async function startGame(){
+    try {
+      await updateDoc(roomRef, {
+        round: 1,
+      })
+    } catch (error) {
+      console.log("Updating the roomDoc to start the game")
+    }
   }
   
   return (
@@ -109,6 +176,7 @@ function PreGameScreen({
             <div className="ready-box">
               <h3>{playerData.playerA.name}</h3>
               <p>{playerData.playerA.ready === false ? 'Not ready' : 'Ready'}</p>
+              <button onClick={startGame} disabled={!playerData.playerB.ready}>Start Game</button>
             </div>
           )
         }

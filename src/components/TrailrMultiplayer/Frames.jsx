@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 // Global Variable Imports
 import { apiKey } from "../../globals/globalVariables";
 import { moviePage } from "../../globals/globalVariables";
@@ -14,6 +16,7 @@ import { collection } from "firebase/firestore";
 
 function Frames({
                 offscreenFrame, setOffscreenFrame,
+                movieData, setMovieData,
                 videoState, setVideoState,
                 }){
 

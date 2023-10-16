@@ -70,15 +70,28 @@ function TrailrMultiplayer({
       movieID: "Waiting for playerB",
     });
 
-    // New player data doc ref (inside of the playerA collection)
-    const newPlayerData = doc(newRoom, newRoomRef.id, "playerA", "playerData")
+    // New playerA data doc ref
+    const initPlayerA = doc(newRoom, newRoomRef.id, "playerA", "playerData");
+
+    // New playerB data doc ref
+    const initPlayerB = doc(newRoom, newRoomRef.id, "playerB", "playerData");
 
     // Set the initial playerA data
-    await setDoc(newPlayerData, {
-      hp: 5000,
-      uid: "Hippolyta",
+    await setDoc(initPlayerA, {
       ready: false,
+      uid: "Hippolyta",
+      guess: '',
+      hp: 5000,
     });
+
+    // Set the initial playerB data
+    await setDoc(initPlayerB, {
+      ready: false,
+      uid: "Norb",
+      guess: '',
+      hp: 5000,
+      present: false,
+    })
 
     // Update the URL params
     setSearchParams({ mode: "multiplayer", roomID: newRoomRef.id, player: "playerA" });
