@@ -16,7 +16,6 @@ const CarouselSlide = ({ trending, genresArr }) => {
   const commonGenres = genresArr.filter((genre) =>
     trending.genre_ids.includes(genre.id)
   );
-  console.log(commonGenres);
 
   //movie tagline
   const movieTagline = `https://api.themoviedb.org/3/movie/${trending.id}?api_key=${apiKey}`;
@@ -32,7 +31,6 @@ const CarouselSlide = ({ trending, genresArr }) => {
     tagLineData();
   }, [movieTagline]);
 
-  console.log(tagLine);
 
   const tagLineText = tagLine?.tagline;
 

@@ -46,10 +46,6 @@ const Carousel = () => {
   }, [endPointTrending, movieGenre, endPointNowPlaying]);
 
   const genresArr = detail?.genres;
-  console.log(genresArr);
-
-  //   let movieId = movieIdDetail.filter(movieId => movieId.genres.id)
-  //   console.log(movieId)
 
   return (
     <>
@@ -120,21 +116,5 @@ const Carousel = () => {
   );
 };
 
-//   return (
-//     <>
-//     {data.map(trending =>
-//         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-//             <SwiperSlide>
-//                 <img></img>
-//             </SwiperSlide>
-//         )
-//         </Swiper>}
-//     </>
-//     ): (
-//         <h1>{console.log("Hello")}</h1>
-//         )};
-//         </>
-//     );
-// };
 
 export default Carousel;

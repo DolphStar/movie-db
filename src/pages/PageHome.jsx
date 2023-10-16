@@ -21,7 +21,6 @@ function App() {
     handleFavorites(movie, favorites, setFavorites);
   };
 
-  console.log(favorites);
   const isFavorite = (movie) => {
     return favorites.some((favorite) => favorite.id == movie.id);
   };
