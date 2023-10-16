@@ -59,6 +59,8 @@ function Room({
     movieID: "",
   });
 
+  // Single source of truth for the onSnapShot unsubscribe functions
+
   // Single source of truth for the endRound state
   const [endRound, setEndRound] = useState(false);
 
