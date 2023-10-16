@@ -18,6 +18,7 @@ function PreGameScreen({
                         player, setPlayer,
                         playerData, setPlayerData,
                         roomData, setRoomData,
+                        unsub, setUnsub,
                         selfRef, enemyRef, roomRef,
                         app, db,
                         enemy,
@@ -28,6 +29,20 @@ function PreGameScreen({
   const [inviteLink, setInviteLink] = useState('');
 
   const [linkCopied, setLinkCopied] = useState(false);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(()=>{
+    function handleResize(){
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return() => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [])
 
   // Generate the invite link for playerB
   useEffect(()=>{
@@ -40,7 +55,7 @@ function PreGameScreen({
 
   // OnSnapShot to listen to room changes
   useEffect(()=>{
-    const unsubscribeRoom = onSnapshot(roomRef, (doc) => {
+    const unsubRoom = onSnapshot(roomRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
         setRoomData((prevRoomData) => ({
@@ -51,15 +66,15 @@ function PreGameScreen({
     });
 
     // Store the unsubscribe function state for when the game is over
-    setUnsubscribers((prevUnsubscribers) => ({
-      ...prevUnsubscribers,
-      room: unsubscribeRoom,
+    setUnsub((prevUnsub) => ({
+      ...prevUnsub,
+      room: unsubRoom,
     }));
   }, [])
 
   // OnSnapShot to listen to the enemy playerData change
   useEffect(()=>{
-    const unsubscribeEnemy = onSnapshot(enemyRef, (doc) => {
+    const unsubEnemy = onSnapshot(enemyRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
         setPlayerData((prevPlayerData) => ({
@@ -73,15 +88,15 @@ function PreGameScreen({
     });
 
     // Store the unsubscribe function state for when the game is over
-    setUnsubscribers((prevUnsubscribers) => ({
-      ...prevUnsubscribers,
-      enemy: unsubscribeEnemy,
+    setUnsub((prevUnsub) => ({
+      ...prevUnsub,
+      enemy: unsubEnemy,
     }));
   }, [])
 
   // OnSnapShot to listen to self playerData change
   useEffect(()=>{
-    const unsubscribeSelf = onSnapshot(selfRef, (doc) => {
+    const unsubSelf = onSnapshot(selfRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
         setPlayerData((prevPlayerData) => ({
@@ -95,9 +110,9 @@ function PreGameScreen({
     });
 
     // Store the unsubscribe function state for when the game is over
-    setUnsubscribers((prevUnsubscribers) => ({
-      ...prevUnsubscribers,
-      self: unsubscribeSelf,
+    setUnsub((prevUnsub) => ({
+      ...prevUnsub,
+      self: unsubSelf,
     }));
   }, [])
 
@@ -150,12 +165,12 @@ function PreGameScreen({
   
   return (
     <>
-    <div className="pre-game-screen">
+    <div className="pregame-screen">
       <section className="playerA-pregame">
         {
           player === 'playerA' && playerData.playerA.ready === false ? (
-            <div>
-              <h3>{playerData.playerA.name}</h3>
+            <div className="playerA-pregame-name-input">
+              <h3>{playerData.playerA.uid}</h3>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -173,9 +188,9 @@ function PreGameScreen({
             </div>
           ) : (
             <div className="ready-box">
-              <h3>{playerData.playerA.name}</h3>
-              <p>{playerData.playerA.ready === false ? 'Not ready' : 'Ready'}</p>
+              <h3>{playerData.playerA.uid}</h3>
               <button onClick={startGame} disabled={!playerData.playerB.ready}>Start Game</button>
+              <p>{playerData.playerA.ready === false ? 'Set a name to ready up' : 'Ready'}</p>
             </div>
           )
         }
@@ -185,13 +200,12 @@ function PreGameScreen({
         player === 'playerA' && playerData.playerB.present === false ? (
           <div id="invite-player-b">
             <h3>Invite a friend!</h3>
-            <p>{inviteLink}</p>
             <button onClick={copyToClipBoard}>{linkCopied === false ? "Copy Invite Link" : "Copied!"}</button>
           </div>
         ) : 
         player === 'playerB' && playerData.playerB.ready === false ? (
-          <div className="playerB-pregame">
-            <h3>{playerData.playerB.name}</h3>
+          <div className="playerB-pregame-name-input">
+            <h3>{playerData.playerB.uid}</h3>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -209,12 +223,24 @@ function PreGameScreen({
           </div>
         ) : (
           <div className="ready-box">
-            <h3>{playerData.playerB.name}</h3>
-            <p>{playerData.playerB.ready === false ? 'Not ready' : 'Ready'}</p>
+            <h3>{playerData.playerB.uid}</h3>
+            <p>{playerData.playerB.ready === false ? 'Set a name to ready up' : 'Ready'}</p>
           </div>
         )
       }
       </section>
+    </div>
+    <div className="searchBar-blocker"
+      style={{
+        position: 'absolute',
+        top: '1px',
+        left: '50%',
+        transform: 'translate(-50%)',
+        backgroundColor: 'black',
+        width: windowWidth >= 700 ? '50px' : '0',
+        height: '150px',
+        zIndex: '99',
+      }}>
     </div>
     </>
   )

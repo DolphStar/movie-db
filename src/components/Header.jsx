@@ -4,6 +4,7 @@ import logo from "../icons/logo.svg";
 import { NavLink } from 'react-router-dom';
 
 function Header() {
+
   return (
     <>
     <header className='main-header'>

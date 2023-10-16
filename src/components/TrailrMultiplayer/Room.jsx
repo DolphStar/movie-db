@@ -60,6 +60,11 @@ function Room({
   });
 
   // Single source of truth for the onSnapShot unsubscribe functions
+  const [unsub, setUnsub] = useState({
+    enemy: null,
+    self: null,
+    room: null,
+  })
 
   // Single source of truth for the endRound state
   const [endRound, setEndRound] = useState(false);
@@ -84,6 +89,7 @@ function Room({
                         player={player} setPlayer={setPlayer}
                         playerData={playerData} setPlayerData={setPlayerData}
                         roomData={roomData} setRoomData={setRoomData}
+                        unsub={unsub} setUnsub={setUnsub}
                         selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
                         app={app} db={db}
                         enemy={enemy}/>
