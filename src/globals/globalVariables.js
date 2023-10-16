@@ -14,6 +14,8 @@ export const SEARCH_START = "https://api.themoviedb.org/3/search/movie?include_a
 
 export const youtubePath = "https://www.youtube.com/embed/";
 
+
+
 // Range of pages that trailr will choose from
 export const moviePage = 10;
 

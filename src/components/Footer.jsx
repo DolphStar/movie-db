@@ -2,7 +2,7 @@ function Footer() {
   return (
     <>
     <footer>
-      Footer
+      <p>Created by Jadie, Nick, and Samir</p>
     </footer>
     </>
   )

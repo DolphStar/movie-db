@@ -16,11 +16,12 @@ import "swiper/css/navigation";
 // import required modules
 import { Navigation } from "swiper/modules";
 import { Pagination } from "swiper/modules";
-import "../styles/Acting.css";
+
 
 function Single() {
   const { id } = useParams();
   const singleMovieDetails = `https://api.themoviedb.org/3/movie/${id}?append_to_response=videos%2Ccredits&language=en-US&api_key=${apiKey}`;
+
   const [singleMovieData, setSingleMovieData] = useState(null);
   // const [trailerData, setTrailerData] = useState(null);
   const allVideos = singleMovieData?.videos?.results;
@@ -52,25 +53,18 @@ function Single() {
 
   const trailer = `${youtubePath}${trailerPath?.key}`;
 
-  console.log(trailer);
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(singleMovieDetails);
-      // const response_trailer = await fetch(trailerData);
       const json = await response.json();
-      // const json_trailer = await response_trailer.json();
       setSingleMovieData(json);
-      // setTrailerData(json_trailer);
+
     };
     fetchData();
   }, [singleMovieDetails]);
 
   const singleMovieGenres = singleMovieData?.genres;
   const movieMinuteLength = singleMovieData?.runtime;
-
-  //needed: 1. video link (filter) 2. poster ok 3. actors(swiper)
-  //content: 1. date 2. genres 3.film length 4. director 5.writer
 
   //Changing time format
   function MinutestoHours(totalMinutes) {

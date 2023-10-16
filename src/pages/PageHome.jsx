@@ -2,22 +2,19 @@ import Carousel from "../components/Carousel";
 import { useEffect, useState, useContext } from "react";
 import { apiKey, imgPath } from "../globals/globalVariables";
 import { handleFavorites } from "../utilities/favoritesFunctions";
-import { Link } from "react-router-dom";
 import FavoritesContext from "../context/FavoritesContext";
 import favoriteIcon from "../icons/favorite.svg";
 import notfavoriteIcon from "../icons/notfavorite.svg";
+import placeholder from "../icons/placeholder.png";
 import Rating from "../components/Rating";
+import { Link } from "react-router-dom";
 
 function App() {
   // Holds api request data
   const [movies, setMovies] = useState([]);
-
-
-  // Api fetch link for popularity
-  const endPointMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${apiKey}`;
+  const [category, setCategory] = useState("popular");
 
   const { favorites, setFavorites } = useContext(FavoritesContext);
-
 
   // Function to handle adding/removing from favorites
   const handleFavs = (movie) => {
@@ -28,9 +25,9 @@ function App() {
     return favorites.some((favorite) => favorite.id === movie.id);
   };
 
-
   useEffect(() => {
     const fetchMovies = async () => {
+      const endPointMovies = `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1'&api_key=${apiKey}`;
       const res = await fetch(endPointMovies);
       let list = await res.json();
       let shortList = list.results.slice(0, 12);
@@ -38,13 +35,58 @@ function App() {
     };
 
     fetchMovies();
-  }, []);
+  }, [category]);
+
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
 
   return (
     <>
-     <div className="main-wrapper">
-        <h1>Movies</h1>
+      <div className="main-wrapper">
         <Carousel />
+        <div className="radio-buttons">
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="popular"
+              checked={category === "popular"}
+              onChange={handleCategory}
+            />
+            <span>Popular</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="now_playing"
+              checked={category === "now_playing"}
+              onChange={handleCategory}
+            />
+            <span>Now Playing</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="top_rated"
+              checked={category === "top_rated"}
+              onChange={handleCategory}
+            />
+            <span>Top Rated</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radios"
+              value="upcoming"
+              checked={category === "upcoming"}
+              onChange={handleCategory}
+            />
+            <span>Upcoming</span>
+          </label>
+        </div>
         <div className="movie-list">
           {movies.map((movie, index) => (
             <Link to={`/movie/${movie.id}`} key={index}>

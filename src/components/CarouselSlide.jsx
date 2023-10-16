@@ -4,8 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-//Import CSS styles
-import "../styles/Carousel.css";
+
 
 // import required modules
 import { Navigation } from "swiper/modules";
@@ -46,9 +45,9 @@ const CarouselSlide = ({ trending, genresArr }) => {
       <div className="carousel-content-image-wrapper">
         <picture>
           <source
-            srcset={`https://image.tmdb.org/t/p/original${trending.poster_path}`}
+            srcSet={`https://image.tmdb.org/t/p/original${trending.poster_path}`}
             alt={trending.title}
-            media="(max-width: 600px)"
+            media="(max-width: 700px)"
           />
           <img
             src={`https://image.tmdb.org/t/p/original${trending.backdrop_path}`}

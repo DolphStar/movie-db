@@ -1,0 +1,84 @@
+@use "../abstract/variables" as *;
+
+/* mobile version: no poster */
+.single-movie-rating-genre-wrapper {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+#single-movie-genres {
+	gap: 1rem;
+	display: flex;
+	flex-direction: row;
+	flex: 1 1 0;
+	width: 0;
+	flex-wrap: wrap;
+	p {
+		width: fit-content;
+		height: 35px;
+		display: grid;
+		place-items: center;
+		background-color: $background-color_1;
+		padding: 0.1rem 0.5rem;
+		border-radius: 15px;
+		white-space: nowrap;
+		margin: 0;
+	}
+}
+.single-movie-content-wrapper {
+	padding: 0 1rem;
+	top: 7rem;
+}
+#acting-profile-picture {
+	display: none;
+}
+.acting-bio {
+	background-color: $color_2;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	div {
+		flex: 0 0 60px;
+	}
+	img {
+		border-radius: 15px 15px 0 0;
+	}
+	span {
+		color: $color_1;
+		margin-left: 10px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	p {
+		color: $color_1;
+		margin-left: 10px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+iframe {
+	width: 100%;
+	border: none;
+}
+.swiper-slide {
+	background: transparent;
+}
+.image-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+.first-image {
+	grid-area: 1 / 3;
+}
+@media screen and (min-width: 700px) {
+	iframe {
+		width: 100%;
+		height: 550px !important;
+	}
+}
+@media screen and (min-width: 1200px) {
+	iframe {
+		width: 100%;
+		height: 650px !important;
+	}
+}

@@ -13,16 +13,18 @@ import { firebaseConfig } from "../../globals/globalVariables";
 import { useEffect } from 'react';
 import { useState } from 'react';
 
- 
 // React Router Imports
 import { useSearchParams } from "react-router-dom";
 
 // Component Imports
 import Frames from "./Frames";
 import PlayerInput from "./PlayerInput";
+import EndRoundScreen from "./EndRoundScreen";
+import PreGameScreen from "./PreGameScreen";
 
 function Room({
               offscreenFrame, setOffscreenFrame,
+              movieData, setMovieData,
               videoState, setVideoState,
               searchData, setSearchData,
               roomID, setRoomID,
@@ -31,94 +33,84 @@ function Room({
               db, app,
               }){
 
-  const [playerReady, setPlayerReady] = useState({
-    playerA: false,
-    playerB: false,
+  // Single source of truth for the playerData
+  const [playerData, setPlayerData] = useState({
+    playerA: {
+      guess: '',
+      hp: 5000,
+      frameReady: false,
+      ready: false,
+      uid: 'Hippolyta',
+    },
+    playerB: {
+      guess: '',
+      hp: 5000,
+      present: false,
+      frameReady: false,
+      ready: false,
+      uid: 'Norb',
+    },
   });
 
-  const [playerName, setPlayerName] = useState({
-    playerA: 'Hippolyta',
-    playerB: 'Norb',
+  // Single source of truth for the roomData
+  const [roomData, setRoomData] = useState({
+    round: 0,
+    dmgMultiplier: 1,
+    movieID: "",
   });
 
-  // Self Firestore Ref
-  const selfRef = doc(db, "rooms", roomID, player, "playerData");
+  // Single source of truth for the onSnapShot unsubscribe functions
+  const [unsub, setUnsub] = useState({
+    enemy: null,
+    self: null,
+    room: null,
+  })
 
-  // Enemy Firestore Ref
-  const enemyRef = doc(db, "rooms", roomID, player === "playerA" ? "playerB" : "playerA", "playerData");
+  // Single source of truth for the endRound state
+  const [endRound, setEndRound] = useState(false);
+
+  // Single source of truth for the enemy player ref
+  const [enemy] = useState(player === 'playerA' ? 'playerB' : 'playerA');
 
   // Room Firestore Ref
   const roomRef = doc(db, "rooms", roomID);
 
-  // Player ready up
-  async function readyUp(){
-    await setDoc(selfRef, {
-      ready: true,
-    });
-    setPlayerReady()
-  }
+  // Self Firestore Ref
+  const selfRef = doc(roomRef, player, "playerData");
 
-  // Use effect to monitor if the other player is ready
-  useEffect(()=>{
-    const unsubscribe = onSnapshot(enemyRef, (docSnapshot) => {
-      if(docSnapshot.exists()){
-        const { ready } = docSnapshot.data();
-        if(player === "playerA"){
-          setPlayerReady(prevReady => ({
-            ...prevReady,
-            playerB: ready
-          }));
-        }
-        if(player === "playerB"){
-          setPlayerReady(prevReady => ({
-            ...prevReady,
-            playerA: ready
-          }));
-        }
-      }
-    });
-    
-    return () => unsubscribe();
-  }, []);
+  // Enemy Firestore Ref
+  const enemyRef = doc(roomRef, enemy, "playerData");
 
   return (
     <>
-      <Frames       offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    videoState={videoState} setVideoState={setVideoState}/>
+    {
+      roomData.round === 0 ? (
+        <PreGameScreen  roomID={roomID} setRoomID={setRoomID}
+                        player={player} setPlayer={setPlayer}
+                        playerData={playerData} setPlayerData={setPlayerData}
+                        roomData={roomData} setRoomData={setRoomData}
+                        unsub={unsub} setUnsub={setUnsub}
+                        selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
+                        app={app} db={db}
+                        enemy={enemy}/>
+      ) : 
+      endRound === false ? (
+        <>
+        <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        movieData={movieData} setMovieData={movieData}
+                        videoState={videoState} setVideoState={setVideoState}/>
 
-      <PlayerInput  offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                    searchData={searchData} setSearchData={setSearchData}
-                    input={input} setInput={setInput}/>
-
-      <div className="playerA">
-        <h2>{playerName.playerA}</h2>
-        <div>
-          HP: |||||||||||||||||||||
-        </div>
-        <button 
-          disabled={player === 'playerA' ? false : true}
-          onClick={readyUp}>
-            {playerReady.playerA === false ? 'Ready up' : 'Ready!'}
-        </button>
-        <div>
-          Guesses:
-        </div>
-      </div>
-
-      <div className="playerB">
-        <h2>{playerName.playerB}</h2>
-        <div>
-          HP: |||||||||||||||||||||
-        </div>
-        <button 
-          disabled={player === 'playerB' ? false : true} 
-          onClick={readyUp}>
-            {playerReady.playerA === false ? 'Ready up' : 'Ready!'}
-        </button>
-        <div>
-          Guesses:
-        </div>
-      </div>
+        <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        searchData={searchData} setSearchData={setSearchData}
+                        input={input} setInput={setInput}
+                        endRound={endRound} setEndRound={setEndRound}/>
+        </>
+      ) : (
+        <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        playerData={playerData} setPlayerData={setPlayerData}
+                        movieData={movieData} setMovieData={setMovieData}
+                        endRound={endRound} setEndRound={setEndRound}/>
+      )}
     </>
   )
 }
