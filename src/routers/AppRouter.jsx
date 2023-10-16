@@ -2,6 +2,9 @@
 // import { appTitle } from "../globals/globalVariables";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Import state to disable scrolling on trailr
+import { useState } from 'react';
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import Carousel from "../components/Carousel";
@@ -14,6 +17,7 @@ import Single from "../pages/Single";
 import Search from "../pages/PageSearch";
 
 function AppRouter() {
+
   return (
     <BrowserRouter>
       <div className="wrapper">

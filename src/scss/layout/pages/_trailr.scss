@@ -2,6 +2,11 @@
 @use "../../abstract/mixins" as *;
 @use "../../abstract/animations" as *;
 
+// Disable y and x srolling on trailr
+.overflow-hidden {
+    overflow: hidden;
+}
+
 .dev-panel-frames {
     @include dev-panel(5%, 10%)
 }
@@ -206,4 +211,48 @@
         flex-direction: row;
         background-color: black;
     } 
+}
+
+// Game Room
+.gameroom-wrapper {
+    @include remove-default-styling;
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    // Removing default styling from everything
+    * {
+        @include remove-default-styling;
+    }
+
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    h3 {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    input {
+        border: 1px white solid;
+        padding: 5px;
+    }
+
+    button {
+        border-radius: 0;
+        padding: 5px;
+        border: 1px solid white;
+        transition: background-color 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        color: black;
+        background-color: white;
+    }
 }
