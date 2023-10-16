@@ -93,23 +93,30 @@ function Room({
                         selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
                         app={app} db={db}
                         enemy={enemy}/>
-      ) : 
-      endRound === false ? (
-        <>
-        <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                        movieData={movieData} setMovieData={movieData}
-                        videoState={videoState} setVideoState={setVideoState}/>
-
-        <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                        searchData={searchData} setSearchData={setSearchData}
-                        input={input} setInput={setInput}
-                        endRound={endRound} setEndRound={setEndRound}/>
-        </>
       ) : (
-        <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                        playerData={playerData} setPlayerData={setPlayerData}
-                        movieData={movieData} setMovieData={setMovieData}
-                        endRound={endRound} setEndRound={setEndRound}/>
+        <>
+        <div className="gameroom-wrapper">
+          <section className="playerA statbox">
+            <h3>PlayerA goes here</h3>
+          </section>
+          <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                          movieData={movieData} setMovieData={movieData}
+                          videoState={videoState} setVideoState={setVideoState}/>
+
+          <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                          searchData={searchData} setSearchData={setSearchData}
+                          input={input} setInput={setInput}
+                          endRound={endRound} setEndRound={setEndRound}/>
+
+          <section className="playerB statbox">
+            <h3>PlayerB goes here</h3> 
+          </section>
+          <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                          playerData={playerData} setPlayerData={setPlayerData}
+                          movieData={movieData} setMovieData={setMovieData}
+                          endRound={endRound} setEndRound={setEndRound}/>
+        </div>
+        </>
       )}
     </>
   )

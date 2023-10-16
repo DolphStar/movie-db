@@ -2,7 +2,8 @@
 
 function EndRoundScreen() {
   return (
-    <div>EndRoundScreen</div>
+    <>
+    </>
   )
 }
 

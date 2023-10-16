@@ -88,6 +88,25 @@ function Trailr() {
   // URL Params Ref
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Disable scrolling in trailr only
+  useEffect(()=>{
+    function addClass(){
+      document.body.classList.add("overflow-hidden");
+    }
+    function removeClass(){
+      document.body.classList.remove("overflow-hidden")
+    }
+
+    // Disable scrolling when the component mounts
+    addClass();
+
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      removeClass();
+    };
+
+  }, [])
+
   return (
     <>
       {
