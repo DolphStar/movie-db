@@ -39,10 +39,10 @@ function SearchBar() {
       const results = await fetchSearchResults(value);
       const uniqueHighestRatedMovies = filterHighestRated(results)
       setSuggestions(uniqueHighestRatedMovies.slice(0, 5)); // Show only top 5 results
-      setSuggestionsVisible(true); // Show suggestions
+      // setSuggestionsVisible(true); 
     } else {
       setSuggestions([]); // Empty the suggestions if the search query is empty
-      setSuggestionsVisible(false); // Hide suggestions
+      // setSuggestionsVisible(false); 
     }
   };
 
@@ -50,13 +50,13 @@ function SearchBar() {
     setSearchQuery(movie.title);
     setSuggestions([]);
     navigate(`/movie/${movie.id}`);
-    // Add navigate to solo movie page when clicked later
   };
 
   const handleSearch = (navigate, searchQuery) => {
     if (searchQuery) {
         // Redirect to the search page.
         navigate("/search");
+        setSuggestions([]);
     }
 };
 
