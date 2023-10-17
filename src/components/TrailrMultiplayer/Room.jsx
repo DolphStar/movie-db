@@ -107,7 +107,6 @@ function Room({
                           searchData={searchData} setSearchData={setSearchData}
                           input={input} setInput={setInput}
                           endRound={endRound} setEndRound={setEndRound}/>
-
           <section className="playerB statbox">
             <h3>PlayerB goes here</h3> 
           </section>

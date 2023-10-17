@@ -2,11 +2,17 @@
 @use "../../abstract/mixins" as *;
 @use "../../abstract/animations" as *;
 
+// Remove default styling from the wrapper
+.wrapper {
+    @include remove-default-styling;
+}
+
 // Disable y and x srolling on trailr
 .overflow-hidden {
     overflow: hidden;
 }
 
+// Dev panels
 .dev-panel-frames {
     @include dev-panel(5%, 10%)
 }
@@ -17,83 +23,6 @@
 
 .dev-panel-firebase {
     @include dev-panel(5%, 85%)
-}
-
-// Trailr
-.banner {
-    @include absolute-center;
-    top: 20%;
-}
-
-// Frames
-.frameA {
-    @include absolute-center;
-    top: 30%;
-
-    .frameA-wrapper {
-        position: relative;
-
-        .frame-blocker {
-            @include frame-blocker();
-
-            .pregame {
-                @include absolute-center;
-                top: 50%;
-                transform: translateX(-50%) translateY(-50%);
-                font-size: 2rem;
-                font-weight: bold;
-            }
-        }
-    }
-}
-
-.frameB {
-    @include absolute-center;
-    top: 30%;
-
-    .frameB-wrapper {
-        position: relative;
-
-        .frame-blocker {
-            @include frame-blocker();
-        }
-    }
-}
-
-// Animations
-.alive {
-    animation-name: revive;
-    animation-duration: 2s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.dead {
-    animation-name: kill;
-    animation-duration: 1.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-// Input
-.trailr-input {
-    @include absolute-center;
-    top: 70%;
-    width: 650px;
-
-    input {
-        width: 80%;
-        height: 30px;
-    }
-
-    .suggestions {
-        background-color: black;
-    }
-
-    .single-suggest:hover {
-        background-color: rgb(88, 88, 88);
-        cursor: pointer;
-    }
 }
 
 // Main Menu Styling
@@ -126,7 +55,7 @@
 .pregame-screen {
     @include remove-default-styling;
     background-color: black;
-    min-height: 100vh;
+    // min-height: 100vh;
     display: flex;
     flex-direction: column;
 
@@ -220,6 +149,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
 
     // Removing default styling from everything
     * {
@@ -254,5 +184,69 @@
     button:hover {
         color: black;
         background-color: white;
+    }
+
+    // Frames
+    .frameA,
+    .frameB {
+        @include absolute-center;
+
+        iframe {
+            display: block;
+            width: 95vw;
+            display: block;
+            height: calc(95vw *(9/16));
+        }
+    }
+
+    .frameA {
+        border: 1px solid blue;
+    }
+
+    .frameB {
+        border: 1px solid red;
+    }
+
+    // Frame switching animations
+    .alive {
+        animation-name: revive;
+        animation-duration: 2s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    .dead {
+        animation-name: kill;
+        animation-duration: 1.5s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    @media screen and (min-width: 700px){
+
+        .frameA,
+        .frameB {
+        @include absolute-center;
+
+            iframe {
+                display: block;
+                width: 55vw;
+                height: calc(55vw * (9/16));
+            }
+        }
+
+        .alive {
+            animation-name: revive;
+            animation-duration: 2s;
+            animation-timing-function: ease;
+            animation-fill-mode: forwards;
+        }
+    
+        .dead {
+            animation-name: kill;
+            animation-duration: 1.5s;
+            animation-timing-function: ease;
+            animation-fill-mode: forwards;
+        }
     }
 }
