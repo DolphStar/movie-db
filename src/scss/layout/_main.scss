@@ -4,6 +4,11 @@
 @use "../abstract/mixins" as *;
 @use "../abstract/animations" as *;
 
-// main {
-//     margin-top: 40%;
-// }
+h1, h2, h3 {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+  }
+p, span {
+    font-family: 'Merriweather', serif;
+}
+  
