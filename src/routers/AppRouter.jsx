@@ -24,7 +24,7 @@ function AppRouter() {
   }, [])
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/movie-night">
       <div className="wrapper">
         <Header />
           <main>

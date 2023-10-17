@@ -17,9 +17,9 @@ const About = () => {
           Straight outta BCIT and fueled by Vancouver's cutting-edge tech scene, we're the renegades behind MovieNight. We're not just coders; we're film aficionados on a quest to redefine your cinematic journey. Our platform isn't just user-friendly—it's a constantly evolving masterpiece engineered to quench your movie-hunting thirst. Get ready for a next-level experience.
           </p>
           <ul className="team-list">
-            <li className="team-member"><a href="https://linkedin.com/"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Jadie Lin</a></li>
-            <li className="team-member"><a href="https://linkedin.com/"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Nick Birkus</a></li>
-            <li className="team-member"><a href="https://linkedin.com/"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Samir Afilal</a></li>
+            <li className="team-member"><a href="https://linkedin.com/in/jadie-lin"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Jadie Lin</a></li>
+            <li className="team-member"><a href="https://www.linkedin.com/in/nickbirkus/"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Nick Birkus</a></li>
+            <li className="team-member"><a href="https://www.linkedin.com/in/samir-afilal-3b6772266/"><img className="linkedin-icon" src={linkedin} alt="linkedin-logo" />Samir Afilal</a></li>
           </ul>
         </section>
         <section className="api-section">
