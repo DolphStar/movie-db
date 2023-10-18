@@ -73,10 +73,11 @@ function Search() {
 
   return (
     <>
+      <div className="search-wrapper">
+      <h2 className="fav-header">Search results</h2>
       <button onClick={() => setShowGenres(!showGenres)}>
         {showGenres ? "Hide Genres" : "Show Genres"}
       </button>
-
       {showGenres && (
         <div className="genre-filters">
           {allGenres.map((genre) => (
@@ -91,7 +92,6 @@ function Search() {
           ))}
         </div>
       )}
-      <h2 className="fav-header">Search results</h2>
       <div className="movie-list">
         {filteredMovies.map((movie) => {
           return (
@@ -121,13 +121,6 @@ function Search() {
                         alt="Favorite"
                       />
                     </button>
-                    {/* <Link to={`/movie/${movie.id}`} className="info-button">
-                <img
-               className="info-icon"
-               src={infoIcon}
-               alt="Info"
-               />
-                </Link> */}
                   </div>
                   <div className="movie-hover">
                   <div className="movie-overview">{movie.overview}
@@ -139,6 +132,7 @@ function Search() {
             </div>
           );
         })}
+      </div>
       </div>
     </>
   );

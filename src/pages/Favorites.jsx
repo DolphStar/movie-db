@@ -53,17 +53,12 @@ function Favorites() {
                       alt="Favorite"
                     />
                   </button>
-                  {/* <Link to={`/movie/${favorites.id}`} className="info-button">
-               <img
-               className="info-icon"
-               src={infoIcon}
-               alt="Info"
-               />
-              </Link> */}
                 </div>
                 <div className="movie-hover">
-                  <div className="movie-overview">{favorites.overview}
-                  <p>Release Date: {favorites.release_date}</p>
+                  <div className="movie-overview">{favorites?.overview.length > 236
+                        ? `${favorites?.overview.slice(0, 237)}...`
+                        : favorites?.overview}
+                  <p>Release Date: {favorites?.release_date}</p>
                   </div>
                 </div>
               </div>
