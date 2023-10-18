@@ -40,23 +40,6 @@
     }
 }
 
-// Multiplayer Styling
-.statbox {
-    position: absolute;
-    width: $playerBoxWidth;
-    height: $playerBoxHeight;
-    top: calc($finalPos - $playerBoxHeight)
-}
-
-.playerA {
-    left: 8%;
-    border: 1px solid orange;
-}
-
-.playerB {
-    right: 8%;
-}
-
 // Pregame screen
 .pregame-screen {
     @include remove-default-styling;
@@ -413,6 +396,53 @@
             .suggestions-box {
                 width: 455px;
             }  
+        }
+    }
+
+    // Player Box's
+    .playerA {
+        position: absolute;
+        top: calc($finalPos - $playerBoxHeight - 5px);
+        left: 8%;
+        width: 35vw;
+        height: $playerBoxHeight;
+        border: 1px solid orange;
+
+        .statbox-wrapper {
+            position: relative;
+
+            h3 {
+                position: absolute;
+            }
+
+            .hp-bar-wrapper {
+                position: absolute;
+            }
+        }
+    }
+
+    .playerB {
+        position: absolute;
+        top: calc($finalPos - $playerBoxHeight - 5px);
+        right: 8%;
+        width: 35vw;
+        height: $playerBoxHeight;
+        border: 1px solid orange;
+
+        .statbox-wrapper {
+            position: relative;
+
+            * {
+                position: absolute;
+            }
+
+            h3 {
+
+            }
+
+            .hp-bar-wrapper {
+
+            }
         }
     }
 }

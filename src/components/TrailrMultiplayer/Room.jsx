@@ -81,6 +81,20 @@ function Room({
   // Enemy Firestore Ref
   const enemyRef = doc(roomRef, enemy, "playerData");
 
+  // PlayerHP Bars
+  const [HPBarStyle, setHPBarStyle] = useState({
+    playerA: {
+      width: '100px',
+      height: '30px',
+      backgroundColor: 'green',
+    },
+    playerB: {
+      width: '100px',
+      height: '30px',
+      backgroundColor: 'green',
+    },
+  })
+
   return (
     <>
     {
@@ -96,9 +110,14 @@ function Room({
       ) : (
         <>
         <div className="gameroom-wrapper">
-          <section className="playerA statbox">
-            <h3>PlayerA goes here</h3>
-          </section>
+          <div className="playerA">
+            <div className="statbox-wrapper">
+              <h3>{playerData.playerA.uid}</h3>
+              <div className="hp-bar-wrapper">
+                <div className="hp-bar" style={HPBarStyle.playerA}></div>
+              </div>
+            </div>
+          </div>
           <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                           movieData={movieData} setMovieData={movieData}
                           videoState={videoState} setVideoState={setVideoState}/>
@@ -108,9 +127,14 @@ function Room({
                             input={input} setInput={setInput}
                             endRound={endRound} setEndRound={setEndRound}/>
           </div>
-          <section className="playerB statbox">
-            <h3>PlayerB goes here</h3> 
-          </section>
+          <div className="playerB">
+            <div className="statbox-wrapper">
+              <h3>{playerData.playerB.uid}</h3>
+              <div className="hp-bar-wrapper">
+                <div className="hp-bar" style={HPBarStyle.playerB}></div>
+              </div>
+            </div>
+          </div>
           <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                           playerData={playerData} setPlayerData={setPlayerData}
                           movieData={movieData} setMovieData={setMovieData}
