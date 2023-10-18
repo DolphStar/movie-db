@@ -41,13 +41,19 @@
 }
 
 // Multiplayer Styling
-.playerA {
+.statbox {
     position: absolute;
+    width: $playerBoxWidth;
+    height: $playerBoxHeight;
+    top: calc($finalPos - $playerBoxHeight)
+}
+
+.playerA {
     left: 8%;
+    border: 1px solid orange;
 }
 
 .playerB {
-    position: absolute;
     right: 8%;
 }
 
@@ -146,7 +152,8 @@
 .gameroom-wrapper {
     @include remove-default-styling;
     background-color: black;
-    min-height: 100vh;
+    border: 1px solid white;
+    min-height: calc(100vh - 2px);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -170,12 +177,10 @@
 
     input {
         border: 1px white solid;
-        padding: 5px;
     }
 
     button {
         border-radius: 0;
-        padding: 5px;
         border: 1px solid white;
         transition: background-color 0.3s ease-in-out;
         transition: color 0.3s ease-in-out;
@@ -193,9 +198,48 @@
 
         iframe {
             display: block;
-            width: 95vw;
-            display: block;
-            height: calc(95vw *(9/16));
+            width: $small;
+            height: calc($small *(9/16));
+        }
+    }
+
+    @media screen and (min-width: 700px){
+
+        .frameA,
+        .frameB {
+            @include absolute-center;
+
+            iframe {
+                display: block;
+                width: $medium;
+                height: calc($medium * (9/16));
+            }
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+        .frameA,
+        .frameB {
+            @include absolute-center;
+
+            iframe {
+                display: block;
+                width: $large;
+                height: calc($large * (9/16));
+            }
+        }
+    }
+
+    @media screen and (min-width: 1400px){
+        .frameA,
+        .frameB {
+            @include absolute-center;
+
+            iframe {
+                display: block;
+                width: $xtra;
+                height: calc($xtra * (9/16));
+            }
         }
     }
 
@@ -222,31 +266,153 @@
         animation-fill-mode: forwards;
     }
 
-    @media screen and (min-width: 700px){
-
-        .frameA,
-        .frameB {
+    // Input
+    .input-wrapper {
         @include absolute-center;
+        width: $small;
+        height: calc($small *(9/16));
+        border: 1px solid green;
+    }
 
-            iframe {
-                display: block;
-                width: 55vw;
-                height: calc(55vw * (9/16));
+    @media screen and (min-width: 700px){
+        .input-wrapper {
+            @include absolute-center;
+            width: $medium;
+            height: calc($medium *(9/16));
+            border: 1px solid green;
+        }
+    }
+
+    @media screen and (min-width: 1100px){
+        .input-wrapper {
+            @include absolute-center;
+            width: $large;
+            height: calc($large *(9/16));
+            border: 1px solid green;
+        }
+    }
+    
+    @media screen and (min-width: 1400px){
+        .input-wrapper {
+            @include absolute-center;
+            width: $xtra;
+            height: calc($xtra *(9/16));
+            border: 1px solid green;
+        }
+    }
+    
+    .trailr-input {
+        @include absolute-center;
+        top: calc(100% + 15px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input {
+            width: 230px;
+            height: 35px;
+            padding-left: 10px;
+        }
+
+        button {
+            width: 55px;
+            height: 37px;
+            font-size: 0.8rem;
+        }
+
+        .suggestions-box {
+            position: absolute;
+            top: calc(100% - 1px);
+            width: 285px;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+
+            /* Scrollbar Styles */
+            scrollbar-width: thin;  /* For Firefox */
+            scrollbar-color: #888 #f5f5f5;  /* For Firefox */
+
+            /* Webkit (Safari/Chrome) scrollbar styling */
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: whitesmoke;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(245, 245, 245, 0.8);
             }
         }
 
-        .alive {
-            animation-name: revive;
-            animation-duration: 2s;
-            animation-timing-function: ease;
-            animation-fill-mode: forwards;
+        .single-suggest {
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+            padding: 5px 0 5px 5px;
+            font-weight: 700;
+            transition: background-color 0.3s ease-in-out;
+            transition: color 0.1s ease-in-out;
         }
+
+        .single-suggest:hover {
+            background-color: rgb(218, 218, 218);
+            color: black;
+            cursor: pointer;
+        }
+    }
+
+    @media screen and (min-width: 700px){
+        .trailr-input {
+
+            input {
+                width: 275px;
+            }
     
-        .dead {
-            animation-name: kill;
-            animation-duration: 1.5s;
-            animation-timing-function: ease;
-            animation-fill-mode: forwards;
+            button {
+                font-size: 1rem;
+                width: 75px;
+            }
+
+            .suggestions-box {
+                width: 360px;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1100px){
+        .trailr-input {
+
+            input {
+                width: 290px;
+            }
+    
+            button {
+                font-size: 1rem;
+                width: 80px;
+            }
+
+            .suggestions-box {
+                width: 380px;
+            }
+        }
+    }
+    
+    @media screen and (min-width: 1400px){
+        .trailr-input {
+
+            input {
+                width: 365px;
+            }
+    
+            button {
+                font-size: 1rem;
+                width: 80px;
+            }
+
+            .suggestions-box {
+                width: 455px;
+            }  
         }
     }
 }

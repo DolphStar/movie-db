@@ -102,11 +102,12 @@ function Room({
           <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                           movieData={movieData} setMovieData={movieData}
                           videoState={videoState} setVideoState={setVideoState}/>
-
-          <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                          searchData={searchData} setSearchData={setSearchData}
-                          input={input} setInput={setInput}
-                          endRound={endRound} setEndRound={setEndRound}/>
+          <div className="input-wrapper alive">
+            <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            searchData={searchData} setSearchData={setSearchData}
+                            input={input} setInput={setInput}
+                            endRound={endRound} setEndRound={setEndRound}/>
+          </div>
           <section className="playerB statbox">
             <h3>PlayerB goes here</h3> 
           </section>
