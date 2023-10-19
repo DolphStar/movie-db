@@ -306,7 +306,7 @@
         .suggestions-box {
             position: absolute;
             top: calc(100% - 1px);
-            width: 285px;
+            width: 295px;
             max-height: 150px;
             overflow-y: auto;
             border: 1px solid #ccc;
@@ -398,51 +398,9 @@
             }  
         }
     }
-
-    // Player Box's
-    .playerA {
-        position: absolute;
-        top: calc($finalPos - $playerBoxHeight - 5px);
-        left: 8%;
-        width: 35vw;
-        height: $playerBoxHeight;
-        border: 1px solid orange;
-
-        .statbox-wrapper {
-            position: relative;
-
-            h3 {
-                position: absolute;
-            }
-
-            .hp-bar-wrapper {
-                position: absolute;
-            }
-        }
-    }
-
-    .playerB {
-        position: absolute;
-        top: calc($finalPos - $playerBoxHeight - 5px);
-        right: 8%;
-        width: 35vw;
-        height: $playerBoxHeight;
-        border: 1px solid orange;
-
-        .statbox-wrapper {
-            position: relative;
-
-            * {
-                position: absolute;
-            }
-
-            h3 {
-
-            }
-
-            .hp-bar-wrapper {
-
-            }
-        }
-    }
+    
+    // PLAYER BOXES (PLAYERNAME, SIDE, POSITION)
+    @include player-box('playerA', left, 6%);
+    @include player-box('playerB', right, 6%);
+  
 }

@@ -85,12 +85,12 @@ function Room({
   const [HPBarStyle, setHPBarStyle] = useState({
     playerA: {
       width: '100px',
-      height: '30px',
+      height: '20px',
       backgroundColor: 'green',
     },
     playerB: {
       width: '100px',
-      height: '30px',
+      height: '20px',
       backgroundColor: 'green',
     },
   })
