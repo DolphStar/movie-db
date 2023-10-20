@@ -174,56 +174,20 @@
         background-color: white;
     }
 
-    // Frames
-    .frameA,
-    .frameB {
-        @include absolute-center;
+    // FRAMES //
 
-        iframe {
-            display: block;
-            width: $small;
-            height: calc($small *(9/16));
-        }
-    }
+    @include frames($small);
 
     @media screen and (min-width: 700px){
-
-        .frameA,
-        .frameB {
-            @include absolute-center;
-
-            iframe {
-                display: block;
-                width: $medium;
-                height: calc($medium * (9/16));
-            }
-        }
+        @include frames($medium);
     }
 
     @media screen and (min-width: 1100px) {
-        .frameA,
-        .frameB {
-            @include absolute-center;
-
-            iframe {
-                display: block;
-                width: $large;
-                height: calc($large * (9/16));
-            }
-        }
+        @include frames($large);
     }
 
     @media screen and (min-width: 1400px){
-        .frameA,
-        .frameB {
-            @include absolute-center;
-
-            iframe {
-                display: block;
-                width: $xtra;
-                height: calc($xtra * (9/16));
-            }
-        }
+        @include frames($xtra);
     }
 
     .frameA {
@@ -249,158 +213,55 @@
         animation-fill-mode: forwards;
     }
 
-    // Input
-    .input-wrapper {
-        @include absolute-center;
-        width: $small;
-        height: calc($small *(9/16));
-        border: 1px solid green;
-    }
+    // INPUT //
+
+    // Width
+    @include input-wrapper($small);
 
     @media screen and (min-width: 700px){
-        .input-wrapper {
-            @include absolute-center;
-            width: $medium;
-            height: calc($medium *(9/16));
-            border: 1px solid green;
-        }
+        @include input-wrapper($medium);
     }
 
     @media screen and (min-width: 1100px){
-        .input-wrapper {
-            @include absolute-center;
-            width: $large;
-            height: calc($large *(9/16));
-            border: 1px solid green;
-        }
+        @include input-wrapper($large);
     }
     
     @media screen and (min-width: 1400px){
-        .input-wrapper {
-            @include absolute-center;
-            width: $xtra;
-            height: calc($xtra *(9/16));
-            border: 1px solid green;
-        }
+        @include input-wrapper($xtra)
     }
+
+    //Input width, Btn width, btn font size
+    @include input(230px, 55px, 0.8rem);
     
-    .trailr-input {
-        @include absolute-center;
-        top: calc(100% + 15px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        input {
-            width: 230px;
-            height: 35px;
-            padding-left: 10px;
-        }
-
-        button {
-            width: 55px;
-            height: 37px;
-            font-size: 0.8rem;
-        }
-
-        .suggestions-box {
-            position: absolute;
-            top: calc(100% - 1px);
-            width: 295px;
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-
-            /* Scrollbar Styles */
-            scrollbar-width: thin;  /* For Firefox */
-            scrollbar-color: #888 #f5f5f5;  /* For Firefox */
-
-            /* Webkit (Safari/Chrome) scrollbar styling */
-            &::-webkit-scrollbar {
-                width: 10px;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background-color: whitesmoke;
-            }
-
-            &::-webkit-scrollbar-thumb:hover {
-                background-color: rgba(245, 245, 245, 0.8);
-            }
-        }
-
-        .single-suggest {
-            border-bottom: 1px solid white;
-            border-right: 1px solid white;
-            padding: 5px 0 5px 5px;
-            font-weight: 700;
-            transition: background-color 0.3s ease-in-out;
-            transition: color 0.1s ease-in-out;
-        }
-
-        .single-suggest:hover {
-            background-color: rgb(218, 218, 218);
-            color: black;
-            cursor: pointer;
-        }
-    }
-
     @media screen and (min-width: 700px){
-        .trailr-input {
-
-            input {
-                width: 275px;
-            }
-    
-            button {
-                font-size: 1rem;
-                width: 75px;
-            }
-
-            .suggestions-box {
-                width: 360px;
-            }
-        }
+        @include input(275px, 75px, 1rem);
     }
 
     @media screen and (min-width: 1100px){
-        .trailr-input {
-
-            input {
-                width: 290px;
-            }
-    
-            button {
-                font-size: 1rem;
-                width: 80px;
-            }
-
-            .suggestions-box {
-                width: 380px;
-            }
-        }
+        @include input(290px, 80px, 1rem);
     }
     
     @media screen and (min-width: 1400px){
-        .trailr-input {
-
-            input {
-                width: 365px;
-            }
-    
-            button {
-                font-size: 1rem;
-                width: 80px;
-            }
-
-            .suggestions-box {
-                width: 455px;
-            }  
-        }
+        @include input(365px, 80px, 1rem);
     }
     
-    // PLAYER BOXES (PLAYERNAME, SIDE, POSITION)
-    @include player-box('playerA', left, 6%);
-    @include player-box('playerB', right, 6%);
+    // PLAYER BOXES (PLAYERNAME, SIDE, POSITION, MAX HP WIDTH)
+    @include player-box('playerA', left, 2%, 100px);
+    @include player-box('playerB', right, 2%, 100px);
+
+    @media screen and (min-width: 700px){
+        @include player-box('playerA', left, 8%, 100px);
+        @include player-box('playerB', right, 8%, 100px);
+    }
+
+    @media screen and (min-width: 1100px){
+        @include player-box('playerA', left, 2%, 100px);
+        @include player-box('playerB', right, 2%, 100px);
+    }
+    
+    @media screen and (min-width: 1400px){
+        @include player-box('playerA', left, 2%, 100px);
+        @include player-box('playerB', right, 2%, 100px);
+    }
   
 }

@@ -85,12 +85,12 @@ function Room({
   const [HPBarStyle, setHPBarStyle] = useState({
     playerA: {
       width: '100px',
-      height: '20px',
+      height: '18px',
       backgroundColor: 'green',
     },
     playerB: {
       width: '100px',
-      height: '20px',
+      height: '18px',
       backgroundColor: 'green',
     },
   })
@@ -112,7 +112,7 @@ function Room({
         <div className="gameroom-wrapper">
           <div className="playerA">
             <div className="statbox-wrapper">
-              <h3>{playerData.playerA.uid}</h3>
+              <p>{playerData.playerA.uid}</p>
               <div className="hp-bar-wrapper">
                 <div className="hp-bar" style={HPBarStyle.playerA}></div>
               </div>
@@ -129,7 +129,7 @@ function Room({
           </div>
           <div className="playerB">
             <div className="statbox-wrapper">
-              <h3>{playerData.playerB.uid}</h3>
+              <p>{playerData.playerB.uid}</p>
               <div className="hp-bar-wrapper">
                 <div className="hp-bar" style={HPBarStyle.playerB}></div>
               </div>
