@@ -16,6 +16,7 @@ import PlayerInput from "./PlayerInput";
 import EndRoundScreen from "./EndRoundScreen";
 import PreGameScreen from "./PreGameScreen";
 import PlayerBoxes from "./playerBoxes";
+import GuessHistory from "./GuessHistory";
 
 function Room({
               offscreenFrame, setOffscreenFrame,
@@ -99,6 +100,9 @@ function Room({
           <div className="gameroom-wrapper">
             <PlayerBoxes    playerData={playerData} setPlayerData={setPlayerData}
                             hpBar={hpBar} setHpBar={setHpBar}/>
+
+            <GuessHistory   playerData={playerData} setPlayerData={setPlayerData}
+                            input={input} setInput={setInput}/>
 
             <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                             movieData={movieData} setMovieData={movieData}

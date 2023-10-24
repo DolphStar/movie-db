@@ -263,5 +263,23 @@
         @include player-box('playerA', left, calc((100vw - $xtra) * 0.25), 200px, -50%);
         @include player-box('playerB', right, calc((100vw - $xtra) * 0.25), 200px, 50%);
     }
-  
+
+    // Guess History Combined
+    @include guess-history-combined($small, 67px);
+
+    @media screen and (min-width: 700px){
+        @include guess-history-combined($medium, 67px);
+    }
+
+    @media screen and (min-width: 1100px){
+        @include guess-history-split('playerA', left, 1%, $large);
+        @include guess-history-split('playerB', right, 1%, $large);
+    }
+
+    @media screen and (min-widht: 1400px){
+        @include guess-history-split('playerA', left, 1%, $xtra);
+        @include guess-history-split('playerB', right, 1%, $xtra);
+    }
+
+
 }

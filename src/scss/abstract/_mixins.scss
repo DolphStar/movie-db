@@ -169,4 +169,27 @@
     }
 }
 
+@mixin guess-history-combined($width, $inputOffset){
+    .guess-history-combined {
+        @include absolute-center();
+        width: $width;
+        height: calc(100vh - ($finalPos + ($width * (9/16)) + ($inputOffset) + 10px));
+        top: calc($finalPos + ($width * (9/16)) + ($inputOffset));
+        border: 1px solid orange;
+        overflow-y: hidden;
+    }
+}
+
+@mixin guess-history-split($playerName, $side, $position, $width){
+    .guess-history-#{$playerName}{
+        position: absolute;
+        top: $finalPos;
+        #{$side}: $position;
+        width: calc(((100vw - $width) * 0.5) - $position - 15px);
+        height: calc($width * (9/16));
+        overflow-y: hidden;
+        border: 1px solid orange;
+    }
+}
+
   

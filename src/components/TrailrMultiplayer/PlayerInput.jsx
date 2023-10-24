@@ -2,32 +2,13 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import { SEARCH_START, apiKey } from '../../globals/globalVariables';
+import { randomPlaceholders } from '../../globals/globalVariables';
 
 function PlayerInput({
                     offscreenFrame, setOffscreenFrame,
                     input, setInput,
                     searchData, setSearchData,
                     }){
-
-  const [randomPlaceholders, setRandomPlaceholders] = useState([
-    'Maybe Spiderman?',
-    'Is that Fifty Shades?',
-    'Is that Matt Damon?',
-    "Maybe it's a Marvel movie?",
-    'Could it be Harry Potter?',
-    'Is this a Star Wars film?',
-    "Perhaps it's Jurassic Park?",
-    "Maybe it's a James Bond movie?",
-    'Is this a Disney classic?',
-    'Could it be The Matrix?',
-    'Is that Tom Hanks?',
-    "Maybe it's a Pixar Movie?",
-    'Fast and Furious 15?',
-    'Is that Christopher Nolan?',
-    'Could it be a horror movie?',
-    "Is that Meryl Streep?",
-  ])
-                      
   
   async function handleInputChange(event){
     setInput((prevInput) => ({

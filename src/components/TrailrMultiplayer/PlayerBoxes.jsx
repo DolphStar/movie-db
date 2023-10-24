@@ -36,8 +36,8 @@ function PlayerBoxes({
                             width: `${hpBar.playerA}%`,
                             height: '25px',
                             backgroundColor: hpBar.playerA <= 100 && hpBar.playerA >= 50 ? 'green' :
-                                            hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
-                                            'red',
+                                             hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
+                                             'red',
                         }}>
                             <span className="hp">{playerData.playerA.hp}</span>
                         </div>
@@ -54,8 +54,8 @@ function PlayerBoxes({
                             width: `${hpBar.playerB}%`,
                             height: '25px',
                             backgroundColor: hpBar.playerB <= 100 && hpBar.playerB >= 50 ? 'green' :
-                                            hpBar.playerB < 50 && hpBar.playerB >= 25 ? 'yellow' :
-                                            'red',
+                                             hpBar.playerB < 50 && hpBar.playerB >= 25 ? 'yellow' :
+                                             'red',
                         }}>
                             <span className="hp">{playerData.playerB.hp}</span>
                         </div>

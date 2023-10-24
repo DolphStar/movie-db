@@ -27,3 +27,23 @@ export const firebaseConfig = {
   messagingSenderId: "1096065471677",
   appId: "1:1096065471677:web:1cbf71f9839de157da13d4"
 };
+
+// Input phrases
+export const randomPlaceholders = [
+  'Maybe Spiderman?',
+  'Is that Fifty Shades?',
+  'Is that Matt Damon?',
+  "Maybe it's a Marvel movie?",
+  'Could it be Harry Potter?',
+  'Is this a Star Wars film?',
+  "Perhaps it's Jurassic Park?",
+  "Maybe it's a James Bond movie?",
+  'Is this a Disney classic?',
+  'Could it be The Matrix?',
+  'Is that Tom Hanks?',
+  "Maybe it's a Pixar Movie?",
+  'Fast and Furious 15?',
+  'Is that Christopher Nolan?',
+  'Could it be a horror movie?',
+  "Is that Meryl Streep?",
+];
