@@ -11,7 +11,7 @@
   }
 }
 
-@mixin absolute-center(){
+@mixin absolute-center{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -34,43 +34,12 @@
     }
 }
 
-@mixin remove-default-styling(){
+@mixin remove-default-styling{
     border: none;
     background: none;
     outline: none;
     padding: 0;
     margin: 0;
-}
-
-@mixin player-box($playerName, $side, $position, $maxHPWidth) {
-    .#{$playerName} {
-        position: absolute;
-        top: calc($finalPos - $playerBoxHeight - 5px);
-        #{$side}: $position;
-
-        .statbox-wrapper {
-            position: relative;
-            border: 1px solid orange;
-            width: 35vw;
-            height: $playerBoxHeight;
-
-            p {
-                position: absolute;
-                top: 0;
-                #{$side}: 0;
-            }
-
-            .hp-bar-wrapper {
-                position: absolute;
-                bottom: 0;
-                #{$side}: 0;
-                border: 1px solid white;
-                display: flex;
-                justify-content: #{$side};
-                width: $maxHPWidth;
-            }
-        }
-    }
 }
 
 @mixin frames($width){
@@ -154,6 +123,48 @@
             background-color: rgb(218, 218, 218);
             color: black;
             cursor: pointer;
+        }
+    }
+}
+
+@mixin player-box($playerName, $side, $position, $maxHPWidth, $translate: 0%, $nameSize: 1rem) {
+    .#{$playerName} {
+        position: absolute;
+        top: calc($finalPos - $playerBoxHeight - 5px);
+        #{$side}: $position;
+        width: $maxHPWidth;
+        // border: 1px solid orange;
+        transform: translateX($translate);
+
+        .statbox-wrapper {
+            position: relative;
+            height: $playerBoxHeight;
+
+            p {
+                position: absolute;
+                top: 0;
+                #{$side}: 0;
+                font-size: $nameSize;
+            }
+
+            .hp-bar-wrapper {
+                position: absolute;
+                bottom: 0;
+                #{$side}: 0;
+                border: 2px solid white;
+                display: flex;
+                justify-content: #{$side};
+                width: $maxHPWidth;
+
+                .hp-bar {
+                    transition: width 0.3s ease-in-out;
+
+                    .hp {
+                        @include absolute-center;
+
+                    }
+                }
+            }
         }
     }
 }

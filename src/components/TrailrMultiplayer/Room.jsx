@@ -6,21 +6,16 @@ import { doc, addDoc, setDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
 
-// Global Variable Imports
-import { firebaseConfig } from "../../globals/globalVariables";
-
 // React Imports
 import { useEffect } from 'react';
 import { useState } from 'react';
-
-// React Router Imports
-import { useSearchParams } from "react-router-dom";
 
 // Component Imports
 import Frames from "./Frames";
 import PlayerInput from "./PlayerInput";
 import EndRoundScreen from "./EndRoundScreen";
 import PreGameScreen from "./PreGameScreen";
+import PlayerBoxes from "./playerBoxes";
 
 function Room({
               offscreenFrame, setOffscreenFrame,
@@ -37,7 +32,7 @@ function Room({
   const [playerData, setPlayerData] = useState({
     playerA: {
       guess: '',
-      hp: 5000,
+      hp: 2000,
       frameReady: false,
       ready: false,
       uid: 'Hippolyta',
@@ -72,6 +67,12 @@ function Room({
   // Single source of truth for the enemy player ref
   const [enemy] = useState(player === 'playerA' ? 'playerB' : 'playerA');
 
+  // Single source of truth for the playerHP
+  const [hpBar, setHpBar] = useState({
+    playerA: 100,
+    playerB: 100,
+  });
+
   // Room Firestore Ref
   const roomRef = doc(db, "rooms", roomID);
 
@@ -80,20 +81,6 @@ function Room({
 
   // Enemy Firestore Ref
   const enemyRef = doc(roomRef, enemy, "playerData");
-
-  // PlayerHP Bars
-  const [HPBarStyle, setHPBarStyle] = useState({
-    playerA: {
-      width: '100px',
-      height: '18px',
-      backgroundColor: 'green',
-    },
-    playerB: {
-      width: '100px',
-      height: '18px',
-      backgroundColor: 'green',
-    },
-  })
 
   return (
     <>
@@ -109,37 +96,26 @@ function Room({
                         enemy={enemy}/>
       ) : (
         <>
-        <div className="gameroom-wrapper">
-          <div className="playerA">
-            <div className="statbox-wrapper">
-              <p>{playerData.playerA.uid}</p>
-              <div className="hp-bar-wrapper">
-                <div className="hp-bar" style={HPBarStyle.playerA}></div>
-              </div>
+          <div className="gameroom-wrapper">
+            <PlayerBoxes    playerData={playerData} setPlayerData={setPlayerData}
+                            hpBar={hpBar} setHpBar={setHpBar}/>
+
+            <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            movieData={movieData} setMovieData={movieData}
+                            videoState={videoState} setVideoState={setVideoState}/>
+
+            <div className="input-wrapper alive">
+              <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                              searchData={searchData} setSearchData={setSearchData}
+                              input={input} setInput={setInput}
+                              endRound={endRound} setEndRound={setEndRound}/>
             </div>
-          </div>
-          <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                          movieData={movieData} setMovieData={movieData}
-                          videoState={videoState} setVideoState={setVideoState}/>
-          <div className="input-wrapper alive">
-            <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                            searchData={searchData} setSearchData={setSearchData}
-                            input={input} setInput={setInput}
+            
+            <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                            playerData={playerData} setPlayerData={setPlayerData}
+                            movieData={movieData} setMovieData={setMovieData}
                             endRound={endRound} setEndRound={setEndRound}/>
           </div>
-          <div className="playerB">
-            <div className="statbox-wrapper">
-              <p>{playerData.playerB.uid}</p>
-              <div className="hp-bar-wrapper">
-                <div className="hp-bar" style={HPBarStyle.playerB}></div>
-              </div>
-            </div>
-          </div>
-          <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                          playerData={playerData} setPlayerData={setPlayerData}
-                          movieData={movieData} setMovieData={setMovieData}
-                          endRound={endRound} setEndRound={setEndRound}/>
-        </div>
         </>
       )}
     </>
