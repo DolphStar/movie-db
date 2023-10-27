@@ -78,18 +78,29 @@ function TrailrMultiplayer({
 
     // Set the initial playerA data
     await setDoc(initPlayerA, {
-      ready: false,
-      uid: "Hippolyta",
-      guess: '',
+      uid: 'Hippolyta',
       hp: 5000,
+      guess: {
+        title: '',
+        poster: '',
+        id: '',
+      },
+      frameReady: false,
+      ready: false,
+      present: true,
     });
 
     // Set the initial playerB data
     await setDoc(initPlayerB, {
-      ready: false,
       uid: "Norb",
-      guess: '',
       hp: 5000,
+      guess: {
+        title: '',
+        poster: '',
+        id: '',
+      },
+      frameReady: false,
+      ready: false,
       present: false,
     })
 

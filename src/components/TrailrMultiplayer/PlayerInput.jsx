@@ -48,10 +48,11 @@ function PlayerInput({
     }
   }
   
-  function handleSelection(id, title){
+  function handleSelection(id, title, poster){
     setInput((prevInput) => ({
       ...prevInput,
       title: title,
+      poster: poster,
       id: id,
     }));
   }

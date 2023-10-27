@@ -30,21 +30,8 @@ function Room({
 
   // Single source of truth for the playerData
   const [playerData, setPlayerData] = useState({
-    playerA: {
-      guess: '',
-      hp: 2000,
-      frameReady: false,
-      ready: false,
-      uid: 'Hippolyta',
-    },
-    playerB: {
-      guess: '',
-      hp: 5000,
-      present: false,
-      frameReady: false,
-      ready: false,
-      uid: 'Norb',
-    },
+    playerA: {},
+    playerB: {},
   });
 
   // Single source of truth for the roomData
@@ -97,7 +84,11 @@ function Room({
   // Enemy Firestore Ref
   const enemyRef = doc(roomRef, enemy, "playerData");
 
-  
+  // When a guess is made add it to the guessHistory
+  useEffect(()=>{
+    
+  }, [playerData.playerA.guess, playerData.playerB.guess])
+
 
   return (
     <>
