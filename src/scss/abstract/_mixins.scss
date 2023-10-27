@@ -127,7 +127,7 @@
     }
 }
 
-@mixin player-box($playerName, $side, $position, $maxHPWidth, $translate: 0%, $nameSize: 1rem) {
+@mixin statbox($playerName, $side, $position, $maxHPWidth, $translate: 0%, $nameSize: 1rem) {
     .#{$playerName} {
         position: absolute;
         top: calc($finalPos - $playerBoxHeight - 5px);
@@ -180,15 +180,39 @@
     }
 }
 
-@mixin guess-history-split($playerName, $side, $position, $width){
-    .guess-history-#{$playerName}{
+@mixin playerbox-split($playerName, $side, $position, $width){
+    .playerbox-#{$playerName}{
         position: absolute;
         top: $finalPos;
         #{$side}: $position;
         width: calc(((100vw - $width) * 0.5) - $position - 15px);
-        height: calc($width * (9/16));
-        overflow-y: hidden;
+        height: 70vh;
         border: 1px solid orange;
+
+        .playerbox-wrapper {
+            position: relative;
+            height: 100%;
+            width: 100%;
+
+            .hp-bar-wrapper {
+                position: absolute;
+                left: -1px;
+                width: 100%;
+                display: flex;
+                justify-content: #{$side};
+                border: 1px solid white;
+
+                .hp-bar {
+                    height: 30px;
+
+                    .hp {
+                        @include absolute-center();
+                    }
+                }
+            }
+            
+            
+        }
     }
 }
 

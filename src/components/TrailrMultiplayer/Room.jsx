@@ -16,7 +16,6 @@ import PlayerInput from "./PlayerInput";
 import EndRoundScreen from "./EndRoundScreen";
 import PreGameScreen from "./PreGameScreen";
 import PlayerBoxes from "./playerBoxes";
-import GuessHistory from "./GuessHistory";
 
 function Room({
               offscreenFrame, setOffscreenFrame,
@@ -74,6 +73,21 @@ function Room({
     playerB: 100,
   });
 
+  // Single source of truth for the guess history
+  // {
+  //   player: '',
+  //   guess: '',
+  // }
+  const [guessHistory, setGuessHistory] = useState([]);
+
+  // Single source of truth for correct guesses
+  // {
+  //   player: '',
+  //   dmgDealt: 0,
+  //   movieData: {},
+  // }
+  const [correctGuesses, setCorrectGuesses] = useState([])
+
   // Room Firestore Ref
   const roomRef = doc(db, "rooms", roomID);
 
@@ -82,6 +96,8 @@ function Room({
 
   // Enemy Firestore Ref
   const enemyRef = doc(roomRef, enemy, "playerData");
+
+  
 
   return (
     <>
@@ -99,10 +115,9 @@ function Room({
         <>
           <div className="gameroom-wrapper">
             <PlayerBoxes    playerData={playerData} setPlayerData={setPlayerData}
-                            hpBar={hpBar} setHpBar={setHpBar}/>
-
-            <GuessHistory   playerData={playerData} setPlayerData={setPlayerData}
-                            input={input} setInput={setInput}/>
+                            hpBar={hpBar} setHpBar={setHpBar}
+                            guessHistory={guessHistory} setGuessHistory={setGuessHistory}
+                            correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}/>
 
             <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                             movieData={movieData} setMovieData={movieData}
@@ -112,7 +127,9 @@ function Room({
               <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                               searchData={searchData} setSearchData={setSearchData}
                               input={input} setInput={setInput}
-                              endRound={endRound} setEndRound={setEndRound}/>
+                              endRound={endRound} setEndRound={setEndRound}
+                              guessHistory={guessHistory} setGuessHistory={setGuessHistory}
+                              correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}/>
             </div>
             
             <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}

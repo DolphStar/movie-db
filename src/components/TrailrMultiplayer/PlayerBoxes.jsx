@@ -14,7 +14,12 @@ import { useState } from 'react';
 function PlayerBoxes({
                     playerData, setPlayerData,
                     hpBar, setHpBar,
+                    guessHistory, setGuessHistory,
+                    correctGuesses, setCorrectGuesses,
                     }){
+
+    // Track the window width to show the correct layout
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     // Update the HP when the player takes damage
     useEffect(()=>{
@@ -24,44 +29,104 @@ function PlayerBoxes({
         playerB: (playerData.playerB.hp / 5000) * 100,
         }));
     }, [playerData.playerA.hp, playerData.playerB.hp])
-    
+
+    // Track the window size to show the correct guess history
+    useEffect(()=>{
+
+        function handleResize(){
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        // Stop tracking when the component unmounts
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
+
     return (
         <>
-            <div className="playerA">
-                <div className="statbox-wrapper">
-                    <p>{playerData.playerA.uid}</p>
-                    <div className="hp-bar-wrapper">
-                        <div className="hp-bar" 
-                        style={{
-                            width: `${hpBar.playerA}%`,
-                            height: '25px',
-                            backgroundColor: hpBar.playerA <= 100 && hpBar.playerA >= 50 ? 'green' :
-                                             hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
-                                             'red',
-                        }}>
-                            <span className="hp">{playerData.playerA.hp}</span>
+            {   
+                // Mobile player box layout
+                windowWidth < 1100 ? (
+                    <>
+                        <div className="playerA">
+                            <div className="statbox-wrapper">
+                                <p>{playerData.playerA.uid}</p>
+                                <div className="hp-bar-wrapper">
+                                    <div className="hp-bar" 
+                                        style={{
+                                            width: `${hpBar.playerA}%`,
+                                            height: '25px',
+                                            backgroundColor: hpBar.playerA <= 100 && hpBar.playerA >= 50 ? 'green' :
+                                                            hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
+                                                            'red',
+                                            }}>
+                                            <span className="hp">{playerData.playerA.hp}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div className="playerB">
-                <div className="statbox-wrapper">
-                    <p>{playerData.playerB.uid}</p>
-                    <div className="hp-bar-wrapper">
-                        <div className="hp-bar" 
-                        style={{
-                            width: `${hpBar.playerB}%`,
-                            height: '25px',
-                            backgroundColor: hpBar.playerB <= 100 && hpBar.playerB >= 50 ? 'green' :
-                                             hpBar.playerB < 50 && hpBar.playerB >= 25 ? 'yellow' :
-                                             'red',
-                        }}>
-                            <span className="hp">{playerData.playerB.hp}</span>
+                        <div className="playerB">
+                            <div className="statbox-wrapper">
+                                <p>{playerData.playerB.uid}</p>
+                                <div className="hp-bar-wrapper">
+                                    <div className="hp-bar" 
+                                        style={{
+                                            width: `${hpBar.playerB}%`,
+                                            height: '25px',
+                                            backgroundColor: hpBar.playerB <= 100 && hpBar.playerB >= 50 ? 'green' :
+                                                            hpBar.playerB < 50 && hpBar.playerB >= 25 ? 'yellow' :
+                                                            'red',
+                                            }}>
+                                        <span className="hp">{playerData.playerB.hp}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+
+                        <div className="guess-history-combined">
+
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="playerbox-playerA">
+                            <div className="playerbox-wrapper">
+                                <div className="hp-bar-wrapper">
+                                    <div className="hp-bar"
+                                        style={{
+                                            width: `${hpBar.playerA}%`,
+                                            backgroundColor: hpBar.playerA <= 100 && hpBar.playerA >= 50 ? 'green' :
+                                                            hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
+                                                            'red',
+                                        }}>
+                                        <span className="hp">{playerData.playerA.hp}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="playerbox-playerB">
+                            <div className="playerbox-wrapper">
+                                <div className="hp-bar-wrapper">
+                                    <div className="hp-bar"
+                                        style={{
+                                            width: `${hpBar.playerB}%`,
+                                            backgroundColor: hpBar.playerB <= 100 && hpBar.playerB >= 50 ? 'green' :
+                                                            hpBar.playerB < 50 && hpBar.playerB >= 25 ? 'yellow' :
+                                                            'red',
+                                        }}>
+                                        <span className="hp">{playerData.playerB.hp}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )
+            }
         </>
     )
 }

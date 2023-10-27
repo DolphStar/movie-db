@@ -8,6 +8,8 @@ function PlayerInput({
                     offscreenFrame, setOffscreenFrame,
                     input, setInput,
                     searchData, setSearchData,
+                    guessHistory, setGuessHistory,
+                    correctGuesses, setCorrectGuesses,
                     }){
   
   async function handleInputChange(event){

@@ -246,40 +246,23 @@
     }
     
     // PLAYER BOXES (PLAYERNAME, SIDE, POSITION, MAX HP WIDTH)
-    @include player-box('playerA', left, calc((100vw - $small) * 0.5), 125px);
-    @include player-box('playerB', right, calc((100vw - $small) * 0.5), 125px);
-
-    @media screen and (min-width: 700px){
-        @include player-box('playerA', left, calc((100vw - $medium) * 0.5), 150px);
-        @include player-box('playerB', right, calc((100vw - $medium) * 0.5), 150px);
-    }
-
-    @media screen and (min-width: 1100px){
-        @include player-box('playerA', left, calc((100vw - $large) * 0.25), 180px, -50%);
-        @include player-box('playerB', right, calc((100vw - $large) * 0.25), 180px, 50%);
-    }
-    
-    @media screen and (min-width: 1400px){
-        @include player-box('playerA', left, calc((100vw - $xtra) * 0.25), 200px, -50%);
-        @include player-box('playerB', right, calc((100vw - $xtra) * 0.25), 200px, 50%);
-    }
-
-    // Guess History Combined
+    @include statbox('playerA', left, calc((100vw - $small) * 0.5), 125px);
+    @include statbox('playerB', right, calc((100vw - $small) * 0.5), 125px);
     @include guess-history-combined($small, 67px);
 
     @media screen and (min-width: 700px){
+        @include statbox('playerA', left, calc((100vw - $medium) * 0.5), 150px);
+        @include statbox('playerB', right, calc((100vw - $medium) * 0.5), 150px);
         @include guess-history-combined($medium, 67px);
     }
 
     @media screen and (min-width: 1100px){
-        @include guess-history-split('playerA', left, 1%, $large);
-        @include guess-history-split('playerB', right, 1%, $large);
+        @include playerbox-split('playerA', left, 1%, $large);
+        @include playerbox-split('playerB', right, 1%, $large);
     }
 
     @media screen and (min-widht: 1400px){
-        @include guess-history-split('playerA', left, 1%, $xtra);
-        @include guess-history-split('playerB', right, 1%, $xtra);
+        @include playerbox-split('playerA', left, 1%, $xtra);
+        @include playerbox-split('playerB', right, 1%, $xtra);
     }
-
-
 }

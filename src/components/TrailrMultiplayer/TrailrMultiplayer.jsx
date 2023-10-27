@@ -67,7 +67,7 @@ function TrailrMultiplayer({
     // Create a new room **DOCUMENT**
     const newRoomRef = await addDoc(newRoom, {
       dmgMultiplier: 1,
-      movieID: "Waiting for playerB",
+      movieID: '',
     });
 
     // New playerA data doc ref
