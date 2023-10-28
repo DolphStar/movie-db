@@ -66,20 +66,31 @@ function PlayerInput({
   }
   
   // Set the input when a suggestion is clicked on
-  function handleSelection(id, title, poster){
-    setInput((prevInput) => ({
-      ...prevInput,
+  function handleSelection(title, id, poster, backdrop, rating, releaseDate){
+    setInput({
       title: title,
+      movieID: id,
       poster: poster,
-      id: id,
-    }));
+      backdrop: backdrop,
+      rating: rating,
+      releaseDate: releaseDate,
+    });
   }
 
-  //  
+  // 
   async function handleSubmit(){
     await updateDoc(selfRef, {
       guess: input,
     });
+    setInput({
+      title: '',
+      movieID: '',
+      poster: '',
+      backdrop: '',
+      rating: null,
+      releaseDate: '',
+    });
+    setSearchData([]);
   }
 
   useEffect(()=>{
@@ -103,7 +114,7 @@ function PlayerInput({
             <div
               key={movie.id} 
               className='single-suggest' 
-              onClick={()=>handleSelection(movie.id, movie.title, movie.poster_path)}>
+              onClick={()=>handleSelection(movie.title, movie.id, movie.poster_path, movie.backdrop_path, movie.vote_average, movie.release_date)}>
                 {movie.title}
             </div>
           ))}

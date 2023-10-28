@@ -67,7 +67,14 @@ function TrailrMultiplayer({
     // Initialize Room
     const newRoomRef = await addDoc(newRoom, {
       dmgMultiplier: 1,
-      movieID: '',
+      movieInfo: {
+        title: '',
+        movieID: '',
+        poster: '',
+        backdrop: '',
+        rating: null,
+        releaseDate: '',
+      },
       round: 0,
     });
 
@@ -83,8 +90,11 @@ function TrailrMultiplayer({
       hp: 5000,
       guess: {
         title: '',
+        movieID: '',
         poster: '',
-        id: '',
+        backdrop: '',
+        rating: null,
+        releaseDate: '',
       },
       frameReady: false,
       present: true,
@@ -96,8 +106,11 @@ function TrailrMultiplayer({
       hp: 5000,
       guess: {
         title: '',
+        movieID: '',
         poster: '',
-        id: '',
+        backdrop: '',
+        rating: null,
+        releaseDate: '',
       },
       frameReady: false,
       present: false,

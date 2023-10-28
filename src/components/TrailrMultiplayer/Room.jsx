@@ -32,12 +32,19 @@ function Room({
   // Single source of truth for the client side roomData
   // {
   //   dmgMultiplier: int,
-  //   movieID: string,
+  //   movieID: obj,
   //   round: int, 
   // }
   const [roomData, setRoomData] = useState({
-    dmgMultiplier: 0,
-    movieID: '',
+    dmgMultiplier: 1,
+    movieInfo: {
+      title: '',
+      movieID: '',
+      poster: '',
+      backdrop: '',
+      rating: null,
+      releaseDate: '',
+    },
     round: 0,
   });
 
@@ -206,8 +213,10 @@ function Room({
                             correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}/>
 
             <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                            movieData={movieData} setMovieData={movieData}
-                            videoState={videoState} setVideoState={setVideoState}/>
+                            roomData={roomData} setRoomData={setRoomData}
+                            videoState={videoState} setVideoState={setVideoState}
+                            selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
+                            enemy={enemy} player={player} setPlayer={setPlayer}/>
 
             <div className="input-wrapper alive">
               <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}

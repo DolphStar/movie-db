@@ -17,8 +17,10 @@ import { onSnapshot } from "firebase/firestore";
 
 function Frames({
                 offscreenFrame, setOffscreenFrame,
-                movieData, setMovieData,
+                roomData, setRoomData,
                 videoState, setVideoState,
+                selfRef, enemyRef, roomRef,
+                enemy, player, setPlayer,
                 }){
 
   // Frame references
@@ -28,6 +30,12 @@ function Frames({
   // Player references
   const youtubeA = useRef(null);
   const youtubeB = useRef(null);
+
+  // Single source of truth for the video keys
+  const [videoKeys, setVideoKeys] = useState([
+    '',
+    '',
+  ])
 
   // Switch the offscreen frame
   function switchFrame(){
@@ -51,6 +59,56 @@ function Frames({
       youtubeB.current.internalPlayer.playVideo();
     }
   }
+
+  async function fetchMovies(){
+    // Get a random page to choose from and then fetch movies from that page
+    const randomPage = Math.floor(Math.random() * moviePage) + 1;
+    const moviesEndpoint = `${MOVIE_START}&page=${randomPage}&sort_by=popularity.desc&with_original_language=en&api_key=${apiKey}`;
+    const res = await fetch(moviesEndpoint);
+
+    if(res.ok){
+      // Get a random movie from the list of movies that got fetched
+      const movieList = await res.json();
+      const randomIndex = (Math.floor(Math.random() * movieList.results.length));
+      const randomMovie = movieList.results[randomIndex]
+
+      // Send the chosen movie information to the db
+      await updateDoc(roomRef, {
+        movieInfo: {
+          title: randomMovie.title,
+          movieID: randomMovie.id,
+          poster: randomMovie.poster_path,
+          backdrop: randomMovie.backdrop_path,
+          rating: randomMovie.vote_average,
+          releaseDate: randomMovie.release_date,
+        }
+      })
+    }
+  }
+
+  async function fetchVideos(){
+    // Fetch the videos for the movie from roomData
+    const videosEndpoint = `${VIDEO_START}${roomData.movieInfo.movieID}/videos?language=en-US&api_key=${apiKey}`;
+    const res = await fetch(videosEndpoint);
+
+    if(res.ok){
+      // Get the trailer from the video list and then set it for the offscreenframe
+      const video = await res.json();
+      const trailer = video.results.find(video => video.type === 'Trailer');
+      setVideoKeys(prevVideoKeys => {
+        const newVideoKeys = [...prevVideoKeys];
+        newVideoKeys[offscreenFrame] = trailer.key;
+        return newVideoKeys;
+      });
+    }
+  }
+
+  // On initial load playerA calls fetchMovies if a movie hasn't already been set
+  useEffect(()=>{
+    if(roomData.movieInfo.movieID === '' && player === 'playerA'){
+      fetchMovies();
+    }
+  }, [])
 
   return (
     <>
@@ -121,7 +179,8 @@ function Frames({
             }}
           />
         </div>
-      </div>      
+      </div>    
+       
     </>
   )
 }
