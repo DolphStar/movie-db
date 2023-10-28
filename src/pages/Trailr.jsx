@@ -49,7 +49,8 @@ function Trailr() {
   // Single source of truth for the player input
   const [input, setInput] = useState({
     title: '',
-    id: null
+    poster: '',
+    id: null,
   });
 
   // Single source of truth for the answer submit
@@ -75,12 +76,6 @@ function Trailr() {
 
   // Single source of truth for the selected game mode
   const [gameMode, setGameMode] = useState('');
-
-  // Single source of truth for the roomID
-  const [roomID, setRoomID] = useState('');
-
-  // Single source of truth for the player
-  const [player, setPlayer] = useState('');
 
   // Single source of truth for the params state
   const [params, setParams] = useState({});
@@ -113,9 +108,7 @@ function Trailr() {
         gameMode === '' ? (
         <MainMenu           gameMode={gameMode} setGameMode={setGameMode}
                             searchParams={searchParams} setSearchParams={setSearchParams}
-                            params={params} setParams={setParams}
-                            player={player} setPlayer={setPlayer}
-                            roomID={roomID} setRoomID={setRoomID}/>
+                            params={params} setParams={setParams}/>
       ) 
       : gameMode === 'solo' ? (
         <TrailrSolo         movieData={movieData} setMovieData={setMovieData}
@@ -135,10 +128,7 @@ function Trailr() {
                             videoState={videoState} setVideoState={setVideoState}
                             searchData={searchData} setSearchData={setSearchData}
                             input={input} setInput={setInput}
-                            roomID={roomID} setRoomID={setRoomID}
-                            player={player} setPlayer={setPlayer}
                             params={params} setParams={setParams}
-                            gameMode={gameMode} setGameMode={setGameMode}
                             searchParams={searchParams} setSearchParams={setSearchParams}/>
       )
       : (

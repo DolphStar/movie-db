@@ -7,18 +7,16 @@ import { collection } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
 
 // Global Variable Imports
-import { firebaseConfig } from "../../globals/globalVariables";
+import { firebaseConfig } from "../../../globals/globalVariables";
 
 // React Imports
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 function PreGameScreen({
-                        roomID, setRoomID,
                         player, setPlayer,
                         playerData, setPlayerData,
                         roomData, setRoomData,
-                        unsub, setUnsub,
                         selfRef, enemyRef, roomRef,
                         app, db,
                         enemy,
@@ -32,6 +30,7 @@ function PreGameScreen({
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // Listen for window width to block the search bar on mobile
   useEffect(()=>{
     function handleResize(){
       setWindowWidth(window.innerWidth);
@@ -51,69 +50,6 @@ function PreGameScreen({
       const newURL = currentURL.replace('playerA', 'playerB');
       setInviteLink(newURL);
     }
-  }, [])
-
-  // OnSnapShot to listen to room changes
-  useEffect(()=>{
-    const unsubRoom = onSnapshot(roomRef, (doc) => {
-      if(doc.exists()){
-        const data = doc.data();
-        setRoomData((prevRoomData) => ({
-          ...prevRoomData,
-          ...data,
-        }));
-      }
-    });
-
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      room: unsubRoom,
-    }));
-  }, [])
-
-  // OnSnapShot to listen to the enemy playerData change
-  useEffect(()=>{
-    const unsubEnemy = onSnapshot(enemyRef, (doc) => {
-      if(doc.exists()){
-        const data = doc.data();
-        setPlayerData((prevPlayerData) => ({
-          ...prevPlayerData,
-          [enemy]: {
-            ...prevPlayerData[enemy],
-            ...data,
-          },
-        }));
-      }
-    });
-
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      enemy: unsubEnemy,
-    }));
-  }, [])
-
-  // OnSnapShot to listen to self playerData change
-  useEffect(()=>{
-    const unsubSelf = onSnapshot(selfRef, (doc) => {
-      if(doc.exists()){
-        const data = doc.data();
-        setPlayerData((prevPlayerData) => ({
-          ...prevPlayerData,
-          [player]: {
-            ...prevPlayerData[player],
-            ...data,
-          },
-        }));
-      }
-    });
-
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      self: unsubSelf,
-    }));
   }, [])
 
   // When playerB joins set playerB present to true in db
@@ -152,14 +88,14 @@ function PreGameScreen({
     }
   }
 
-  // Start the game
+  // Switch the round (round 1 means game starts)
   async function startGame(){
     try {
       await updateDoc(roomRef, {
         round: 1,
       })
     } catch (error) {
-      console.log("Updating the roomDoc to start the game")
+      console.log("Error switching the round")
     }
   }
   
@@ -189,7 +125,7 @@ function PreGameScreen({
           ) : (
             <div className="ready-box">
               <h3>{playerData.playerA.uid}</h3>
-              <button onClick={startGame} disabled={!playerData.playerB.ready}>Start Game</button>
+              <button onClick={startGame} disabled={playerData.playerB.ready === false || player === 'playerB' ? true : false}>Start Game</button>
               <p>{playerData.playerA.ready === false ? 'Set a name to ready up' : 'Ready'}</p>
             </div>
           )

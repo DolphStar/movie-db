@@ -1,25 +1,42 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
-import { SEARCH_START, apiKey } from '../../globals/globalVariables';
-import { randomPlaceholders } from '../../globals/globalVariables';
+
+// React Imports
+import { useState, useEffect } from 'react'
+
+// Global Imports
+import { SEARCH_START, apiKey } from '../../../globals/globalVariables';
+import { randomPlaceholders } from '../../../globals/globalVariables';
+import { firebaseConfig } from "../../../globals/globalVariables";
+
+// Firebase Imports
+import { doc, addDoc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 
 function PlayerInput({
                     offscreenFrame, setOffscreenFrame,
-                    input, setInput,
+                    playerData, setPlayerData,
                     searchData, setSearchData,
+                    input, setInput,
+                    endRound, setEndRound,
                     guessHistory, setGuessHistory,
                     correctGuesses, setCorrectGuesses,
+                    selfRef, enemyRef, roomRef, 
+                    enemy,
                     }){
   
   async function handleInputChange(event){
+
+    // Update the input field on change
     setInput((prevInput) => ({
       ...prevInput,
       title: event.target.value
     }));
+
+    // Make a search api call on change
     const urlSafeInput = encodeURIComponent(event.target.value);
     const searchEndpoint = `${SEARCH_START}&query=${urlSafeInput}&api_key=${apiKey}`
-
     const res = await fetch(searchEndpoint);
     if(res.ok){
       const searchList = await res.json();
@@ -48,6 +65,7 @@ function PlayerInput({
     }
   }
   
+  // Set the input when a suggestion is clicked on
   function handleSelection(id, title, poster){
     setInput((prevInput) => ({
       ...prevInput,
@@ -57,9 +75,16 @@ function PlayerInput({
     }));
   }
 
+  //  
   async function handleSubmit(){
-    console.log("Send the answer to firebase");
+    await updateDoc(selfRef, {
+      guess: input,
+    });
   }
+
+  useEffect(()=>{
+    console.log("Input submitted")
+  }, [playerData.playerA.guess, playerData.playerB.guess])
 
   return (
     <>
@@ -78,7 +103,7 @@ function PlayerInput({
             <div
               key={movie.id} 
               className='single-suggest' 
-              onClick={()=>handleSelection(movie.id, movie.title)}>
+              onClick={()=>handleSelection(movie.id, movie.title, movie.poster_path)}>
                 {movie.title}
             </div>
           ))}

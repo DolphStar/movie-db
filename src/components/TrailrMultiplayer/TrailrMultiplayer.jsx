@@ -25,10 +25,7 @@ function TrailrMultiplayer({
                             movieData, setMovieData,
                             videoState, setVideoState,
                             searchData, setSearchData,
-                            roomID, setRoomID,
-                            player, setPlayer,
                             params, setParams,
-                            gameMode, setGameMode,
                             searchParams, setSearchParams,
                             input, setInput,
                             }){
@@ -38,6 +35,12 @@ function TrailrMultiplayer({
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
+
+  // Single source of truth for the roomID
+  const [roomID, setRoomID] = useState('');
+
+  // Single source of truth for the player
+  const [player, setPlayer] = useState('');
 
   // Check the URL for params and then set params state accordingly
   useEffect(()=>{
@@ -53,9 +56,6 @@ function TrailrMultiplayer({
     if(params.roomID !== undefined){
       setRoomID(params.roomID);
     }
-    if(params.mode !== undefined){
-      setGameMode(params.mode);
-    }
   }, [params])
 
   // Create a new room in Firestore
@@ -64,19 +64,20 @@ function TrailrMultiplayer({
     // Room collection ref
     const newRoom = collection(db, "rooms");
 
-    // Create a new room **DOCUMENT**
+    // Initialize Room
     const newRoomRef = await addDoc(newRoom, {
       dmgMultiplier: 1,
       movieID: '',
+      round: 0,
     });
 
-    // New playerA data doc ref
+    // PlayerA doc ref
     const initPlayerA = doc(newRoom, newRoomRef.id, "playerA", "playerData");
 
-    // New playerB data doc ref
+    // PlayerB doc ref
     const initPlayerB = doc(newRoom, newRoomRef.id, "playerB", "playerData");
 
-    // Set the initial playerA data
+    // Initialize playerA
     await setDoc(initPlayerA, {
       uid: 'Hippolyta',
       hp: 5000,
@@ -86,13 +87,12 @@ function TrailrMultiplayer({
         id: '',
       },
       frameReady: false,
-      ready: false,
       present: true,
     });
 
-    // Set the initial playerB data
+    // Initialize playerB
     await setDoc(initPlayerB, {
-      uid: "Norb",
+      uid: "Deraj",
       hp: 5000,
       guess: {
         title: '',
@@ -100,9 +100,8 @@ function TrailrMultiplayer({
         id: '',
       },
       frameReady: false,
-      ready: false,
       present: false,
-    })
+    });
 
     // Update the URL params
     setSearchParams({ mode: "multiplayer", roomID: newRoomRef.id, player: "playerA" });

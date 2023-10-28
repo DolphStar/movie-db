@@ -6,8 +6,6 @@ function MainMenu({
                 gameMode, setGameMode,
                 searchParams, setSearchParams,
                 params, setParams,
-                player, setPlayer,
-                roomID, setRoomID,
                 }){
 
   // Sets the selected mode as the state and add it as a param in the URL
@@ -24,12 +22,6 @@ function MainMenu({
   // Every time the params are updated, check to see if a player, roomID, or gameMode is present
   // If so, update the states accordingly
   useEffect(()=>{
-    if(params.player !== undefined){
-      setPlayer(params.player);
-    }
-    if(params.roomID !== undefined){
-      setRoomID(params.roomID);
-    }
     if(params.mode !== undefined){
       setGameMode(params.mode);
     }

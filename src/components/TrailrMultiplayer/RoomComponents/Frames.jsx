@@ -2,17 +2,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 // Global Variable Imports
-import { apiKey } from "../../globals/globalVariables";
-import { moviePage } from "../../globals/globalVariables";
-import { VIDEO_START, MOVIE_START } from "../../globals/globalVariables";
+import { apiKey } from "../../../globals/globalVariables";
+import { moviePage } from "../../../globals/globalVariables";
+import { VIDEO_START, MOVIE_START } from "../../../globals/globalVariables";
 
 // React Imports
 import { useState, useEffect, useRef } from "react";
 import Youtube from 'react-youtube';
 
 // Firebase Imports
-import { doc, addDoc, setDoc } from "firebase/firestore";
+import { doc, addDoc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 
 function Frames({
                 offscreenFrame, setOffscreenFrame,
