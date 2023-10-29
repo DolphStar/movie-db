@@ -13,6 +13,7 @@ import { collection } from "firebase/firestore";
 
 // Global Variable Imports
 import { firebaseConfig } from "../../globals/globalVariables";
+import { roomInit, playerAInit, playerBInit } from "../../globals/globalVariables"
 
 // React Imports
 import { useEffect, useState } from 'react';
@@ -65,18 +66,7 @@ function TrailrMultiplayer({
     const newRoom = collection(db, "rooms");
 
     // Initialize Room
-    const newRoomRef = await addDoc(newRoom, {
-      dmgMultiplier: 1,
-      movieInfo: {
-        title: '',
-        movieID: '',
-        poster: '',
-        backdrop: '',
-        rating: null,
-        releaseDate: '',
-      },
-      round: 0,
-    });
+    const newRoomRef = await addDoc(newRoom, roomInit);
 
     // PlayerA doc ref
     const initPlayerA = doc(newRoom, newRoomRef.id, "playerA", "playerData");
@@ -85,36 +75,10 @@ function TrailrMultiplayer({
     const initPlayerB = doc(newRoom, newRoomRef.id, "playerB", "playerData");
 
     // Initialize playerA
-    await setDoc(initPlayerA, {
-      uid: 'Hippolyta',
-      hp: 5000,
-      guess: {
-        title: '',
-        movieID: '',
-        poster: '',
-        backdrop: '',
-        rating: null,
-        releaseDate: '',
-      },
-      frameReady: false,
-      present: true,
-    });
+    await setDoc(initPlayerA, playerAInit);
 
     // Initialize playerB
-    await setDoc(initPlayerB, {
-      uid: "Deraj",
-      hp: 5000,
-      guess: {
-        title: '',
-        movieID: '',
-        poster: '',
-        backdrop: '',
-        rating: null,
-        releaseDate: '',
-      },
-      frameReady: false,
-      present: false,
-    });
+    await setDoc(initPlayerB, playerBInit);
 
     // Update the URL params
     setSearchParams({ mode: "multiplayer", roomID: newRoomRef.id, player: "playerA" });

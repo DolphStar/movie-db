@@ -10,6 +10,9 @@ import { onSnapshot } from "firebase/firestore";
 import { useEffect } from 'react';
 import { useState } from 'react';
 
+// Global Imports
+import { roomInit, playerAInit, playerBInit } from "../../globals/globalVariables";
+
 // Component Imports
 import Frames from "./RoomComponents/Frames";
 import PlayerInput from "./RoomComponents/PlayerInput";
@@ -35,18 +38,7 @@ function Room({
   //   movieID: obj,
   //   round: int, 
   // }
-  const [roomData, setRoomData] = useState({
-    dmgMultiplier: 1,
-    movieInfo: {
-      title: '',
-      movieID: '',
-      poster: '',
-      backdrop: '',
-      rating: null,
-      releaseDate: '',
-    },
-    round: 0,
-  });
+  const [roomData, setRoomData] = useState(roomInit);
 
   // Single source of truth for the client side playerData
   // {
@@ -58,32 +50,12 @@ function Room({
   //     id: string,
   //   },
   //   ready: bool,
+  //   frameReady: bool,
+  //   present: bool,
   // }
   const [playerData, setPlayerData] = useState({
-    playerA: {
-      uid: 'Hippolyta',
-      hp: 5000,
-      guess: { 
-        title: '',
-        poster: '',
-        id: '',
-      },
-      ready: false,
-      frameReady: false,
-      present: true,
-    },
-    playerB: {
-      uid: 'Deraj',
-      hp: 5000,
-      guess: {
-        title: '',
-        poster: '',
-        id: '',
-      },
-      ready: false,
-      frameReady: false,
-      present: false,
-    },
+    playerA: playerAInit,
+    playerB: playerBInit,
   });
 
   // Single source of truth for the onSnapShot unsubscribe functions

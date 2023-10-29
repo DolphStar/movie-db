@@ -2,6 +2,7 @@
 export const apiKey = "9de5ef6478cb7a1b5b666488d964d267";
 
 export const appTitle = "Movie Time";
+
 export const youtubeApiKey = "AIzaSyBgitWTtZ1hFrkPFDWfvHfOOuTIdQ-fbxg";
 
 export const imgPath = "https://image.tmdb.org/t/p/original";
@@ -47,3 +48,50 @@ export const randomPlaceholders = [
   'Could it be a horror movie?',
   "Is that Meryl Streep?",
 ];
+
+// Init values
+export const roomInit = {
+  round: 0,
+  videoKeyFrameA: '',
+  videoKeyFrameB: '',
+  movieInfo: {
+    title: '',
+    movieID: '',
+    poster: '',
+    backdrop: '',
+    rating: null,
+    releaseDate: '',
+  },
+};
+
+export const playerAInit = {
+  uid: 'Hippolyta',
+  hp: 5000,
+  guess: {
+    title: '',
+    movieID: '',
+    poster: '',
+    backdrop: '',
+    rating: null,
+    releaseDate: '',
+  },
+  ready: false,
+  frameReady: false,
+  present: true,
+};
+
+export const playerBInit = {
+  uid: "Deraj",
+  hp: 5000,
+  guess: {
+    title: '',
+    movieID: '',
+    poster: '',
+    backdrop: '',
+    rating: null,
+    releaseDate: '',
+  },
+  ready: false,
+  frameReady: false,
+  present: false,
+};

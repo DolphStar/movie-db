@@ -67,49 +67,60 @@ function Frames({
     const res = await fetch(moviesEndpoint);
 
     if(res.ok){
-      // Get a random movie from the list of movies that got fetched
+      // Get a random movie from the list of that got fetched
       const movieList = await res.json();
       const randomIndex = (Math.floor(Math.random() * movieList.results.length));
-      const randomMovie = movieList.results[randomIndex]
-
-      // Send the chosen movie information to the db
-      await updateDoc(roomRef, {
-        movieInfo: {
-          title: randomMovie.title,
-          movieID: randomMovie.id,
-          poster: randomMovie.poster_path,
-          backdrop: randomMovie.backdrop_path,
-          rating: randomMovie.vote_average,
-          releaseDate: randomMovie.release_date,
-        }
-      })
+      const randomMovie = movieList.results[randomIndex];
+      return randomMovie;
+    }else{
+      console.log("Fetch Movies Failed")
     }
   }
 
-  async function fetchVideos(){
-    // Fetch the videos for the movie from roomData
-    const videosEndpoint = `${VIDEO_START}${roomData.movieInfo.movieID}/videos?language=en-US&api_key=${apiKey}`;
+  async function fetchVideos(id){
+    // Fetch the videos for the chosen movie
+    const videosEndpoint = `${VIDEO_START}${id}/videos?language=en-US&api_key=${apiKey}`;
     const res = await fetch(videosEndpoint);
 
     if(res.ok){
-      // Get the trailer from the video list and then set it for the offscreenframe
+      // Get the trailer from the video list
       const video = await res.json();
       const trailer = video.results.find(video => video.type === 'Trailer');
-      setVideoKeys(prevVideoKeys => {
-        const newVideoKeys = [...prevVideoKeys];
-        newVideoKeys[offscreenFrame] = trailer.key;
-        return newVideoKeys;
-      });
+      return trailer;
+    }else{
+      console.log("Fetch Videos Failed")
     }
   }
 
-  // On initial load playerA calls fetchMovies if a movie hasn't already been set
+  async function updateMovieInfo(){
+    const movieInfo = await fetchMovies();
+    const videoInfo = await fetchVideos(movieInfo.id);
+    // Change the video key of the offscreenframe
+    const videoKeyTag = roomData.round % 2 === 0 ? 'videoKeyFrameA' : 'videoKeyFrameB';
+
+    // Send the movieInfo and video key to the db spot 
+    await updateDoc(roomRef, {
+      [videoKeyTag]: videoInfo.key,
+      movieInfo: {
+        title: movieInfo.title,
+        movieID: movieInfo.id,
+        poster: movieInfo.poster_path,
+        backdrop: movieInfo.backdrop_path,
+        rating: movieInfo.vote_average,
+        releaseDate: movieInfo.release_date,
+      }
+    })
+
+    console.log("Update Movie Info Ran")
+  }
+
+  // If the movieID is empty then playerA sends the initial data on load
   useEffect(()=>{
     if(roomData.movieInfo.movieID === '' && player === 'playerA'){
-      fetchMovies();
+      updateMovieInfo();
     }
   }, [])
-
+  
   return (
     <>
       {/* starts as the alive frame */}
@@ -118,7 +129,7 @@ function Frames({
           {/* frame A */}
           <Youtube className="youtubeA"
             ref={youtubeA}
-            videoId={1234567890}
+            videoId={roomData.videoKeyFrameA}
             opts={{
               playerVars: {
                 enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
@@ -131,7 +142,7 @@ function Frames({
                 iv_load_policy: 3, // disables annotations
               }
             }}
-            key={1234567890}
+            key={roomData.videoKeyFrameA}
             onStateChange={(event)=>{
               setVideoState((prevVideoState) => ({
                 ...prevVideoState,
@@ -155,7 +166,7 @@ function Frames({
           {/* frame B */}
           <Youtube className="youtubeB"
             ref={youtubeB}
-            videoId={1234567890}
+            videoId={roomData.videoKeysFrameB}
             opts={{
               playerVars: {
                 enablejsapi: 1,    // enables the player to be controlled by IFrame API calls
@@ -168,7 +179,7 @@ function Frames({
                 iv_load_policy: 3, // disables annotations
               }
             }}
-            key={1234567890}
+            key={roomData.videoKeysFrameB}
             onReady={()=>{
             }}
             onStateChange={(event)=>{
