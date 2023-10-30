@@ -17,7 +17,6 @@ import { roomInit, playerAInit, playerBInit } from "../../globals/globalVariable
 import Frames from "./RoomComponents/Frames";
 import PlayerInput from "./RoomComponents/PlayerInput";
 import EndRoundScreen from "./Screens/EndRoundScreen";
-import PreGameScreen from "./Screens/PreGameScreen";
 import PlayerBoxes from "./RoomComponents/PlayerBoxes";
 
 function Room({
