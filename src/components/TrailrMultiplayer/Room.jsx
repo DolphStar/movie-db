@@ -58,13 +58,6 @@ function Room({
     playerB: playerBInit,
   });
 
-  // Single source of truth for the onSnapShot unsubscribe functions
-  const [unsub, setUnsub] = useState({
-    enemy: null,
-    self: null,
-    room: null,
-  })
-
   // Single source of truth for the endRound state
   const [endRound, setEndRound] = useState(false);
 
@@ -101,9 +94,10 @@ function Room({
   // Enemy Firestore Ref
   const enemyRef = doc(roomRef, enemy, "playerData");
 
-  // ONSNAPSHOTS TO LISTEN TO FIREBASE CHANGES
-  // OnSnapShot to listen to room changes
+  // OnSnapShot to listen to room, enemy, and self doc changes
   useEffect(()=>{
+
+    // Room
     const unsubRoom = onSnapshot(roomRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
@@ -114,15 +108,7 @@ function Room({
       }
     });
 
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      room: unsubRoom,
-    }));
-  }, [])
-
-  // OnSnapShot to listen to the enemy playerData change
-  useEffect(()=>{
+    // Enemy
     const unsubEnemy = onSnapshot(enemyRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
@@ -136,15 +122,7 @@ function Room({
       }
     });
 
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      enemy: unsubEnemy,
-    }));
-  }, [])
-
-  // OnSnapShot to listen to self playerData change
-  useEffect(()=>{
+    // Self
     const unsubSelf = onSnapshot(selfRef, (doc) => {
       if(doc.exists()){
         const data = doc.data();
@@ -158,57 +136,46 @@ function Room({
       }
     });
 
-    // Store the unsubscribe function state for when the game is over
-    setUnsub((prevUnsub) => ({
-      ...prevUnsub,
-      self: unsubSelf,
-    }));
+    // Stop listening for changes when the component unmounts
+    return () => {
+      unsubRoom();
+      unsubEnemy();
+      unsubSelf();
+    }
   }, [])
 
   return (
     <>
-    {
-      roomData.round === 0 ? (
-        <PreGameScreen  player={player} setPlayer={setPlayer}
+      <div className="gameroom-wrapper">
+        <PlayerBoxes    roomData={roomData} setRoomdata={setRoomData}
                         playerData={playerData} setPlayerData={setPlayerData}
+                        enemy={enemy} player={player} setPlayer={setPlayer}
+                        hpBar={hpBar} setHpBar={setHpBar}
+                        guessHistory={guessHistory} setGuessHistory={setGuessHistory}
+                        correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}
+                        selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}/>
+
+        <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
                         roomData={roomData} setRoomData={setRoomData}
+                        videoState={videoState} setVideoState={setVideoState}
                         selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
-                        app={app} db={db}
+                        enemy={enemy} player={player} setPlayer={setPlayer}/>
+
+        <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        playerData={playerData} setPlayerData={setPlayerData}
+                        searchData={searchData} setSearchData={setSearchData}
+                        input={input} setInput={setInput}
+                        endRound={endRound} setEndRound={setEndRound}
+                        guessHistory={guessHistory} setGuessHistory={setGuessHistory}
+                        correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}
+                        selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
                         enemy={enemy}/>
-                        
-      ) : (
-        <>
-          <div className="gameroom-wrapper">
-            <PlayerBoxes    playerData={playerData} setPlayerData={setPlayerData}
-                            hpBar={hpBar} setHpBar={setHpBar}
-                            guessHistory={guessHistory} setGuessHistory={setGuessHistory}
-                            correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}/>
-
-            <Frames         offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                            roomData={roomData} setRoomData={setRoomData}
-                            videoState={videoState} setVideoState={setVideoState}
-                            selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
-                            enemy={enemy} player={player} setPlayer={setPlayer}/>
-
-            <div className="input-wrapper alive">
-              <PlayerInput    offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                              playerData={playerData} setPlayerData={setPlayerData}
-                              searchData={searchData} setSearchData={setSearchData}
-                              input={input} setInput={setInput}
-                              endRound={endRound} setEndRound={setEndRound}
-                              guessHistory={guessHistory} setGuessHistory={setGuessHistory}
-                              correctGuesses={correctGuesses} setCorrectGuesses={setCorrectGuesses}
-                              selfRef={selfRef} enemyRef={enemyRef} roomRef={roomRef}
-                              enemy={enemy}/>
-            </div>
-            
-            <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
-                            playerData={playerData} setPlayerData={setPlayerData}
-                            movieData={movieData} setMovieData={setMovieData}
-                            endRound={endRound} setEndRound={setEndRound}/>
-          </div>
-        </>
-      )}
+        
+        <EndRoundScreen offscreenFrame={offscreenFrame} setOffscreenFrame={setOffscreenFrame}
+                        playerData={playerData} setPlayerData={setPlayerData}
+                        movieData={movieData} setMovieData={setMovieData}
+                        endRound={endRound} setEndRound={setEndRound}/>
+      </div>
     </>
   )
 }

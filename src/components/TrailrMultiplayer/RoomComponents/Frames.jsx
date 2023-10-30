@@ -96,7 +96,7 @@ function Frames({
     const movieInfo = await fetchMovies();
     const videoInfo = await fetchVideos(movieInfo.id);
     // Change the video key of the offscreenframe
-    const videoKeyTag = roomData.round % 2 === 0 ? 'videoKeyFrameA' : 'videoKeyFrameB';
+    const videoKeyTag = roomData.round % 2 === 0 ? 'videoKeyFrameB' : 'videoKeyFrameA';
 
     // Send the movieInfo and video key to the db spot 
     await updateDoc(roomRef, {
@@ -110,8 +110,6 @@ function Frames({
         releaseDate: movieInfo.release_date,
       }
     })
-
-    console.log("Update Movie Info Ran")
   }
 
   // If the movieID is empty then playerA sends the initial data on load
@@ -166,7 +164,7 @@ function Frames({
           {/* frame B */}
           <Youtube className="youtubeB"
             ref={youtubeB}
-            videoId={roomData.videoKeysFrameB}
+            videoId={roomData.videoKeyFrameB}
             opts={{
               playerVars: {
                 enablejsapi: 1,    // enables the player to be controlled by IFrame API calls

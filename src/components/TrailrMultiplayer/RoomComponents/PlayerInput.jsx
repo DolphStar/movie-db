@@ -99,25 +99,27 @@ function PlayerInput({
 
   return (
     <>
-      <div className='trailr-input'>
-        <input 
-          type="text"
-          value={input.title}
-          onChange={handleInputChange}
-          placeholder={randomPlaceholders[Math.floor(Math.random() * randomPlaceholders.length)]}
-        />
-        <button onClick={handleSubmit} id='input-submit'>
-          Submit
-        </button>
-        <div className='suggestions-box'>
-          {searchData.map((movie)=> (
-            <div
-              key={movie.id} 
-              className='single-suggest' 
-              onClick={()=>handleSelection(movie.title, movie.id, movie.poster_path, movie.backdrop_path, movie.vote_average, movie.release_date)}>
-                {movie.title}
-            </div>
-          ))}
+      <div className='input-wrapper alive'>
+        <div className='trailr-input'>
+          <input 
+            type="text"
+            value={input.title}
+            onChange={handleInputChange}
+            placeholder={randomPlaceholders[Math.floor(Math.random() * randomPlaceholders.length)]}
+          />
+          <button onClick={handleSubmit} id='input-submit'>
+            Submit
+          </button>
+          <div className='suggestions-box'>
+            {searchData.map((movie)=> (
+              <div
+                key={movie.id} 
+                className='single-suggest' 
+                onClick={()=>handleSelection(movie.title, movie.id, movie.poster_path, movie.backdrop_path, movie.vote_average, movie.release_date)}>
+                  {movie.title}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
