@@ -177,6 +177,37 @@
         top: calc($finalPos + ($width * (9/16)) + ($inputOffset));
         border: 1px solid orange;
         overflow-y: hidden;
+        display: flex;
+        flex-direction: column;
+
+        .playerA-pregame {
+            position: relative;
+            height: 50%;
+            border: 1px solid white;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                input {
+                    width: calc($width * 0.4);
+                    padding: 6px;
+                    margin: 15px;
+                }
+
+                button {
+                    width: calc($width * 0.3);
+                    padding: 6px;
+                }
+            }
+        }
+
+        .playerB-pregame {
+            position: relative;
+            height: 50%;
+            border: 1px solid white;
+        }
     }
 }
 
@@ -210,8 +241,6 @@
                     }
                 }
             }
-            
-            
         }
     }
 }

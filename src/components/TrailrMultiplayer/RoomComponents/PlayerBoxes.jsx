@@ -236,8 +236,8 @@ function PlayerBoxes({
                                     </>
                                 ) : (
                                     <>
-                                    <div>
-                                        
+                                    <div className="guesses">
+                                        <h2>Guesses showing here</h2>
                                     </div>
                                     </>
                                 )

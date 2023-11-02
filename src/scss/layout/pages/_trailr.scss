@@ -12,19 +12,6 @@
     overflow: hidden;
 }
 
-// Dev panels
-.dev-panel-frames {
-    @include dev-panel(5%, 10%)
-}
-
-.dev-panel-input {
-    @include dev-panel(50%, 10%)
-}
-
-.dev-panel-firebase {
-    @include dev-panel(5%, 85%)
-}
-
 // Main Menu Styling
 .game-modes {
     border: green 1px solid;
@@ -38,97 +25,6 @@
             
         }
     }
-}
-
-// Pregame screen
-.pregame-screen {
-    @include remove-default-styling;
-    background-color: black;
-    // min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-
-    // Removing default styling from everything
-    * {
-        @include remove-default-styling;
-    }
-
-    section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-    h3 {
-        color: white;
-        margin-bottom: 10px;
-    }
-
-    input {
-        border: 1px white solid;
-        padding: 5px;
-    }
-
-    button {
-        border-radius: 0;
-        padding: 5px;
-        border: 1px solid white;
-        transition: background-color 0.3s ease-in-out;
-        transition: color 0.3s ease-in-out;
-    }
-
-    button:hover {
-        color: black;
-        background-color: white;
-    }
-
-    .playerA-pregame {
-        border: 1px white solid;
-        width: 100vw;
-        height: calc(50vh - 2px);
-    }
-
-    .playerB-pregame {
-        border: 1px white solid;
-        width: 100vw;
-        height: calc(50vh - 2px);
-    }
-
-    .playerA-pregame-name-input,
-    .playerB-pregame-name-input {
-        display: flex;
-        flex-direction: column;
-    }
-
-    @media screen and (min-width: 700px) {
-
-        .playerA-pregame {
-            border: 1px white solid;
-            width: 50vw;
-            height: calc(100vh - 2px);
-        }
-    
-        .playerB-pregame {
-            border: 1px white solid;
-            width: 50vw;
-            height: calc(100vh - 2px);
-        }
-    
-        .playerA-pregame-name-input,
-        .playerB-pregame-name-input {
-            display: flex;
-            flex-direction: column;
-        }
-    }
-}
-
-@media screen and (min-width: 700px){
-    .pregame-screen {
-        display: flex;
-        flex-direction: row;
-        background-color: black;
-    } 
 }
 
 // Game Room
