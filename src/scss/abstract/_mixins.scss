@@ -209,6 +209,23 @@
             }
         }
 
+        #start-button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            width: calc($width * 0.4);
+            height: 35px;
+            background-color: black;
+            color: white;
+        }
+
+        #start-button:hover {
+            background-color: white;
+            color: black;
+        }
+
         .playerB-pregame {
             position: relative;
             height: 50%;

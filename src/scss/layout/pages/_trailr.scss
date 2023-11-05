@@ -109,6 +109,15 @@
         animation-fill-mode: forwards;
     }
 
+    // Start button animation
+    .start-animation {
+        animation: startAnimation 2s infinite;
+    }
+
+    .waiting-animation {
+        animation: waitingAnimation 2s infinite;
+    }
+
     // INPUT //
 
     // Width

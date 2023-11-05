@@ -49,6 +49,13 @@ function PlayerBoxes({
         });
     }
 
+    // Start the game
+    async function startGame(){
+        await updateDoc(roomRef, {
+            gameStarted: true,
+        });
+    }
+
     // Track the window size to show the correct layout
     useEffect(()=>{
 
@@ -143,7 +150,7 @@ function PlayerBoxes({
                         */}
                         <div 
                             className="guess-history-combined"
-                            style={playerData.playerA.ready === false || playerData.playerB.ready === false ? 
+                            style={roomData.gameStarted === false ? 
                                 {
                                     top: '20%', 
                                     height: '79vh',
@@ -154,7 +161,7 @@ function PlayerBoxes({
                             }>
                             {
                                 // Show the pregame screen until both players are ready
-                                playerData.playerA.ready === false || playerData.playerB.ready === false ? (
+                                roomData.gameStarted === false  ? (
                                     <>
                                     <section className='playerA-pregame'>
                                         {
@@ -204,6 +211,15 @@ function PlayerBoxes({
                                             )
                                         }
                                     </section>
+                                    <button id="start-button" className={playerData.playerA.ready && playerData.playerB.ready && player === 'playerA' ? 'start-animation' : 'waiting-animation'}
+                                        disabled={!playerData.playerA.ready || !playerData.playerB.ready ? true : false}
+                                        onClick={startGame}>
+                                        {
+                                            !playerData.playerA.ready || !playerData.playerB.ready ? 'Waiting for players to ready up' : 
+                                            player === 'playerA' ? 'Start!' :
+                                            'Waiting for host to start'
+                                        }
+                                    </button>
                                     <section className='playerB-pregame'>
                                         {   
                                             // PlayerB POV - PlayerB not ready - PlayerB input form shown
@@ -274,8 +290,8 @@ function PlayerBoxes({
                                         style={{
                                             width: `${hpBar.playerA}%`,
                                             backgroundColor: hpBar.playerA <= 100 && hpBar.playerA >= 50 ? 'green' :
-                                                            hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
-                                                            'red',
+                                                             hpBar.playerA < 50 && hpBar.playerA >= 25 ? 'yellow' :
+                                                             'red',
                                         }}>
                                         <span className="hp">{playerData.playerA.hp}</span>
                                     </div>

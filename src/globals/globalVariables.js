@@ -54,6 +54,7 @@ export const roomInit = {
   round: 0,
   videoKeyFrameA: '',
   videoKeyFrameB: '',
+  gameStarted: false,
   movieInfo: {
     title: '',
     movieID: '',

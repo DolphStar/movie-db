@@ -32,6 +32,29 @@ $header-item-height: 50px;
     }
 }
 
+@keyframes startAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 0 20px white;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes waitingAnimation {
+    0% {
+    }
+    50% {
+        box-shadow: 0 0 20px white;
+    }
+    100% {
+    }
+}
+
 $color_1: #000;
 $color_2: white;
 $font-family_1: Helvetica Neue, Helvetica, Arial, sans-serif;
