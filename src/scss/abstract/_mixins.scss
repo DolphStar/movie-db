@@ -175,12 +175,15 @@
         width: $width;
         height: calc(100vh - ($finalPos + ($width * (9/16)) + ($inputOffset) + 10px));
         top: calc($finalPos + ($width * (9/16)) + ($inputOffset));
-        transition: top 0.5s ease-in-out;
-        border: 1px solid orange;
+        border: 1px solid white;
         overflow-y: hidden;
         display: flex;
         flex-direction: column;
+        z-index: 99;
+        background-color: black;
 
+        transition: top 1s ease-in-out, height 1s ease-in-out;
+    
         .playerA-pregame {
             position: relative;
             height: 50%;
@@ -193,13 +196,15 @@
             }
 
             input {
-                width: calc($width * 0.4);
+                min-width: calc($width * 0.3);
+                max-width: calc($width * 0.5);
                 padding: 6px;
                 margin: 10px;
             }
 
             button {
-                width: calc($width * 0.3);
+                min-width: calc($width * 0.2);
+                max-width: calc($width * 0.4);
                 padding: 4px;
             }
         }
@@ -216,13 +221,15 @@
             }
 
             input {
-                width: calc($width * 0.4);
+                min-width: calc($width * 0.3);
+                max-width: calc($width * 0.5);
                 padding: 6px;
                 margin: 10px;
             }
 
             button {
-                width: calc($width * 0.3);
+                min-width: calc($width * 0.2);
+                max-width: calc($width * 0.4);
                 padding: 4px;
             }
         }

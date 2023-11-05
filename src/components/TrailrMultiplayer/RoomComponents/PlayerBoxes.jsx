@@ -146,9 +146,12 @@ function PlayerBoxes({
                             style={playerData.playerA.ready === false || playerData.playerB.ready === false ? 
                                 {
                                     top: '20%', 
-                                    zIndex: '999',
-                                    background: 'black',
-                                } : null }>
+                                    height: '79vh',
+                                    transition: 'top 1s ease-in-out, height 1s ease-in-out',
+                                }  
+                                : 
+                                null
+                            }>
                             {
                                 // Show the pregame screen until both players are ready
                                 playerData.playerA.ready === false || playerData.playerB.ready === false ? (
