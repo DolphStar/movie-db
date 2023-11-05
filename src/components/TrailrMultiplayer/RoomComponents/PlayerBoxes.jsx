@@ -143,7 +143,7 @@ function PlayerBoxes({
                         */}
                         <div 
                             className="guess-history-combined"
-                            style={playerData.playerA.ready === false && playerData.playerB.ready === false ? 
+                            style={playerData.playerA.ready === false || playerData.playerB.ready === false ? 
                                 {
                                     top: '20%', 
                                     zIndex: '999',

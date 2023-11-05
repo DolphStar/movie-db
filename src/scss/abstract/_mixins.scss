@@ -175,7 +175,7 @@
         width: $width;
         height: calc(100vh - ($finalPos + ($width * (9/16)) + ($inputOffset) + 10px));
         top: calc($finalPos + ($width * (9/16)) + ($inputOffset));
-        transition: top 0.5 ease-in-out;
+        transition: top 0.5s ease-in-out;
         border: 1px solid orange;
         overflow-y: hidden;
         display: flex;
