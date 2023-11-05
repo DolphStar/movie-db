@@ -65,8 +65,8 @@ export const roomInit = {
 };
 
 export const playerAInit = {
-  uid: 'Hippolyta',
-  hp: 5000,
+  uid: 'Not ready',
+  hp: 0,
   guess: {
     title: '',
     movieID: '',
@@ -81,8 +81,8 @@ export const playerAInit = {
 };
 
 export const playerBInit = {
-  uid: "Deraj",
-  hp: 5000,
+  uid: "Not ready",
+  hp: 0,
   guess: {
     title: '',
     movieID: '',

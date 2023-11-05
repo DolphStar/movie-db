@@ -175,6 +175,7 @@
         width: $width;
         height: calc(100vh - ($finalPos + ($width * (9/16)) + ($inputOffset) + 10px));
         top: calc($finalPos + ($width * (9/16)) + ($inputOffset));
+        transition: top 0.5 ease-in-out;
         border: 1px solid orange;
         overflow-y: hidden;
         display: flex;
@@ -189,17 +190,17 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
 
-                input {
-                    width: calc($width * 0.4);
-                    padding: 6px;
-                    margin: 15px;
-                }
+            input {
+                width: calc($width * 0.4);
+                padding: 6px;
+                margin: 10px;
+            }
 
-                button {
-                    width: calc($width * 0.3);
-                    padding: 6px;
-                }
+            button {
+                width: calc($width * 0.3);
+                padding: 4px;
             }
         }
 
@@ -207,6 +208,23 @@
             position: relative;
             height: 50%;
             border: 1px solid white;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input {
+                width: calc($width * 0.4);
+                padding: 6px;
+                margin: 10px;
+            }
+
+            button {
+                width: calc($width * 0.3);
+                padding: 4px;
+            }
         }
     }
 }

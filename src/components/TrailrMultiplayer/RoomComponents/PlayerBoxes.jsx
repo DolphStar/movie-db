@@ -45,6 +45,7 @@ function PlayerBoxes({
         await updateDoc(selfRef, {
             uid: newName,
             ready: true,
+            hp: '5000',
         });
     }
 
@@ -93,10 +94,13 @@ function PlayerBoxes({
             {   
                 // Mobile player box layout
                 windowWidth < 1100 ? (
-                    <>
+                    <>  
+                        {/* PlayerA */}
                         <div className="playerA">
                             <div className="statbox-wrapper">
+                                {/* PlayerA Name */}
                                 <p>{playerData.playerA.uid}</p>
+                                {/* PlayerA HP Bar */}
                                 <div className="hp-bar-wrapper">
                                     <div className="hp-bar" 
                                         style={{
@@ -112,9 +116,12 @@ function PlayerBoxes({
                             </div>
                         </div>
 
+                        {/* PlayerB */}
                         <div className="playerB">
                             <div className="statbox-wrapper">
+                                {/* PlayerB Name */}
                                 <p>{playerData.playerB.uid}</p>
+                                {/* PlayerB HP Bar */}
                                 <div className="hp-bar-wrapper">
                                     <div className="hp-bar" 
                                         style={{
@@ -130,14 +137,28 @@ function PlayerBoxes({
                             </div>
                         </div>
 
-                        <div className="guess-history-combined">
+                        {/* 
+                        Pregame screen and guess history 
+                        Position is controlled inline while it is a pregame screen
+                        */}
+                        <div 
+                            className="guess-history-combined"
+                            style={playerData.playerA.ready === false && playerData.playerB.ready === false ? 
+                                {
+                                    top: '20%', 
+                                    zIndex: '999',
+                                    background: 'black',
+                                } : null }>
                             {
-                                roomData.round === 0 ? (
+                                // Show the pregame screen until both players are ready
+                                playerData.playerA.ready === false || playerData.playerB.ready === false ? (
                                     <>
                                     <section className='playerA-pregame'>
                                         {
+                                            // PlayerA POV - PlayerA not ready - PlayerA input shown
                                             player === 'playerA' && playerData.playerA.ready === false ? (
                                                 <div className="playerA-pregame-name-input">
+                                                    <h3>Choose your name</h3>
                                                     <form onSubmit={(e) => {
                                                             e.preventDefault();
                                                             changePlayerName();
@@ -151,6 +172,7 @@ function PlayerBoxes({
                                                     </form>
                                                 </div>
                                             ) : 
+                                            // PlayerA POV - PlayerA ready - PlayerA name shown
                                             player === 'playerA' && playerData.playerA.ready === true ? (
                                                 <div className="readybox">
                                                     <h3>{playerData.playerA.uid}</h3>
@@ -165,11 +187,13 @@ function PlayerBoxes({
                                                     </div>
                                                 </div>
                                             ) : 
+                                            // PlayerB POV - PlayerA not ready - Waiting for playerA shown
                                             player === 'playerB' && playerData.playerA.ready === false ? (
                                                 <div className="enemy-set-name">
                                                     <p>Waiting for opponent to set name</p>
                                                 </div>
                                             ) : (
+                                            // PlayerB POV - PlayerA ready - PlayerA name shown
                                                 <div className="readybox">
                                                     <h3>{playerData.playerA.uid}</h3>
                                                     <p>Ready</p>
@@ -178,7 +202,8 @@ function PlayerBoxes({
                                         }
                                     </section>
                                     <section className='playerB-pregame'>
-                                        {
+                                        {   
+                                            // PlayerB POV - PlayerB not ready - PlayerB input form shown
                                             player === 'playerB' && playerData.playerB.ready === false ? (
                                                 <div className="playerB-pregame-name-input">
                                                     <form onSubmit={(e) => {
@@ -194,20 +219,14 @@ function PlayerBoxes({
                                                     </form>
                                                 </div>
                                             ) : 
+                                            // PlayerB POV - PlayerB ready - PlayerB name shown 
                                             player === 'playerB' && playerData.playerB.ready === true ? (
                                                 <div className="readybox">
                                                     <h3>{playerData.playerB.uid}</h3>
-                                                    <div>
-                                                        {
-                                                            playerData.playerA.ready === false ? (
-                                                                <p>Waiting for opponent to ready up</p>
-                                                            ) : (
-                                                                <p>Ready</p>
-                                                            )
-                                                        }
-                                                    </div>
+                                                    <p>Ready</p>
                                                 </div>
                                             ) : 
+                                            // PlayerA POV - PlayerB not present - Invite a friend shown
                                             player === 'playerA' && playerData.playerB.present === false ? (
                                                 <div className="invite-playerB">
                                                     <h3>Invite a friend!</h3>
@@ -217,18 +236,17 @@ function PlayerBoxes({
                                                         }
                                                     </button>
                                                 </div>
+                                            ) : 
+                                            // PlayerA POV - PlayerB not ready - Waiting for playerB to ready up
+                                            player === 'playerA' && playerData.playerB.ready === false ? (
+                                                <div className="readybox">
+                                                    <h3>Waiting for your opponent to ready up</h3>
+                                                </div>
                                             ) : (
+                                            // PlayerA POV - PlayerB ready - PlayerB name shown
                                                 <div className="readybox">
                                                     <h3>{playerData.playerB.uid}</h3>
-                                                    <div>
-                                                        {
-                                                            playerData.playerB.ready === false ? (
-                                                                <p>Waiting for opponent to ready up</p>
-                                                            ) : (
-                                                                <p>Ready</p>
-                                                            )
-                                                        }
-                                                    </div>
+                                                    <p>Ready</p>
                                                 </div>
                                             )
                                         }
@@ -237,7 +255,7 @@ function PlayerBoxes({
                                 ) : (
                                     <>
                                     <div className="guesses">
-                                        <h2>Guesses showing here</h2>
+                                        <h3>Player guess history</h3>
                                     </div>
                                     </>
                                 )
